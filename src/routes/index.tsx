@@ -5,7 +5,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 export default function Router() {
   const router = createBrowserRouter([
     {
-      path: "/home",
+      path: "/",
       element: <Home />,
     },
     {
