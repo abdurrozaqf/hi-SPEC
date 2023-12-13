@@ -18,9 +18,9 @@ const SidebarAdmin = () => {
     setTheme(newTheme);
   }
   return (
-    <div>
+    <div className="font-poppins">
       {/* SIDEBAR */}
-      <div className="h-full p-10 border-r relative flex flex-col justify-between shadow-md">
+      <div className="h-full p-12 border-r relative flex flex-col justify-between shadow-md">
         {/* BUTTON SIDEBAR */}
         <div className="bg-[#E4ECF1] dark:bg-[#1265AE] shadow-md p-2 rounded-md absolute right-5 cursor-pointer">
           <ChevronLastIcon />

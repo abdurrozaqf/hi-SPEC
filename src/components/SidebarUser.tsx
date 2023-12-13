@@ -11,6 +11,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Checkbox } from "@/components/ui/checkbox";
 
 import { useTheme } from "@/utils/contexts/theme-provider";
+import { Button } from "./ui/button";
 
 const SidebarUser = () => {
   const { setTheme, theme } = useTheme();
@@ -19,11 +20,11 @@ const SidebarUser = () => {
     setTheme(newTheme);
   }
   return (
-    <div>
+    <div className="font-poppins">
       {/* SIDEBAR */}
-      <div className="h-full p-10 border-r relative flex flex-col justify-between shadow-md">
+      <div className="h-full p-12 border-r relative flex flex-col justify-between shadow-md">
         {/* BUTTON SIDEBAR */}
-        <div className="bg-[#E4ECF1] dark:bg-[#1265AE] shadow-md p-2 rounded-md absolute right-5 cursor-pointer">
+        <div className="bg-[#E4ECF1] dark:bg-[#1265AE] shadow-md p-2 rounded-md absolute right-4 cursor-pointer">
           <ChevronLastIcon />
         </div>
 
@@ -102,6 +103,9 @@ const SidebarUser = () => {
               placeholder="Rp. Maximum"
               className="rounded-md placeholder:text-sm outline-none dark:bg-black px-4 py-1 border shadow"
             />
+            <Button type="submit" className=" h-fit w-full bg-[#48B774] mt-6">
+              <p className="font-medium">Submit</p>
+            </Button>
           </form>
         </div>
 
