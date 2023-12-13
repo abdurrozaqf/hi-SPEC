@@ -21,7 +21,7 @@ const Layout = (props: Readonly<Props>) => {
         {/* <SidebarAdmin /> */}
 
         {/* CONTENT */}
-        <div className="grow overflow-auto flex flex-col p-6 bg-[#E4ECF1]">
+        <div className="grow overflow-auto flex flex-col p-6 bg-[#E4ECF1] dark:bg-transparent">
           {children}
         </div>
       </div>
