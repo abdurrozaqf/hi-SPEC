@@ -1,11 +1,13 @@
-import Layout from "@/components/Layout";
+import { useNavigate } from "react-router-dom";
+
 import { Button } from "@/components/ui/button";
-import React from "react";
+import Layout from "@/components/Layout";
 
 const Profile = () => {
+  const navigate = useNavigate();
   return (
     <Layout>
-      <div className="grow bg-white shadow-lg rounded-xl overflow-auto p-32 font-poppins dark:bg-transparent">
+      <div className="grow bg-white shadow-lg rounded-xl p-32 font-poppins dark:bg-transparent">
         <h1 className=" pb-16 text-4xl font-bold">Profile</h1>
         <div className="flex justify-between items-center mb-12">
           <div className="flex items-center">
@@ -16,7 +18,12 @@ const Profile = () => {
             />
             <p className=" pl-8 text-3xl font-bold">John Doe</p>
           </div>
-          <Button className="w-40 h-14">
+
+          <Button
+            type="button"
+            className="w-40 h-14"
+            onClick={() => navigate("/edit-profile")}
+          >
             <p className=" font-bold text-base">Edit Profile</p>
           </Button>
         </div>

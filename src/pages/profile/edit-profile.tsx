@@ -7,9 +7,12 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
-import { CameraIcon, UploadIcon } from "lucide-react";
+import { CameraIcon, X } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const EditProfile = () => {
+  const navigate = useNavigate();
+
   const form = useForm<UpdateUserSchema>({
     resolver: zodResolver(updateUserSchema),
     defaultValues: {
@@ -26,7 +29,7 @@ const EditProfile = () => {
 
   return (
     <Layout>
-      <div className="grow bg-white shadow-lg rounded-xl overflow-auto p-32 font-poppins dark:bg-transparent">
+      <div className="grow bg-white shadow-lg rounded-xl p-32 font-poppins dark:bg-transparent">
         <h1 className=" pb-16 font-bold text-4xl">Profile</h1>
         <Form {...form}>
           <form action="" className=" flex flex-col gap-6">
@@ -34,18 +37,31 @@ const EditProfile = () => {
               <div className="flex items-center">
                 <div className="relative">
                   <img
-                    className=" rounded-full w-36 h-36"
+                    className=" rounded-full w-36 h-36 relative"
                     src="https://github.com/shadcn.png"
                     alt="@shadcn"
                   />
+                  <label
+                    htmlFor="input-image"
+                    className="absolute bottom-0 right-0 cursor-pointer"
+                  >
+                    <CameraIcon
+                      size={45}
+                      className="p-1 rounded-full bg-white"
+                    />
+                  </label>
                 </div>
                 <p className=" pl-8 text-3xl font-bold">John Doe</p>
               </div>
-              <Button className="w-40 h-14">
-                <p className=" font-bold text-base">Edit Profile</p>
+              <Button
+                type="button"
+                className="w-fit h-fit"
+                onClick={() => navigate(-1)}
+              >
+                <X />
               </Button>
             </div>
-            <div className=" invisible absolute">
+            <div className="invisible absolute">
               <CustomFormField
                 control={form.control}
                 name="image"
@@ -150,9 +166,11 @@ const EditProfile = () => {
                 />
               )}
             </CustomFormField>
-            <Button className=" bg-[#1FBB5C] h-12">Submit</Button>
+            <Button type="submit" className=" bg-[#1FBB5C] h-12">
+              Submit
+            </Button>
             <p className=" text-center">or</p>
-            <Button variant={"destructive"} className="h-12">
+            <Button type="button" variant={"destructive"} className="h-12">
               Delete Account
             </Button>
           </form>
