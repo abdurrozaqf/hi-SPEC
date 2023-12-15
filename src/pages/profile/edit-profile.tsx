@@ -26,7 +26,7 @@ const EditProfile = () => {
 
   return (
     <Layout>
-      <div className="grow bg-white shadow-lg rounded-xl overflow-auto p-32 font-poppins">
+      <div className="grow bg-white shadow-lg rounded-xl overflow-auto p-32 font-poppins dark:bg-transparent">
         <h1 className=" pb-16 font-bold text-4xl">Profile</h1>
         <Form {...form}>
           <form action="" className=" flex flex-col gap-6">

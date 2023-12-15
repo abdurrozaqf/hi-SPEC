@@ -5,7 +5,7 @@ import React from "react";
 const Profile = () => {
   return (
     <Layout>
-      <div className="grow bg-white shadow-lg rounded-xl overflow-auto p-32 font-poppins">
+      <div className="grow bg-white shadow-lg rounded-xl overflow-auto p-32 font-poppins dark:bg-transparent">
         <h1 className=" pb-16 text-4xl font-bold">Profile</h1>
         <div className="flex justify-between items-center mb-12">
           <div className="flex items-center">
