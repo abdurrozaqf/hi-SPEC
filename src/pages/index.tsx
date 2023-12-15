@@ -1,6 +1,8 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import BannerTagline from "@/components/BannerTagline";
+import { useToast } from "@/components/ui/use-toast";
 import ProductCard from "@/components/ProductCard";
 import Layout from "@/components/Layout";
 
@@ -8,7 +10,6 @@ import {
   TypeProducts,
   productsSampleData,
 } from "@/utils/apis/products/sample-data";
-import { useEffect, useState } from "react";
 
 interface Types {
   props: {
@@ -18,9 +19,11 @@ interface Types {
 }
 
 const Home = () => {
-  const [offices, setOffices] = useState<Types[]>([]);
   const [multimedias, setMultimedias] = useState<Types[]>([]);
+  const [offices, setOffices] = useState<Types[]>([]);
   const [gamings, setGamings] = useState<Types[]>([]);
+
+  const { toast } = useToast();
 
   function filteredData(datas: TypeProducts[], selected: string) {
     let filteredProducts = datas;
@@ -45,10 +48,54 @@ const Home = () => {
   const resultGaming = filteredData(productsSampleData, "gaming");
   const resGaming = () => setGamings(resultGaming);
 
+  // fetch data apis
+  async function fetchDataOffice() {
+    try {
+      // const result = await getProduct("office")
+      // setOffices(result)
+    } catch (error: any) {
+      toast({
+        title: "Oops! Something went wrong.",
+        description: error.toString(),
+        variant: "destructive",
+      });
+    }
+  }
+
+  async function fetchDataMultimedia() {
+    try {
+      // const result = await getProduct("multimedia")
+      // setMultimedias(result)
+    } catch (error: any) {
+      toast({
+        title: "Oops! Something went wrong.",
+        description: error.toString(),
+        variant: "destructive",
+      });
+    }
+  }
+
+  async function fetchDataGaming() {
+    try {
+      // const result = await getProduct("gaming")
+      // setGamings(result)
+    } catch (error: any) {
+      toast({
+        title: "Oops! Something went wrong.",
+        description: error.toString(),
+        variant: "destructive",
+      });
+    }
+  }
+
   useEffect(() => {
     resOffice();
     resMultimedia();
     resGaming();
+
+    fetchDataOffice();
+    fetchDataMultimedia();
+    fetchDataGaming();
   }, []);
 
   return (
