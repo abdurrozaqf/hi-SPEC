@@ -47,7 +47,7 @@ const EditProfile = () => {
                   >
                     <CameraIcon
                       size={45}
-                      className="p-1 rounded-full bg-white"
+                      className="p-1 rounded-full bg-white dark:bg-black"
                     />
                   </label>
                 </div>
