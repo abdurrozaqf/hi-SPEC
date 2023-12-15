@@ -54,12 +54,13 @@ const UsersAdmin = () => {
 
   return (
     <Layout>
-      <div className="p-10 bg-white dark:bg-[#1265ae24] rounded-xl grow shadow-products-card">
-        <div className="flex items-center justify-between  mb-10">
+      <div className="px-10 py-4 bg-white dark:bg-[#1265ae24] rounded-xl grow shadow-products-card font-poppins overflow-auto">
+        <h1 className="text-2xl font-medium text-center">Database Users</h1>
+        <div className="flex items-center justify-between mb-10">
           <input
             type="text"
-            placeholder="Search by name"
-            className="w-1/4 placeholder:italic outline-none py-2 px-4 rounded-lg dark:bg-transparent shadow dark:shadow-white"
+            placeholder="Search by name user"
+            className="w-1/4 placeholder:italic placeholder:text-sm outline-none py-2 px-4 rounded-lg dark:bg-transparent shadow dark:shadow-white"
           />
         </div>
         <Table>
@@ -71,7 +72,8 @@ const UsersAdmin = () => {
               <TableHead>Name</TableHead>
               <TableHead>Email</TableHead>
               <TableHead>Address</TableHead>
-              <TableHead>Date</TableHead>
+              <TableHead>Phone Number</TableHead>
+              <TableHead>Create at</TableHead>
               <TableHead className="text-center">Action</TableHead>
             </TableRow>
           </TableHeader>
@@ -96,9 +98,13 @@ const UsersAdmin = () => {
                   <TableCell>
                     Jl. Veteran, Kec. Lowokwaru, Kota Malang, Jawa Timur
                   </TableCell>
+                  <TableCell>+62 823 3378 9990</TableCell>
                   <TableCell>Des, 15 2023</TableCell>
                   <TableCell className="flex justify-center items-center h-32 gap-4">
-                    <CustomDialog title="Edit User">
+                    <CustomDialog
+                      title="Edit User"
+                      description={"Form Validation User"}
+                    >
                       <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
                         <PencilLine />
                       </div>

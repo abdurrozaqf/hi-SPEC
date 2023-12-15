@@ -1,4 +1,4 @@
-import { Box, DollarSign, Users } from "lucide-react";
+import { useEffect, useState } from "react";
 
 import {
   Table,
@@ -9,18 +9,47 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import Layout from "@/components/Layout";
 import { useToast } from "@/components/ui/use-toast";
-import { useEffect } from "react";
+import Layout from "@/components/Layout";
+
+import { Box, DollarSign, Users } from "lucide-react";
 
 const datas = [1, 2, 3, 4, 5, 6];
 
 const Dashboard = () => {
+  const [products, setProducts] = useState([]);
+  const [transactions, setTransactions] = useState([]);
+  const [users, setUsers] = useState([]);
   const { toast } = useToast();
 
-  async function fetchData() {
+  async function getDataProduct() {
     try {
       // const result = await getProducts();
+      // setProducts(result)
+    } catch (error: any) {
+      toast({
+        title: "Oops! Something went wrong.",
+        description: error.toString(),
+        variant: "destructive",
+      });
+    }
+  }
+  async function getDataUser() {
+    try {
+      // const result = await getUsers();
+      // setUsers(result)
+    } catch (error: any) {
+      toast({
+        title: "Oops! Something went wrong.",
+        description: error.toString(),
+        variant: "destructive",
+      });
+    }
+  }
+  async function getDataTransaction() {
+    try {
+      // const result = await getTransactions();
+      // setTransactions(result)
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -31,7 +60,9 @@ const Dashboard = () => {
   }
 
   useEffect(() => {
-    fetchData();
+    getDataProduct();
+    getDataUser();
+    getDataTransaction();
   }, []);
 
   return (
@@ -70,14 +101,14 @@ const Dashboard = () => {
           </p>
         </div>
       </div>
-      <div className="p-10 bg-white dark:bg-[#1265ae24] rounded-xl grow shadow-products-card overflow-auto">
+      <div className="p-10 bg-white dark:bg-[#1265ae24] rounded-xl grow shadow-products-card overflow-auto font-poppins">
         <input
           type="text"
           placeholder="Search"
-          className="w-1/4 placeholder:italic outline-none py-2 px-4 rounded-lg dark:bg-[#05152D] shadow dark:shadow-white mb-10"
+          className="w-1/4 placeholder:italic placeholder:text-sm outline-none py-2 px-4 rounded-lg dark:bg-[#05152D] shadow dark:shadow-white mb-10"
         />
         <Table>
-          <TableCaption>A list of your recent products.</TableCaption>
+          <TableCaption>A list of recent products.</TableCaption>
           <TableHeader>
             <TableRow>
               <TableHead className="w-[50px] text-center">No.</TableHead>
