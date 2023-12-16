@@ -1,3 +1,10 @@
-import { Product } from "./types";
+import {
+  AddProductSchema,
+  EditProductSchema,
+  Product,
+  addProductSchema,
+  editProductSchema,
+} from "./types";
 
-export type { Product };
+export { addProductSchema, editProductSchema };
+export type { Product, AddProductSchema, EditProductSchema };

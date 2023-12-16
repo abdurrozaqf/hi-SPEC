@@ -1,13 +1,11 @@
-import { Product } from "../apis/products/types";
-
-export type Response = {
+export type Response<T = any> = {
   message: string;
-  data: Product[];
+  data: T;
 };
 
-export type ResponsePagination = {
+export type ResponsePagination<T = any> = {
   message: string;
-  data: Product[];
+  data: T;
   pagination: {
     page: number;
     pagesize: number;

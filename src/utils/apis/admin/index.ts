@@ -1,12 +1,4 @@
-import {
-  AddProductSchema,
-  EditProductSchema,
-  StatusSchema,
-  Transactions,
-  addProductSchema,
-  editProductSchema,
-  statusSchema,
-} from "./types";
+import { StatusSchema, Transactions, statusSchema } from "./types";
 
-export { addProductSchema, editProductSchema, statusSchema };
-export type { Transactions, AddProductSchema, EditProductSchema, StatusSchema };
+export { statusSchema };
+export type { Transactions, StatusSchema };

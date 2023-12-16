@@ -4,10 +4,7 @@ import { BodyLogin, BodyRegister } from ".";
 
 export const RegisterAccount = async (body: BodyRegister) => {
   try {
-    const response = await axiosWithConfig.post(
-      "https://virtserver.swaggerhub.com/hi_specs/hi_specs/1.0.0/register",
-      body
-    );
+    const response = await axiosWithConfig.post("/register", body);
 
     return response.data as Response;
   } catch (error: any) {
@@ -17,12 +14,9 @@ export const RegisterAccount = async (body: BodyRegister) => {
 
 export const LoginAccount = async (body: BodyLogin) => {
   try {
-    const response = await axiosWithConfig.post(
-      "https://virtserver.swaggerhub.com/hi_specs/hi_specs/1.0.0/login",
-      body
-    );
+    const response = await axiosWithConfig.post("/login", body);
 
-    return response.data as Response<{ token: string}>;
+    return response.data as Response<{ token: string }>;
   } catch (error: any) {
     throw Error(error.response.data.message);
   }

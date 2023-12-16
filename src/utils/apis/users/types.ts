@@ -1,29 +1,5 @@
 import * as z from "zod";
 
-export interface User {
-  user_id: number;
-  name: string;
-  email: string;
-  image: string;
-  create_at: Date;
-  password: string;
-  posts: {
-    post_id: number;
-    caption: string;
-    image: string;
-    created_at: Date;
-    comment_count: number;
-  }[];
-}
-
-export interface UserPosts {
-  post_id: number;
-  caption: string;
-  image: string;
-  created_at: Date;
-  comment_count: number;
-}
-
 const MAX_FILE_SIZE = 5000000;
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
 
@@ -33,9 +9,9 @@ export const updateUserSchema = z.object({
     .string()
     .min(1, { message: "Email is required" })
     .email("Invalid email"),
-  password: z.string(),
-  address: z.string(),
-  phone_number: z.number(),
+  password: z.string().min(1, { message: "Password is required" }),
+  address: z.string().min(1, { message: "Address is required" }),
+  phone_number: z.number().min(1, { message: "Phone number is required" }),
   image: z
     .any()
     .refine((files) => files?.length == 1, "Image is required.")
@@ -52,3 +28,27 @@ export const updateUserSchema = z.object({
 });
 
 export type UpdateUserSchema = z.infer<typeof updateUserSchema>;
+
+export interface User {
+  user_id: number;
+  name: string;
+  email: string;
+  avatar: string;
+  password: string;
+  my_favorite: {
+    product_id: number;
+    favorite_id: number;
+    name: string;
+    price: number;
+    picture: string;
+  }[];
+}
+
+export interface AllUser {
+  id: number;
+  email: string;
+  name: string;
+  address: string;
+  phone_number: string;
+  avatar: string;
+}
