@@ -1,12 +1,18 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
 
 import { BookHeartIcon, SearchCode } from "lucide-react";
 
-const Navbar = () => {
-  const [keywords, setKeywords] = useState("");
+interface Props {
+  handleInputChange: (event: any) => void;
+  query: string;
+}
+
+const Navbar = (props: Props) => {
+  const { handleInputChange, query } = props;
+  const { pathname } = useLocation();
+
   const navigate = useNavigate();
 
   return (
@@ -22,19 +28,27 @@ const Navbar = () => {
           <form className="flex gap-4 items-center">
             <Button
               type="submit"
-              disabled={keywords === ""}
+              disabled={pathname == "/products"}
               onClick={() => {
-                navigate(`/list-products/${keywords}`);
+                navigate(`/products`);
               }}
               className="p-1 bg-[#E4ECF1] rounded-full w-fit h-fit"
             >
               <SearchCode color="black" />
             </Button>
-            <input
+            {/* <input
               type="text"
               placeholder="Search"
               onChange={(e) => setKeywords(e.target.value)}
               className="w-full italic placeholder:text-sm text-black outline-none bg-transparent text-sm"
+            /> */}
+            <input
+              onClick={() => navigate("/products")}
+              type="text"
+              onChange={handleInputChange}
+              value={query}
+              placeholder="Enter your search name"
+              className="w-full placeholder:italic placeholder:text-sm text-black outline-none bg-transparent text-sm"
             />
           </form>
         </div>
