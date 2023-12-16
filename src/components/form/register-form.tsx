@@ -1,9 +1,10 @@
 import { FormEvent, useState } from "react";
 
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
-import { useToast } from "../ui/use-toast";
 import { RegisterAccount } from "@/utils/apis/auth";
+
+import { useToast } from "@/components/ui/use-toast";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 const RegisterForm = () => {
   const { toast } = useToast();

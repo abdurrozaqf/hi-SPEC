@@ -8,7 +8,7 @@ interface Props {
 const ProductCard = (props: Props) => {
   const { name, img } = props;
   return (
-    <Link to="/">
+    <Link to="/detail-product">
       <div className="w-full h-72 flex flex-col rounded-xl shadow-products-card overflow-auto">
         <div className="flex justify-center py-4 grow">
           <img src={img || "src/assets/example-laptop.png"} className="h-36" />

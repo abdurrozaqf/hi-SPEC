@@ -5,8 +5,8 @@ import { Button } from "@/components/ui/button";
 import { BookHeartIcon, SearchCode } from "lucide-react";
 
 interface Props {
-  handleInputChange: (event: any) => void;
-  query: string;
+  handleInputChange?: (event: any) => void;
+  query?: string;
 }
 
 const Navbar = (props: Props) => {
@@ -52,7 +52,7 @@ const Navbar = (props: Props) => {
             />
           </form>
         </div>
-        <Link to="/my-wishlist">
+        <Link to="/wishlist">
           <div className="p-3 bg-white rounded-xl shadow-md">
             <BookHeartIcon color="black" size={30} />
           </div>

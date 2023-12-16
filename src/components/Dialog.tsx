@@ -26,7 +26,7 @@ const CustomDialog = (props: Props) => {
   return (
     <Dialog>
       <DialogTrigger>{children}</DialogTrigger>
-      <DialogContent>
+      <DialogContent className="dark:bg-black/30">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>{description}</DialogDescription>

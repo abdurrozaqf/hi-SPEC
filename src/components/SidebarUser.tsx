@@ -100,11 +100,15 @@ const SidebarUser = (props: Props) => {
               Products
             </p>
           </div>
-          <div className="flex items-center gap-2 cursor-pointer">
-            <div className="p-2 bg-[#E4ECF1] dark:bg-[#1265AE] hover:bg-[#1265AE] hover:dark:bg-[#E4ECF1] hover:text-white hover:dark:text-black w-fit h-fit rounded-lg shadow-md cursor-pointer">
+          <div className="flex items-center gap-2">
+            <div
+              className="p-2 bg-[#E4ECF1] dark:bg-[#1265AE] hover:bg-[#1265AE] hover:dark:bg-[#E4ECF1] hover:text-white hover:dark:text-black w-fit h-fit rounded-lg shadow-md cursor-pointer"
+              onClick={() => navigate("/compare")}
+            >
               <GitCompareArrowsIcon />
             </div>
             <p
+              onClick={() => navigate("/compare")}
               className={
                 isOpen
                   ? `w-40 font-medium translate-x-0 opacity-100 transition-all cursor-pointer hover:bg-[#E4ECF1] dark:hover:bg-white rounded-md p-2 dark:hover:text-black`
@@ -117,12 +121,11 @@ const SidebarUser = (props: Props) => {
         </div>
 
         {/* CATEGORIES */}
-
         <div
           className={
             isOpen
-              ? `translate-x-0 flex flex-col gap-4 opacity-100 transition-all`
-              : `-translate-x-28 w-0 opacity-0 transition-all`
+              ? `translate-x-0 w-fit flex flex-col gap-4 opacity-100 transition-all`
+              : `-translate-x-36 w-0 opacity-50 transition-all hidden`
           }
         >
           <h1 className="font-medium">Categories:</h1>
@@ -217,7 +220,7 @@ const SidebarUser = (props: Props) => {
           className={
             isOpen
               ? `translate-x-0 w-fit flex flex-col gap-4 opacity-100 transition-all`
-              : `-translate-x-28 w-0 opacity-0 transition-all`
+              : `-translate-x-28 w-0 opacity-50 transition-all hidden`
           }
         >
           <h1 className="font-medium">Range on budget :</h1>
@@ -241,16 +244,19 @@ const SidebarUser = (props: Props) => {
 
         {/* USER */}
         <div className="flex flex-col gap-4">
-          <div className="flex gap-4 items-center">
-            <Avatar>
+          <div className="flex gap-2 items-center">
+            <Avatar
+              onClick={() => navigate("/profile")}
+              className="cursor-pointer hover:shadow-[#1265AE] dark:shadow-white hover:shadow-lg rounded-full"
+            >
               <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
-
             <p
+              onClick={() => navigate("/profile")}
               className={
                 isOpen
-                  ? `font-medium w-full opacity-100 translate-x-0 transition-all rounded-md p-2 dark:hover:text-black flex flex-col`
+                  ? `font-medium w-full opacity-100 translate-x-0 transition-all rounded-md p-2 hover:bg-[#E4ECF1]  hover:dark:bg-[#E4ECF1] dark:hover:text-black flex flex-col cursor-pointer`
                   : `w-0 opacity-0 -translate-x-28 transition-all absolute`
               }
             >

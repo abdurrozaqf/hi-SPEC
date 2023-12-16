@@ -1,9 +1,10 @@
 import { FormEvent, useState } from "react";
 
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
-import { useToast } from "../ui/use-toast";
 import { LoginAccount } from "@/utils/apis/auth/apis";
+
+import { useToast } from "@/components/ui/use-toast";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 const LoginForm = () => {
   const { toast } = useToast();
@@ -20,7 +21,7 @@ const LoginForm = () => {
       };
 
       const result = await LoginAccount(body);
-      localStorage.setItem("token", result.payload.token);
+      localStorage.setItem("token", result.data.token);
       toast({
         description: result.message,
       });

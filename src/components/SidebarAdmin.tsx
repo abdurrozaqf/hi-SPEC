@@ -131,16 +131,19 @@ const SidebarAdmin = () => {
 
         {/* ADMIN */}
         <div className="flex flex-col gap-4">
-          <div className="flex gap-4 items-center">
-            <Avatar>
+          <div className="flex gap-2 items-center">
+            <Avatar
+              onClick={() => navigate("/profile")}
+              className="cursor-pointer hover:shadow-[#1265AE] dark:shadow-white hover:shadow-lg rounded-full"
+            >
               <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
-
             <p
+              onClick={() => navigate("/profile")}
               className={
                 isOpen
-                  ? `font-medium w-full opacity-100 translate-x-0 transition-all rounded-md p-2 dark:hover:text-black flex flex-col`
+                  ? `font-medium w-full opacity-100 translate-x-0 transition-all rounded-md p-2 hover:bg-[#E4ECF1]  hover:dark:bg-[#E4ECF1] dark:hover:text-black flex flex-col cursor-pointer`
                   : `w-0 opacity-0 -translate-x-28 transition-all absolute`
               }
             >
