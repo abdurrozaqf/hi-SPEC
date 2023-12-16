@@ -20,7 +20,7 @@ const ProtectedRoutes = () => {
     "/transactions-admin",
   ];
 
-  // bagi yang login dan user tidak admin tidak bisa ke sini
+  // bagi yang login dan user bukan admin tidak bisa ke sini
   const roleAdminProtected = [
     "/dashboard",
     "/products-admin",
@@ -29,7 +29,13 @@ const ProtectedRoutes = () => {
   ];
 
   // bagi yang login dan user admin tidak bisa ke sini
-  const roleUserProtected = ["/wishlist"];
+  const roleUserProtected = [
+    "/",
+    "/products",
+    "/compare",
+    "/wishlist",
+    "/detail-product",
+  ];
 
   if (authProtected.includes(pathname)) {
     if (token) return <Navigate to="/" />;
@@ -43,7 +49,7 @@ const ProtectedRoutes = () => {
     }
 
     if (roleUserProtected.includes(pathname)) {
-      if (user.user?.name === "admin") return <Navigate to="/" />;
+      if (user.user?.name === "admin") return <Navigate to="/dashboard" />;
     }
   }
 
