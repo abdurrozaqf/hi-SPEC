@@ -1,9 +1,11 @@
-import Layout from "@/components/Layout";
-import { Button } from "@/components/ui/button";
 import { ArrowLeft, Search, X } from "lucide-react";
-import React, { useState } from "react";
-import { TypeProducts, productsSampleData } from "./sampleDataCompare";
+import { useState } from "react";
+import {
+  TypeProducts,
+  productsSampleData,
+} from "@/pages/products/sampleDataCompare";
 import CardCompare from "@/components/CardCompare";
+import Layout from "@/components/Layout";
 
 const Compare = () => {
   const [query1, setQuery1] = useState("");
@@ -160,7 +162,7 @@ const Compare = () => {
 
   return (
     <Layout>
-      <div className="grow bg-white dark:bg-transparent shadow-lg rounded-xl  p-32 font-poppins">
+      <div className="grow bg-white dark:bg-[#1265ae24] shadow-lg rounded-xl  p-32 font-poppins">
         <div className="flex items-center mb-10">
           <button className="flex">
             <div className="mr-4">

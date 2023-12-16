@@ -1,27 +1,42 @@
-import Navbar from "@/components/Navbar";
+import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
-const DetailsProducts = () => {
+const DetailProduct = () => {
+  const navigate = useNavigate();
+  function handleWishlist() {}
+
   return (
-    <div className="w-full h-full bg-[#E4ECF1] flex flex-col font-poppins">
-      <Navbar />
-      <div className="container grid grid-cols-12 grow py-9 rounded-lg">
+    <Layout>
+      <div className="flex flex-col gap-10 lg:gap-6 lg:flex-row grow bg-white dark:bg-[#1265ae24] rounded-lg px-10 py-6">
         {/* bagian kiri */}
-        <div className="col-start-1 col-end-4 bg-white flex items-center justify-center">
-          <img
-            src="src/assets/example-laptop-2.png"
-            alt="laptop"
-            className="w-full"
-          />
+        <div className="flex flex-col">
+          <Button
+            onClick={() => navigate(-1)}
+            className="flex w-fit h-fit items-center bg-transparent text-black dark:text-white hover:bg-transparent"
+          >
+            <div className="mr-4">
+              <ArrowLeft />
+            </div>
+            <div>Back</div>
+          </Button>
+          <div className="flex items-center justify-center grow">
+            <img
+              src="src/assets/example-laptop-2.png"
+              alt="laptop"
+              className="w-full"
+            />
+          </div>
         </div>
 
-        {/* bagian tengah */}
-        <div className="col-start-4 col-end-10 bg-white px-4">
-          {/* nama produk */}
-          <h3 className="text-[#1E1E1E] font-semibold text-lg mt-4 mb-1">
+        {/* Bagian tengah */}
+        <div className=" px-6 grow">
+          {/* Nama produk */}
+          <h3 className="text-[#1E1E1E] dark:text-white font-semibold text-lg mt-4 mb-1">
             ASUS ExpertBook B5 B5402FBA -HY7110X Star Black
           </h3>
-          <h1 className="text-[#1E1E1E] font-bold text-3xl mb-2">
+          <h1 className="text-[#1E1E1E] dark:text-white font-bold text-3xl mb-2">
             Rp31.799.000
           </h1>
           <hr className="bg-[#757575]" />
@@ -29,40 +44,40 @@ const DetailsProducts = () => {
           <hr className="bg-[#757575]" />
 
           {/* info produk */}
-          <h4 className="text-[#1E1E1E] font-bold text-base mt-4">
+          <h4 className="text-[#1E1E1E] dark:text-white font-bold text-base mt-4">
             Info Produk
           </h4>
           <p>Fungsionalitas: Kerja</p>
           <p>Kapasitas Memori: 501 GB sampai 1000 GB</p>
           <p>Kapasitas Ram: 8 GB</p>
-          <p>Merek: ASUS</p>
+          {/* <p>Merek: ASUS</p> */}
           <p>Tipe Prosesor: intel</p>
           <p>Ukuran Layar: 12-15 Inci</p>
 
           {/* spesifikasi */}
-          <h4 className="text-[#1E1E1E] font-bold text-base mt-4">
+          <h4 className="text-[#1E1E1E] dark:text-white font-bold text-base mt-4">
             Spesifikasi
           </h4>
           <p>
             Processor : Intel® Core™ i7-1260P Processor 2.1 GHz (18M Cache, up
             to 4.7 GHz, 12 cores)
           </p>
-          <p>OS : Windows 11 Pro</p>
+          {/* <p>OS : Windows 11 Pro</p> */}
           <p>
             Panel : 14.0-inch LED Backlit FHD (1920 x 1080) 16:9 (1W) 400nits
             anti-glare touch panel
           </p>
-          <p>
+          {/* <p>
             Graphic: Intel Iris X? Graphics (available for Intel® Core™ i5/i7/i9
             with dual channel memory)
-          </p>
+          </p> */}
           <p>Memory : 8G DDR5 on board + 8GB DDR5 SO-DIMM</p>
           <p>Storage : 1TB M.2 NVMe™ PCIe® 4.0 SSD</p>
         </div>
 
         {/* bagian kanan */}
-        <div className="col-start-10 col-end-13 bg-white pt-2 pr-1 text-[#1E1E1E]">
-          <div className="border border-solid border-[#D9D9D9] rounded-lg m-2">
+        <div className="px-6 lg:px-0">
+          <div className="border border-solid border-[#D9D9D9] p-3 rounded-lg">
             <div className="m-2">
               <h2 className="font-bold mb-4">Enter the purchase amount here</h2>
               <div className="flex border border-solid border-[#D9D9D9] rounded-md justify-between px-2">
@@ -77,23 +92,30 @@ const DetailsProducts = () => {
               </div>
               <Button className="w-full bg-[#48B774]">Buy Now</Button>
 
-              <div className="flex justify-between mt-1 mb-3">
+              <div className="flex justify-between items-center mt-3">
                 <p className="text-xs">Make your Wishlist come true</p>
-                <div className="flex gap-1">
+                <div
+                  onClick={() => handleWishlist()}
+                  className="flex items-center gap-2 cursor-pointer"
+                >
                   <p className="font-bold text-xs">Wishlist</p>
-                  <img src="src/assets/wishlist-icon.png" alt="wishlist icon" />
+                  <img
+                    src="src/assets/wishlist-icon.png"
+                    alt="wishlist icon"
+                    className="w-6 h-6"
+                  />
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="ml-2 my-3">
+          <div className="mt-6">
             <img src="src/assets/Iklan.png" alt="iklan" />
           </div>
         </div>
       </div>
-    </div>
+    </Layout>
   );
 };
 
-export default DetailsProducts;
+export default DetailProduct;

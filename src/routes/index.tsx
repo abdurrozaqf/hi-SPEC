@@ -1,12 +1,18 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import Home from "@/pages";
+import Login from "@/pages/auth/login";
+import Products from "@/pages/products";
+import DetailProduct from "@/pages/products/detail-product";
+import Compare from "@/pages/products/compare";
+import Profile from "@/pages/profiles";
+import EditProfile from "@/pages/profiles/edit-profile";
+import WishList from "@/pages/profiles/wishlist";
+import Dashboard from "@/pages/admin/Dashboard";
+import ProductsAdmin from "@/pages/admin/ProductsAdmin";
+import UsersAdmin from "@/pages/admin/UsersAdmin";
+import TransactionsAdmin from "@/pages/admin/TransactionsAdmin";
 import NotFound from "@/pages/not-found";
-import DetailsProducts from "@/pages/product/details-product";
-import AuthLayout from "@/pages/auth/auth-layout";
-import RegisterForm from "@/components/form/register-form";
-import LoginForm from "@/components/form/login-form";
-
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -15,20 +21,48 @@ export default function Router() {
       element: <Home />,
     },
     {
-      path: "/details-product",
-      element: <DetailsProducts />,
+      path: "/login",
+      element: <Login />,
     },
     {
-      path: "/auth-layout",
-      element: <AuthLayout />,
+      path: "/products",
+      element: <Products />,
     },
     {
-      path: "/register-form",
-      element: <RegisterForm />,
+      path: "/detail-product",
+      element: <DetailProduct />,
     },
     {
-      path: "/login-form",
-      element: <LoginForm />,
+      path: "/compare",
+      element: <Compare />,
+    },
+    {
+      path: "/profile",
+      element: <Profile />,
+    },
+    {
+      path: "/edit-profile",
+      element: <EditProfile />,
+    },
+    {
+      path: "/wishlist",
+      element: <WishList />,
+    },
+    {
+      path: "/dashboard",
+      element: <Dashboard />,
+    },
+    {
+      path: "/products-admin",
+      element: <ProductsAdmin />,
+    },
+    {
+      path: "/users-admin",
+      element: <UsersAdmin />,
+    },
+    {
+      path: "/transactions-admin",
+      element: <TransactionsAdmin />,
     },
     {
       path: "*",
