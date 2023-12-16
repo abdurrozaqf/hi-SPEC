@@ -1,35 +1,40 @@
-import { FormEvent, useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 
-import { RegisterAccount } from "@/utils/apis/auth";
+import {
+  RegisterAccount,
+  RegisterSchema,
+  registerSchema,
+} from "@/utils/apis/auth";
 
+import { CustomFormField } from "@/components/CustomForm";
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Form } from "@/components/ui/form";
+
+import { Loader2 } from "lucide-react";
 
 const RegisterForm = () => {
   const { toast } = useToast();
 
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [address, setAddress] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const form = useForm<RegisterSchema>({
+    resolver: zodResolver(registerSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+      repassword: "",
+      address: "",
+      phone_number: "",
+    },
+  });
 
-  async function onSubmitRegister(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  async function onSubmitRegister(data: RegisterSchema) {
     try {
-      const body = {
-        full_name: fullName,
-        email,
-        password,
-        address,
-        phone_number: phoneNumber,
-      };
+      const result = await RegisterAccount(data);
 
-      const result = await RegisterAccount(body);
-      toast({
-        description: result.message,
-      });
+      toast({ description: result.message });
     } catch (error: any) {
       toast({
         title: "Oops, something went wrong!",
@@ -41,47 +46,115 @@ const RegisterForm = () => {
 
   return (
     <div className="text-[#1E1E1E] font-poppins">
-      Register your account now to get full access
-      <form
-        className="flex flex-col w-full mx-auto gap-3 mt-10"
-        onSubmit={(e) => onSubmitRegister(e)}
-      >
-        <p className="font-semibold">Full Name</p>
-        <Input
-          placeholder="Jhon Doe"
-          value={fullName}
-          onChange={(e) => setFullName(e.target.value)}
-        />
+      <h1>Register your account now to get full access</h1>
+      <Form {...form}>
+        <form
+          className="flex flex-col w-full mx-auto gap-3 mt-10"
+          onSubmit={form.handleSubmit(onSubmitRegister)}
+        >
+          <CustomFormField control={form.control} name="name" label="Full Name">
+            {(field) => (
+              <Input
+                {...field}
+                placeholder="Jhon Doe"
+                type="text"
+                disabled={form.formState.isSubmitting}
+                aria-disabled={form.formState.isSubmitting}
+              />
+            )}
+          </CustomFormField>
 
-        <p className="font-semibold">Email</p>
-        <Input
-          placeholder="jhondoe@gmail.com"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+          <CustomFormField control={form.control} name="email" label="Email">
+            {(field) => (
+              <Input
+                {...field}
+                placeholder="jhondoe@gmail.com"
+                type="email"
+                disabled={form.formState.isSubmitting}
+                aria-disabled={form.formState.isSubmitting}
+              />
+            )}
+          </CustomFormField>
 
-        <p className="font-semibold">Password</p>
-        <Input
-          placeholder="Minimum 8 characters"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+          <CustomFormField
+            control={form.control}
+            name="password"
+            label="Password"
+          >
+            {(field) => (
+              <Input
+                {...field}
+                placeholder="Minimum 8 characters"
+                type="password"
+                disabled={form.formState.isSubmitting}
+                aria-disabled={form.formState.isSubmitting}
+              />
+            )}
+          </CustomFormField>
 
-        <p className="font-semibold">Address</p>
-        <Input
-          placeholder="e.g: Jl. Veteran, Kec. Lowokwaru, Kota Malang, Jawa Timur"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-        />
+          <CustomFormField
+            control={form.control}
+            name="repassword"
+            label="Confirm Password"
+          >
+            {(field) => (
+              <Input
+                {...field}
+                placeholder="Confirm Password"
+                type="password"
+                disabled={form.formState.isSubmitting}
+                aria-disabled={form.formState.isSubmitting}
+              />
+            )}
+          </CustomFormField>
 
-        <p className="font-semibold">Phone Number</p>
-        <Input
-          placeholder="e.g: +6281936273191"
-          value={phoneNumber}
-          onChange={(e) => setPhoneNumber(e.target.value)}
-        />
-        {/* <Button type="submit">Register</Button> */}
-      </form>
+          <CustomFormField
+            control={form.control}
+            name="address"
+            label="Address"
+          >
+            {(field) => (
+              <Input
+                {...field}
+                placeholder="e.g: Jl. Veteran, Kec. Lowokwaru, Kota Malang, Jawa Timur"
+                type="text"
+                disabled={form.formState.isSubmitting}
+                aria-disabled={form.formState.isSubmitting}
+              />
+            )}
+          </CustomFormField>
+
+          <CustomFormField
+            control={form.control}
+            name="phone_number"
+            label="Phone Number"
+          >
+            {(field) => (
+              <Input
+                {...field}
+                placeholder="e.g: +6281936273191"
+                type="text"
+                disabled={form.formState.isSubmitting}
+                aria-disabled={form.formState.isSubmitting}
+              />
+            )}
+          </CustomFormField>
+          <Button
+            className="mt-4"
+            type="submit"
+            disabled={form.formState.isSubmitting}
+            aria-disabled={form.formState.isSubmitting}
+          >
+            {form.formState.isSubmitting ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please wait
+              </>
+            ) : (
+              "Register"
+            )}
+          </Button>
+        </form>
+      </Form>
     </div>
   );
 };

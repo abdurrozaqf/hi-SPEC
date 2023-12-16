@@ -1,3 +1,14 @@
+import { useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
+
+import { useToken } from "@/utils/contexts/token";
+
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useTheme } from "@/utils/contexts/theme-provider";
+import { useToast } from "@/components/ui/use-toast";
+// import { Checkbox } from "@/components/ui/checkbox";
+import { Button } from "@/components/ui/button";
+
 import {
   BoxIcon,
   ChevronFirstIcon,
@@ -9,32 +20,35 @@ import {
   MoonStarIcon,
   SunIcon,
 } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-// import { Checkbox } from "@/components/ui/checkbox";
-import { Button } from "@/components/ui/button";
-
-import { useTheme } from "@/utils/contexts/theme-provider";
-
-import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
 
 interface Props {
   handleChange?: (event: any) => void;
 }
 
 const SidebarUser = (props: Props) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const { pathname } = useLocation();
   const { handleChange } = props;
-  const navigate = useNavigate();
 
+  const [isOpen, setIsOpen] = useState(false);
   const { setTheme, theme } = useTheme();
+  const { pathname } = useLocation();
+  const { changeToken, changeUserID, user, token } = useToken();
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  const toggle = () => setIsOpen(!isOpen);
+
   function handleTheme() {
     const newTheme = theme === "light" ? "dark" : "light";
     setTheme(newTheme);
   }
 
-  const toggle = () => setIsOpen(!isOpen);
+  function handleLogout() {
+    changeToken();
+    changeUserID();
+    toast({
+      description: "Logout Successfully",
+    });
+  }
 
   return (
     <div className="font-poppins">
@@ -251,7 +265,11 @@ const SidebarUser = (props: Props) => {
               onClick={() => navigate("/profile")}
               className="cursor-pointer hover:shadow-[#1265AE] dark:shadow-white hover:shadow-lg rounded-full"
             >
-              <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+              <AvatarImage
+                src={user.user?.avatar || `https://github.com/shadcn.png`}
+                alt={user.user?.name || `@shadcn`}
+                className="object-cover"
+              />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
             <p
@@ -262,8 +280,10 @@ const SidebarUser = (props: Props) => {
                   : `w-0 opacity-0 -translate-x-28 transition-all absolute`
               }
             >
-              <span>John Doe</span>
-              <span className="text-xs">johndoe@mail.com</span>
+              <span>{user.user?.name || "Guest"}</span>
+              <span className="text-xs">
+                {user.user?.email || " guest@mail.com"}
+              </span>
             </p>
           </div>
           <div
@@ -283,41 +303,44 @@ const SidebarUser = (props: Props) => {
               Change Theme
             </p>
           </div>
-          <div
-            className="flex items-center gap-2 cursor-pointer"
-            onClick={() => navigate("/login")}
-          >
-            <div className="p-2 rounded-md shadow-md w-fit bg-[#48B774]">
-              <LogInIcon color="white" />
-            </div>
-            <p
-              className={
-                isOpen
-                  ? `font-medium w-full opacity-100 translate-x-0 transition-all hover:bg-[#E4ECF1] dark:hover:bg-white rounded-md p-2 dark:hover:text-black`
-                  : `w-0 opacity-0 -translate-x-28 transition-all absolute`
-              }
+          {token ? (
+            <div
+              className="flex items-center gap-2 cursor-pointer"
+              onClick={() => handleLogout()}
             >
-              Login
-            </p>
-          </div>
-          <div
-            className="flex items-center gap-2 cursor-pointer"
-            // onClick={() => changeToken()}
-          >
-            <div className="p-2 rounded-md shadow-md w-fit bg-[#FF5858]">
-              <LogOutIcon color="white" />
-            </div>
+              <div className="p-2 rounded-md shadow-md w-fit bg-[#FF5858]">
+                <LogOutIcon color="white" />
+              </div>
 
-            <p
-              className={
-                isOpen
-                  ? `font-medium w-full opacity-100 translate-x-0 transition-all hover:bg-[#E4ECF1] dark:hover:bg-white rounded-md p-2 dark:hover:text-black`
-                  : `w-0 opacity-0 -translate-x-28 transition-all absolute`
-              }
+              <p
+                className={
+                  isOpen
+                    ? `font-medium w-full opacity-100 translate-x-0 transition-all hover:bg-[#E4ECF1] dark:hover:bg-white rounded-md p-2 dark:hover:text-black`
+                    : `w-0 opacity-0 -translate-x-28 transition-all absolute`
+                }
+              >
+                Logout
+              </p>
+            </div>
+          ) : (
+            <div
+              className="flex items-center gap-2 cursor-pointer"
+              onClick={() => navigate("/login")}
             >
-              Logout
-            </p>
-          </div>
+              <div className="p-2 rounded-md shadow-md w-fit bg-[#48B774]">
+                <LogInIcon color="white" />
+              </div>
+              <p
+                className={
+                  isOpen
+                    ? `font-medium w-full opacity-100 translate-x-0 transition-all hover:bg-[#E4ECF1] dark:hover:bg-white rounded-md p-2 dark:hover:text-black`
+                    : `w-0 opacity-0 -translate-x-28 transition-all absolute`
+                }
+              >
+                Login
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </div>

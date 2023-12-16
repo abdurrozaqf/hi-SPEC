@@ -14,59 +14,66 @@ import UsersAdmin from "@/pages/admin/UsersAdmin";
 import TransactionsAdmin from "@/pages/admin/TransactionsAdmin";
 import NotFound from "@/pages/not-found";
 
+import ProtectedRoutes from "@/routes/protected-routes";
+
 export default function Router() {
   const router = createBrowserRouter([
     {
-      path: "/",
-      element: <Home />,
-    },
-    {
-      path: "/login",
-      element: <Login />,
-    },
-    {
-      path: "/products",
-      element: <Products />,
-    },
-    {
-      path: "/detail-product",
-      element: <DetailProduct />,
-    },
-    {
-      path: "/compare",
-      element: <Compare />,
-    },
-    {
-      path: "/profile",
-      element: <Profile />,
-    },
-    {
-      path: "/edit-profile",
-      element: <EditProfile />,
-    },
-    {
-      path: "/wishlist",
-      element: <WishList />,
-    },
-    {
-      path: "/dashboard",
-      element: <Dashboard />,
-    },
-    {
-      path: "/products-admin",
-      element: <ProductsAdmin />,
-    },
-    {
-      path: "/users-admin",
-      element: <UsersAdmin />,
-    },
-    {
-      path: "/transactions-admin",
-      element: <TransactionsAdmin />,
-    },
-    {
-      path: "*",
-      element: <NotFound />,
+      element: <ProtectedRoutes />,
+      children: [
+        {
+          path: "/",
+          element: <Home />,
+        },
+        {
+          path: "/login",
+          element: <Login />,
+        },
+        {
+          path: "/products",
+          element: <Products />,
+        },
+        {
+          path: "/detail-product",
+          element: <DetailProduct />,
+        },
+        {
+          path: "/compare",
+          element: <Compare />,
+        },
+        {
+          path: "/profile",
+          element: <Profile />,
+        },
+        {
+          path: "/edit-profile",
+          element: <EditProfile />,
+        },
+        {
+          path: "/wishlist",
+          element: <WishList />,
+        },
+        {
+          path: "/dashboard",
+          element: <Dashboard />,
+        },
+        {
+          path: "/products-admin",
+          element: <ProductsAdmin />,
+        },
+        {
+          path: "/users-admin",
+          element: <UsersAdmin />,
+        },
+        {
+          path: "/transactions-admin",
+          element: <TransactionsAdmin />,
+        },
+        {
+          path: "*",
+          element: <NotFound />,
+        },
+      ],
     },
   ]);
 
