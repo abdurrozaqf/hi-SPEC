@@ -1,6 +1,11 @@
-// import { getUser, updateUser, deleteUser } from "./api";
-import { User, UpdateUserSchema, updateUserSchema, AllUser } from "./types";
+import { getUser, updateUser, deleteUser, getDetailUser } from "./api";
+import {
+  User,
+  UpdateUserSchema,
+  updateUserSchema,
+  AllUser,
+  tokenUser,
+} from "./types";
 
-// export { getUser, updateUser, deleteUser, updateUserSchema };
-export { updateUserSchema };
-export type { User, AllUser, UpdateUserSchema };
+export { getUser, getDetailUser, updateUser, deleteUser, updateUserSchema };
+export type { User, AllUser, UpdateUserSchema, tokenUser };
