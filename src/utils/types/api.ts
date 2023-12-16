@@ -1,11 +1,15 @@
-export type Response<T = any> = {
-    message: string;
-    payload: T;
+import { Product } from "../apis/products/types";
+
+export type Response = {
+  message: string;
+  data: Product[];
+};
+
+export type ResponsePagination = {
+  message: string;
+  data: Product[];
+  pagination: {
+    page: number;
+    pagesize: number;
   };
-  
-  export type PayloadPagination<T = any> = {
-    totalItems: number;
-    datas: T;
-    totalPages: number;
-    currentPage: number;
-  };
+};
