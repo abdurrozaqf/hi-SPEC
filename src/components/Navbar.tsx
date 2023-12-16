@@ -24,34 +24,36 @@ const Navbar = (props: Props) => {
             <span className="text-4xl font-black">SPEC</span>
           </h1>
         </Link>
-        <div className="w-1/2 bg-white shadow-md rounded-full p-2 ">
-          <form className="flex gap-4 items-center">
-            <Button
-              type="submit"
-              disabled={pathname == "/products"}
-              onClick={() => {
-                navigate(`/products`);
-              }}
-              className="p-1 bg-[#E4ECF1] rounded-full w-fit h-fit"
-            >
-              <SearchCode color="black" />
-            </Button>
-            {/* <input
+        {pathname === "/products" && (
+          <div className="w-1/2 bg-white shadow-md rounded-full p-2 ">
+            <form className="flex gap-4 items-center">
+              <Button
+                type="submit"
+                disabled={pathname == "/products"}
+                onClick={() => {
+                  navigate(`/products`);
+                }}
+                className="p-1 bg-[#E4ECF1] rounded-full w-fit h-fit"
+              >
+                <SearchCode color="black" />
+              </Button>
+              {/* <input
               type="text"
               placeholder="Search"
               onChange={(e) => setKeywords(e.target.value)}
               className="w-full italic placeholder:text-sm text-black outline-none bg-transparent text-sm"
             /> */}
-            <input
-              onClick={() => navigate("/products")}
-              type="text"
-              onChange={handleInputChange}
-              value={query}
-              placeholder="Enter your search name"
-              className="w-full placeholder:italic placeholder:text-sm text-black outline-none bg-transparent text-sm"
-            />
-          </form>
-        </div>
+              <input
+                onClick={() => navigate("/products")}
+                type="text"
+                onChange={handleInputChange}
+                value={query}
+                placeholder="Enter your search name"
+                className="w-full placeholder:italic placeholder:text-sm text-black outline-none bg-transparent text-sm"
+              />
+            </form>
+          </div>
+        )}
         <Link to="/wishlist">
           <div className="p-3 bg-white rounded-xl shadow-md">
             <BookHeartIcon color="black" size={30} />
