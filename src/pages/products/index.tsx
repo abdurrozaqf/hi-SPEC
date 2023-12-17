@@ -1,65 +1,51 @@
+import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import BannerTagline from "@/components/BannerTagline";
 import { useToast } from "@/components/ui/use-toast";
 import ProductCard from "@/components/ProductCard";
 import Layout from "@/components/Layout";
+import { getProducts } from "@/utils/apis/products";
 
-import {
-  TypeProducts,
-  productsSampleData,
-} from "@/utils/apis/products/sample-data";
+interface Products {
+  product_id: number;
+  name: string;
+  price: number;
+  picture: string;
+}
 
 const Products = () => {
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [categorys, setCategorys] = useState([]);
-  const [ranges, setRanges] = useState([]);
-  const [names, setNames] = useState([]);
+  const [datas, setDatas] = useState<Products[]>();
+  const [searchParams] = useSearchParams();
+  const name = searchParams.get("name") ?? "";
+  const category = searchParams.get("category") ?? "";
+  const minPrice = searchParams.get("minPrice") ?? "";
+  const maxPrice = searchParams.get("maxPrice") ?? "";
 
   const { toast } = useToast();
 
-  const [query, setQuery] = useState("");
-
-  const handleInputChange = (event: any) => {
-    setQuery(event.target.value);
-  };
-
-  const filteredItems = productsSampleData.filter(
-    (product) => product.name.toLowerCase().indexOf(query.toLowerCase()) !== -1
-  );
-
-  const handleChange = (event: any) => {
-    setSelectedCategory(event.target.value);
-  };
-
-  function filteredData(
-    datas: TypeProducts[],
-    selected: string,
-    query: string
+  let url = "";
+  function Endpoint(
+    name: string,
+    category: string,
+    minPrice: string,
+    maxPrice: string
   ) {
-    let filteredProducts = datas;
-
-    if (query) {
-      filteredProducts = filteredItems;
+    if (name) {
+      url = `/product/search?name=${name}`;
+    } else if (name && category) {
+      url = `/product/search?name=${name}&category=${category}`;
+    } else if ((name && category && minPrice) || maxPrice) {
+      url = `/product/search?name=${name}&category=${category}&minPrice=${minPrice}&maxPrice=${maxPrice}`;
     }
-
-    if (selected) {
-      filteredProducts = filteredProducts.filter(
-        ({ category }) => category === selected
-      );
-    }
-
-    return filteredProducts.map(({ name, img }) => (
-      <ProductCard key={Math.random()} name={name} img={img!} />
-    ));
   }
 
-  const result = filteredData(productsSampleData, selectedCategory, query);
-  // fetch data apis
+  // Fetch API
   async function fetchDataName() {
     try {
-      // const result = await getProduct("name")
-      // setOffices(result)
+      const result = await getProducts(name, category, minPrice, maxPrice);
+
+      setDatas(result);
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -69,45 +55,25 @@ const Products = () => {
     }
   }
 
-  async function fetchDataCategory() {
-    try {
-      // const result = await getProduct("category")
-      // setMultimedias(result)
-    } catch (error: any) {
-      toast({
-        title: "Oops! Something went wrong.",
-        description: error.toString(),
-        variant: "destructive",
-      });
-    }
-  }
-
-  async function fetchDataRange() {
-    try {
-      // const result = await getProduct("range")
-      // setGamings(result)
-    } catch (error: any) {
-      toast({
-        title: "Oops! Something went wrong.",
-        description: error.toString(),
-        variant: "destructive",
-      });
-    }
-  }
   useEffect(() => {
     fetchDataName();
-    fetchDataCategory();
-    fetchDataRange();
-  }, []);
+  }, [name, category, maxPrice]);
 
   return (
-    <Layout
-      handleChangeSidebar={handleChange}
-      handleInputChangeSearch={handleInputChange}
-      query={query}
-    >
+    <Layout>
       <BannerTagline />
-      <div className="grid grid-cols-5 gap-6 mt-10">{result}</div>
+
+      {datas == undefined ? (
+        <div className="flex items-center justify-center grow border">
+          <h1 className="font-semibold  text-slate-500">Laptop not found</h1>
+        </div>
+      ) : (
+        <div className="grid grid-cols-5 gap-6 mt-10">
+          {datas?.map((data, index) => {
+            return <ProductCard key={index} data={data} />;
+          })}
+        </div>
+      )}
     </Layout>
   );
 };

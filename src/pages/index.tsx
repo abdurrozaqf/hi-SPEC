@@ -1,58 +1,25 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
+import { getCategoryProducts } from "@/utils/apis/products";
+
 import BannerTagline from "@/components/BannerTagline";
 import { useToast } from "@/components/ui/use-toast";
 import ProductCard from "@/components/ProductCard";
 import Layout from "@/components/Layout";
 
-import {
-  TypeProducts,
-  productsSampleData,
-} from "@/utils/apis/products/sample-data";
-
-interface Types {
-  props: {
-    name: string;
-    img?: string;
-  };
-}
-
 const Home = () => {
-  const [multimedias, setMultimedias] = useState<Types[]>([]);
-  const [offices, setOffices] = useState<Types[]>([]);
-  const [gamings, setGamings] = useState<Types[]>([]);
+  const [multimedias, setMultimedias] = useState([]);
+  const [offices, setOffices] = useState([]);
+  const [gamings, setGamings] = useState([]);
 
   const { toast } = useToast();
 
-  function filteredData(datas: TypeProducts[], selected: string) {
-    let filteredProducts = datas;
-
-    if (selected) {
-      filteredProducts = filteredProducts.filter(
-        ({ category }) => category === selected
-      );
-    }
-
-    return filteredProducts.map(({ name, img }) => (
-      <ProductCard key={Math.random()} name={name} img={img!} />
-    ));
-  }
-
-  const resultOffice = filteredData(productsSampleData, "office");
-  const resOffice = () => setOffices(resultOffice);
-
-  const resultMultimedia = filteredData(productsSampleData, "multimedia");
-  const resMultimedia = () => setMultimedias(resultMultimedia);
-
-  const resultGaming = filteredData(productsSampleData, "gaming");
-  const resGaming = () => setGamings(resultGaming);
-
-  // fetch data apis
+  // Fetch data Apis
   async function fetchDataOffice() {
     try {
-      // const result = await getProduct("office")
-      // setOffices(result)
+      const result = await getCategoryProducts(`office`);
+      setOffices(result);
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -64,8 +31,8 @@ const Home = () => {
 
   async function fetchDataMultimedia() {
     try {
-      // const result = await getProduct("multimedia")
-      // setMultimedias(result)
+      const result = await getCategoryProducts(`multimedia`);
+      setMultimedias(result);
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -77,8 +44,8 @@ const Home = () => {
 
   async function fetchDataGaming() {
     try {
-      // const result = await getProduct("gaming")
-      // setGamings(result)
+      const result = await getCategoryProducts(`gaming`);
+      setGamings(result);
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -89,10 +56,6 @@ const Home = () => {
   }
 
   useEffect(() => {
-    resOffice();
-    resMultimedia();
-    resGaming();
-
     fetchDataOffice();
     fetchDataMultimedia();
     fetchDataGaming();
@@ -105,7 +68,7 @@ const Home = () => {
         <div className="flex flex-col gap-3">
           <div className="flex items-center justify-between w-full">
             <h1 className="font-semibold">Recomended for Office</h1>
-            <Link to="/">
+            <Link to={`/categories/office`}>
               <p className="hover:text-slate-500">see all</p>
             </Link>
           </div>
@@ -113,11 +76,7 @@ const Home = () => {
             {offices
               .map((office, index) =>
                 index < 5 ? (
-                  <ProductCard
-                    key={index}
-                    name={office.props.name}
-                    img={office.props.img!}
-                  />
+                  <ProductCard key={index} data={office} />
                 ) : undefined
               )
               .filter((office) => office !== undefined)}
@@ -125,8 +84,8 @@ const Home = () => {
         </div>
         <div className="flex flex-col gap-3">
           <div className="flex items-center justify-between w-full">
-            <h1 className="font-semibold">Recomended for Office</h1>
-            <Link to="/">
+            <h1 className="font-semibold">Recomended for Multimedia</h1>
+            <Link to="/categories/multimedia">
               <p className="hover:text-slate-500">see all</p>
             </Link>
           </div>
@@ -134,11 +93,7 @@ const Home = () => {
             {multimedias
               .map((multimedia, index) =>
                 index < 5 ? (
-                  <ProductCard
-                    key={index}
-                    name={multimedia.props.name}
-                    img={multimedia.props.img!}
-                  />
+                  <ProductCard key={index} data={multimedia} />
                 ) : undefined
               )
               .filter((multimedia) => multimedia !== undefined)}
@@ -146,8 +101,8 @@ const Home = () => {
         </div>
         <div className="flex flex-col gap-3">
           <div className="flex items-center justify-between w-full">
-            <h1 className="font-semibold">Recomended for Office</h1>
-            <Link to="/">
+            <h1 className="font-semibold">Recomended for Gaming</h1>
+            <Link to="/categories/gaming">
               <p className="hover:text-slate-500">see all</p>
             </Link>
           </div>
@@ -155,11 +110,7 @@ const Home = () => {
             {gamings
               .map((gaming, index) =>
                 index < 5 ? (
-                  <ProductCard
-                    key={index}
-                    name={gaming.props.name}
-                    img={gaming.props.img!}
-                  />
+                  <ProductCard key={index} data={gaming} />
                 ) : undefined
               )
               .filter((gaming) => gaming !== undefined)}
