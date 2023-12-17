@@ -6,8 +6,6 @@ import { useToken } from "@/utils/contexts/token";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useTheme } from "@/utils/contexts/theme-provider";
 import { useToast } from "@/components/ui/use-toast";
-// import { Checkbox } from "@/components/ui/checkbox";
-import { Button } from "@/components/ui/button";
 
 import {
   BoxIcon,
@@ -20,18 +18,15 @@ import {
   MoonStarIcon,
   SunIcon,
 } from "lucide-react";
+import RangeBudgetBox from "./RangeBudgetBox";
+import CategoryBox from "./CategoryBox";
 
-interface Props {
-  handleChange?: (event: any) => void;
-}
-
-const SidebarUser = (props: Props) => {
-  const { handleChange } = props;
+const SidebarUser = () => {
+  const { changeToken, changeUserID, user, token } = useToken();
 
   const [isOpen, setIsOpen] = useState(false);
   const { setTheme, theme } = useTheme();
   const { pathname } = useLocation();
-  const { changeToken, changeUserID, user, token } = useToken();
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -88,7 +83,7 @@ const SidebarUser = (props: Props) => {
             <p
               className={
                 isOpen
-                  ? `w-32 font-medium translate-x-0 opacity-100 transition-all cursor-pointer hover:bg-[#E4ECF1] dark:hover:bg-white rounded-md p-2 dark:hover:text-black`
+                  ? `w-32 mr-10 font-medium translate-x-0 opacity-100 transition-all cursor-pointer hover:bg-[#E4ECF1] dark:hover:bg-white rounded-md p-2 dark:hover:text-black`
                   : `-translate-x-28 opacity-0 transition-all absolute`
               }
               onClick={() => navigate("/")}
@@ -106,7 +101,7 @@ const SidebarUser = (props: Props) => {
             <p
               className={
                 isOpen
-                  ? `w-32 font-medium translate-x-0 opacity-100 transition-all cursor-pointer hover:bg-[#E4ECF1] dark:hover:bg-white rounded-md p-2 dark:hover:text-black`
+                  ? `w-32 mr-10 font-medium translate-x-0 opacity-100 transition-all cursor-pointer hover:bg-[#E4ECF1] dark:hover:bg-white rounded-md p-2 dark:hover:text-black`
                   : `-translate-x-28 opacity-0 transition-all absolute`
               }
               onClick={() => navigate("/products")}
@@ -125,7 +120,7 @@ const SidebarUser = (props: Props) => {
               onClick={() => navigate("/compare")}
               className={
                 isOpen
-                  ? `w-32 font-medium translate-x-0 opacity-100 transition-all cursor-pointer hover:bg-[#E4ECF1] dark:hover:bg-white rounded-md p-2 dark:hover:text-black`
+                  ? `w-32 mr-10 font-medium translate-x-0 opacity-100 transition-all cursor-pointer hover:bg-[#E4ECF1] dark:hover:bg-white rounded-md p-2 dark:hover:text-black`
                   : `-translate-x-28 opacity-0 transition-all absolute`
               }
             >
@@ -134,130 +129,17 @@ const SidebarUser = (props: Props) => {
           </div>
         </div>
 
+        {/* FILTER */}
         {pathname === "/products" && (
           <>
             {/* CATEGORIES */}
-            <div
-              className={
-                isOpen
-                  ? `translate-x-0 w-fit flex flex-col gap-4 opacity-100 transition-all`
-                  : `-translate-x-36 w-0 opacity-50 transition-all hidden`
-              }
-            >
-              <h1 className="font-medium">Categories:</h1>
-              <div
-                className="flex items-center gap-2 ml-4"
-                onClick={() => navigate("/products")}
-              >
-                {/* <Checkbox id="all" value="" onChange={handleChange} /> */}
-                <input
-                  onChange={handleChange}
-                  type="radio"
-                  value=""
-                  id="all"
-                  name="category"
-                  className="cursor-pointer"
-                />
-                <label
-                  htmlFor="all"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
-                >
-                  All
-                </label>
-              </div>
-              <div
-                className="flex items-center gap-2 ml-4"
-                onClick={() => navigate("/products")}
-              >
-                {/* <Checkbox id="office" value="office" onChange={handleChange} /> */}
-                <input
-                  onChange={handleChange}
-                  type="radio"
-                  value="office"
-                  id="office"
-                  name="category"
-                  className="cursor-pointer"
-                />
-                <label
-                  htmlFor="office"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
-                >
-                  Office
-                </label>
-              </div>
-              <div
-                className="flex items-center gap-2 ml-4"
-                onClick={() => navigate("/products")}
-              >
-                {/* <Checkbox id="multimedia" /> */}
-                <input
-                  onChange={handleChange}
-                  type="radio"
-                  value="multimedia"
-                  id="multimedia"
-                  name="category"
-                  className="cursor-pointer"
-                />
-                <label
-                  htmlFor="multimedia"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
-                >
-                  Multimedia
-                </label>
-              </div>
-              <div
-                className="flex items-center gap-2 ml-4"
-                onClick={() => navigate("/products")}
-              >
-                {/* <Checkbox id="gaming" /> */}
-                <input
-                  onChange={handleChange}
-                  type="radio"
-                  value="gaming"
-                  id="gaming"
-                  name="category"
-                  className="cursor-pointer"
-                />
-                <label
-                  htmlFor="gaming"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
-                >
-                  Gaming
-                </label>
-              </div>
-            </div>
+            <CategoryBox isOpen={isOpen} />
 
             {/* RANGE ON BUDGET */}
-            <div
-              className={
-                isOpen
-                  ? `translate-x-0 w-fit flex flex-col gap-4 opacity-100 transition-all`
-                  : `-translate-x-28 w-0 opacity-50 transition-all hidden`
-              }
-            >
-              <h1 className="font-medium">Range on budget :</h1>
-              <form className="flex flex-col gap-2">
-                <input
-                  type="text"
-                  placeholder="Rp. Minimum"
-                  className="rounded-md placeholder:text-sm outline-none dark:bg-black px-4 py-1 border shadow"
-                />
-                <p className="text-center">to</p>
-                <input
-                  type="text"
-                  placeholder="Rp. Maximum"
-                  className="rounded-md placeholder:text-sm outline-none dark:bg-black px-4 py-1 border shadow"
-                />
-                <Button
-                  type="submit"
-                  className=" h-fit w-full bg-[#48B774] mt-6"
-                >
-                  <p className="font-medium">Submit</p>
-                </Button>
-              </form>
-            </div>
+            <RangeBudgetBox isOpen={isOpen} />
           </>
         )}
+
         {/* USER */}
         <div className="flex flex-col gap-4">
           <div className="flex gap-2 items-center">
