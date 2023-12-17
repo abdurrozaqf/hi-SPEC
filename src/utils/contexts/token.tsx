@@ -68,7 +68,7 @@ export function TokenProvider({ children }: Readonly<Props>) {
         variant: "destructive",
       });
     }
-  }, [token]); // biar gak refresh di tambah parameter di dalam kurung siku sebagai tanda perubahan di user dia akan menjalankan functionnya kembali
+  }, [token]);
 
   const changeToken = useCallback(
     (token?: string) => {

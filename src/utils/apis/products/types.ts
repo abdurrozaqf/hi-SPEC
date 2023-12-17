@@ -65,3 +65,10 @@ export type Product = {
   category: string;
   image: string;
 };
+
+export type ResponseAllProducts = {
+  product_id: number;
+  name: string;
+  price: number;
+  picture: string;
+};
