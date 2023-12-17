@@ -31,7 +31,7 @@ const CategoryBox = (props: Props) => {
         {/* <Checkbox id="all" value="" onChange={handleChange} /> */}
         <input
           onChange={(e) => handleCategory(e.target.value)}
-          type="checkbox"
+          type="radio"
           value=""
           id="all"
           name="category"
@@ -51,7 +51,7 @@ const CategoryBox = (props: Props) => {
         {/* <Checkbox id="office" value="office" onChange={handleChange} /> */}
         <input
           onChange={(e) => handleCategory(e.target.value)}
-          type="checkbox"
+          type="radio"
           value="office"
           id="office"
           name="category"
@@ -71,7 +71,7 @@ const CategoryBox = (props: Props) => {
         {/* <Checkbox id="multimedia" /> */}
         <input
           onChange={(e) => handleCategory(e.target.value)}
-          type="checkbox"
+          type="radio"
           value="multimedia"
           id="multimedia"
           name="category"
@@ -91,7 +91,7 @@ const CategoryBox = (props: Props) => {
         {/* <Checkbox id="gaming" /> */}
         <input
           onChange={(e) => handleCategory(e.target.value)}
-          type="checkbox"
+          type="radio"
           value="gaming"
           id="gaming"
           name="category"
