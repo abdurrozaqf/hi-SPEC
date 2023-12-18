@@ -1,3 +1,4 @@
+import { addProduct, deleteProduct, editProduct } from "./api";
 import {
   AddProductSchema,
   EditProductSchema,
@@ -6,5 +7,11 @@ import {
   editProductSchema,
 } from "./types";
 
-export { addProductSchema, editProductSchema };
+export {
+  addProduct,
+  editProduct,
+  deleteProduct,
+  addProductSchema,
+  editProductSchema,
+};
 export type { Product, AddProductSchema, EditProductSchema };
