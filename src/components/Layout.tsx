@@ -1,5 +1,6 @@
-import { useLocation } from "react-router-dom";
 import { ReactNode } from "react";
+
+import { useToken } from "@/utils/contexts/token";
 
 import SidebarAdmin from "@/components/SidebarAdmin";
 import SidebarUser from "@/components/SidebarUser";
@@ -12,14 +13,19 @@ interface Props {
 
 const Layout = (props: Readonly<Props>) => {
   const { children } = props;
-  const { pathname } = useLocation();
+  const { token, user } = useToken();
 
   return (
     <div className="w-full h-screen flex flex-col font-inter transition-all overflow-auto">
       <Navbar />
       <div className="flex grow overflow-auto">
-        {pathname === "/detail-product" ? undefined : <SidebarUser />}
-        {/* <SidebarAdmin /> */}
+        {token && user.user?.name === "admin" ? (
+          <>
+            <SidebarAdmin />
+          </>
+        ) : user.user?.name !== "admin" ? (
+          <SidebarUser />
+        ) : undefined}
 
         {/* CONTENT */}
         <div className="flex flex-1 flex-col p-6 bg-[#E4ECF1] dark:bg-transparent overflow-auto">
