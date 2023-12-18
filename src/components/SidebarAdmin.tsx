@@ -167,7 +167,7 @@ const SidebarAdmin = () => {
               className={
                 isOpen
                   ? `font-medium w-full opacity-100 translate-x-0 transition-all rounded-md p-2 hover:bg-[#E4ECF1]  hover:dark:bg-[#E4ECF1] dark:hover:text-black flex flex-col cursor-pointer`
-                  : `w-0 opacity-0 -translate-x-28 transition-all absolute`
+                  : `w-0 opacity-50 -translate-x-52 transition-all absolute`
               }
             >
               <span>{user.user?.name || "Guest"}</span>
