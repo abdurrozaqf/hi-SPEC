@@ -29,7 +29,7 @@ export const getCategoryProducts = async (category: string) => {
   }
 };
 
-export const getDetailProducts = async (product_id: string) => {
+export const getDetailProducts = async (product_id: number) => {
   try {
     const response = await axiosWithConfig.get(`/product/${product_id}`);
 

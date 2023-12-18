@@ -71,4 +71,5 @@ export type ResponseAllProducts = {
   name: string;
   price: number;
   picture: string;
+  category: string;
 };
