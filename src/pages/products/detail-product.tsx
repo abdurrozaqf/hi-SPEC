@@ -36,7 +36,7 @@ const DetailProduct = () => {
 
   async function fetchData() {
     try {
-      const result = await getDetailProduk("5");
+      const result = await getDetailProduk(2);
       setProduct(result.data);
     } catch (error: any) {
       toast({
@@ -91,7 +91,7 @@ const DetailProduct = () => {
             Specifications
           </h4>
           <p>Thickness: {product?.thickness}</p>
-          <p>Bluetooth:: {product?.bluetooth}</p>
+          <p>Bluetooth: {product?.bluetooth}</p>
           <p>HDMI: {product?.hdmi}</p>
           <p>Weight: {product?.weight}</p>
         </div>
@@ -100,10 +100,10 @@ const DetailProduct = () => {
           <div className="border border-solid border-[#D9D9D9] p-3 rounded-lg">
             <div className="m-2">
               <h2 className="font-bold mb-4">Enter the purchase amount here</h2>
-              <div className="flex border border-solid border-[#D9D9D9] rounded-md justify-between px-2">
-                <p className="text-[#D9D9D9]">-</p>
-                <p>1</p>
-                <p className="text-[#48B774]">+</p>
+              <div className="flex border border-solid border-[#D9D9D9] rounded-md justify-center px-2 py-1">
+                {/* <p className="text-[#D9D9D9]">-</p> */}
+                <p className="font-semibold">1</p>
+                {/* <p className="text-[#48B774]">+</p> */}
               </div>
 
               <div className="flex justify-between my-1">
