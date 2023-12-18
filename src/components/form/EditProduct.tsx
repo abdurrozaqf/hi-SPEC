@@ -29,7 +29,7 @@ interface Props {
 }
 
 type Product = {
-  product_id: 2;
+  product_id: number;
   category: string;
   name: string;
   cpu: string;
