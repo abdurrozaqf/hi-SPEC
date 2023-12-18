@@ -1,4 +1,21 @@
 import { useEffect, useState } from "react";
+import { format } from "date-fns";
+
+import { PencilLine, Trash2 } from "lucide-react";
+import debounce from "lodash.debounce";
+import axios from "axios";
+
+import {
+  Transactions,
+  deleteTransactions,
+  getTransactions,
+} from "@/utils/apis/admin";
+
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useToast } from "@/components/ui/use-toast";
+import CustomDialog from "@/components/Dialog";
+import Alert from "@/components/AlertDialog";
+import Layout from "@/components/Layout";
 import {
   Table,
   TableBody,
@@ -8,24 +25,38 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useToast } from "@/components/ui/use-toast";
-import CustomDialog from "@/components/Dialog";
-import Alert from "@/components/AlertDialog";
-import Layout from "@/components/Layout";
 
-import { PencilLine, Trash2 } from "lucide-react";
+type Product = {
+  product_id: number;
+  category: string;
+  name: string;
+  cpu: string;
+  ram: string;
+  display: string;
+  storage: string;
+  thickness: string;
+  weight: string;
+  bluetooth: string;
+  hdmi: string;
+  price: number;
+  picture: string;
+};
 
-const datas = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+interface MergedData extends Transactions {
+  product: Pick<Product, "name" | "picture" | "price" | "category">;
+}
 
 const TransactionsAdmin = () => {
-  const [transactions, setTransactions] = useState([]);
+  const [transactions, setTransactions] = useState<Transactions[]>();
+  const [products, setProducts] = useState<Product[]>();
+  const [search, setSearch] = useState("");
+
   const { toast } = useToast();
 
-  async function getDataTransaction() {
+  async function fetchData() {
     try {
-      // const result = await getTransactions();
-      // setTransactions(result)
+      const result = await getTransactions();
+      setTransactions(result.data);
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -35,10 +66,88 @@ const TransactionsAdmin = () => {
     }
   }
 
-  async function handleDelete(id: number) {
+  const fetchDataProduct = async () => {
     try {
-      // const result = await deleteProducts(id);
-      // toast({ description: result.message });
+      const Response = await getTransactions();
+      const dataResponse = Response.data;
+
+      const promises = dataResponse.map(async (data: any) => {
+        const res = await axios.get(
+          // `http://3.104.106.44:8000/product/${data.product_id}`
+          `http://3.104.106.44:8000/product/2`
+        );
+        const dataProducts = res.data.data;
+
+        return dataProducts;
+      });
+      const results: any = await Promise.all(promises);
+      setProducts(results);
+    } catch (error: any) {
+      toast({
+        title: "Oops! Something went wrong.",
+        description: error.toString(),
+        variant: "destructive",
+      });
+    }
+  };
+
+  const mergedData: MergedData[] =
+    transactions?.map((transaction) => {
+      const matchingProduct = products?.find(
+        (product) => product.product_id === transaction.product_id
+      );
+
+      if (matchingProduct) {
+        return {
+          ...transaction,
+          product: {
+            name: matchingProduct.name,
+            picture: matchingProduct.picture,
+            price: matchingProduct.price,
+            category: matchingProduct.category,
+          },
+        };
+      } else {
+        // Handle case when matching product is not found
+        return {
+          ...transaction,
+          product: {
+            name: "Unknown",
+            picture:
+              "https://www.iconpacks.net/icons/2/free-laptop-icon-1928-thumb.png",
+            price: 0,
+            category: "Unknown",
+          },
+        };
+      }
+    }) || [];
+
+  // const mergedData: MergedData[] = transactions?.map((transaction) => {
+  //   const matchingProduct = products?.find(
+  //     (product) => product.product_id === transaction.product_id
+  //   );
+
+  //   if (matchingProduct) {
+  //     return {
+  //       ...transaction,
+  //       product: {
+  //         name: matchingProduct.name ?? "Unknown",
+  //         picture:
+  //           matchingProduct.picture ??
+  //           "https://www.iconpacks.net/icons/2/free-laptop-icon-1928-thumb.png",
+  //         price: matchingProduct.price ?? 0,
+  //         category: matchingProduct.category ?? "Unknown",
+  //       },
+  //     };
+  //   }
+
+  //   return transaction;
+  // });
+
+  async function handleDelete(transaction_id: number) {
+    try {
+      const result = await deleteTransactions(transaction_id);
+      toast({ description: result.message });
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -47,10 +156,14 @@ const TransactionsAdmin = () => {
       });
     }
   }
+
+  const debounceRequest = debounce((search: string) => setSearch(search), 1000);
 
   useEffect(() => {
-    getDataTransaction();
+    fetchData();
+    fetchDataProduct();
   }, []);
+
   return (
     <Layout>
       <div className="px-10 py-4 bg-white dark:bg-[#1265ae24] rounded-xl grow shadow-products-card font-poppins overflow-auto">
@@ -61,6 +174,7 @@ const TransactionsAdmin = () => {
           <input
             type="text"
             placeholder="Search..."
+            onChange={(e) => debounceRequest(e.target.value)}
             className="w-1/4 placeholder:italic placeholder:text-sm outline-none py-2 px-4 rounded-lg dark:bg-transparent shadow dark:shadow-white"
           />
         </div>
@@ -72,16 +186,18 @@ const TransactionsAdmin = () => {
               <TableHead>Image</TableHead>
               <TableHead>Name</TableHead>
               <TableHead>Email</TableHead>
-              <TableHead>Address</TableHead>
+              <TableHead>Name Product</TableHead>
+              <TableHead>Total Price</TableHead>
+              <TableHead>Date</TableHead>
               <TableHead>Status</TableHead>
               <TableHead className="text-center">Action</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {datas.map((index) => (
+            {mergedData?.map((data, index) => (
               <TableRow key={index}>
                 <TableCell className="font-medium text-center">
-                  {index}
+                  {index + 1}
                 </TableCell>
                 <TableCell>
                   <Avatar>
@@ -94,10 +210,17 @@ const TransactionsAdmin = () => {
                 </TableCell>
                 <TableCell>John Doe</TableCell>
                 <TableCell>johndoe@mail.com</TableCell>
+                <TableCell>{data.product?.name}</TableCell>
                 <TableCell>
-                  Jl. Veteran, Kec. Lowokwaru, Kota Malang, Jawa Timur
+                  {data.total_price.toLocaleString("id-ID", {
+                    style: "currency",
+                    currency: "IDR",
+                  })}
                 </TableCell>
-                <TableCell>Succes</TableCell>
+                <TableCell>
+                  {format(new Date(data.timestamp), "iiii, dd MMMM Y")}
+                </TableCell>
+                <TableCell>{data.status}</TableCell>
                 <TableCell className="flex justify-center items-center h-32 gap-4">
                   <CustomDialog
                     title="Edit Transactions"
@@ -109,7 +232,7 @@ const TransactionsAdmin = () => {
                   </CustomDialog>
                   <Alert
                     title="Are you sure delete this User from Database?"
-                    onAction={() => handleDelete(index)}
+                    onAction={() => handleDelete(data.transaction_id)}
                   >
                     <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
                       <Trash2 />

@@ -10,7 +10,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { useToast } from "@/components/ui/use-toast";
 import CustomDialog from "@/components/Dialog";
 import Alert from "@/components/AlertDialog";
@@ -19,6 +18,9 @@ import Layout from "@/components/Layout";
 import { PencilLine, Trash2 } from "lucide-react";
 import axios from "axios";
 import debounce from "lodash.debounce";
+import { format } from "date-fns";
+import { deleteUser } from "@/utils/apis/users";
+import EditUser from "@/components/form/EditUser";
 
 type Users = {
   user_id: number;
@@ -26,7 +28,7 @@ type Users = {
   email: string;
   avatar: string;
   address: string;
-  time: string;
+  time: Date;
   phone_number: string;
 };
 
@@ -53,8 +55,8 @@ const UsersAdmin = () => {
 
   async function handleDelete(user_id: number) {
     try {
-      // const result = await deleteUsers(user_id);
-      // toast({ description: result.message });
+      const result = await deleteUser(user_id);
+      toast({ description: result.message });
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -93,7 +95,7 @@ const UsersAdmin = () => {
               <TableHead>Address</TableHead>
               <TableHead>Phone Number</TableHead>
               <TableHead>Create at</TableHead>
-              <TableHead className="text-center">Action</TableHead>
+              {/* <TableHead className="text-center">Action</TableHead> */}
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -103,40 +105,40 @@ const UsersAdmin = () => {
                   {index + 1}
                 </TableCell>
                 <TableCell>
-                  <Avatar>
-                    <AvatarImage
-                      src={
-                        user.avatar ||
-                        "https://mlsn40jruh7z.i.optimole.com/w:auto/h:auto/q:mauto/f:best/https://jeffjbutler.com//wp-content/uploads/2018/01/default-user.png"
-                      }
-                      alt={user.name}
-                      className="object-cover"
-                    />
-                  </Avatar>
+                  <img
+                    src={
+                      user.avatar ||
+                      "https://mlsn40jruh7z.i.optimole.com/w:auto/h:auto/q:mauto/f:best/https://jeffjbutler.com//wp-content/uploads/2018/01/default-user.png"
+                    }
+                    alt={user.name}
+                    className="object-cover bg-center rounded-full w-14 h-14"
+                  />
                 </TableCell>
                 <TableCell>{user.name}</TableCell>
                 <TableCell>{user.email}</TableCell>
                 <TableCell>{user.address}</TableCell>
                 <TableCell>{user.phone_number}</TableCell>
-                <TableCell>{user.time}</TableCell>
-                <TableCell className="flex justify-center items-center h-32 gap-4">
+                <TableCell>
+                  {format(new Date(user.time), "iiii, dd MMMM Y")}
+                </TableCell>
+                {/* <TableCell className="flex justify-center items-center h-32 gap-4">
                   <CustomDialog
                     title="Edit User"
-                    description={"Form Validation User"}
+                    description={<EditUser user_id={user.user_id} />}
                   >
                     <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
                       <PencilLine />
                     </div>
                   </CustomDialog>
                   <Alert
-                    title="Are you sure delete this User from Database?"
+                    title={`Are you sure delete ${user.name.toUpperCase()} from database?`}
                     onAction={() => handleDelete(1)}
                   >
                     <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
                       <Trash2 />
                     </div>
                   </Alert>
-                </TableCell>
+                </TableCell> */}
               </TableRow>
             ))}
           </TableBody>

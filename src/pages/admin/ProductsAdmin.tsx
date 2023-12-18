@@ -47,6 +47,8 @@ type Products = {
 const ProductsAdmin = () => {
   // const [products, setProducts] = useState<Datas>();
   const [products, setProducts] = useState<Products[]>();
+  console.log(products);
+
   const [search, setSearch] = useState("");
 
   const { toast } = useToast();
@@ -56,7 +58,7 @@ const ProductsAdmin = () => {
       const result = await axios.get(
         `http://3.104.106.44:8000/product/search?name=${search}`
       );
-      setProducts(result.data);
+      setProducts(result.data.data);
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -130,6 +132,7 @@ const ProductsAdmin = () => {
                       "https://www.iconpacks.net/icons/2/free-laptop-icon-1928-thumb.png"
                     }
                     alt="HP 14 inch Laptop 14s-fq0564AU"
+                    className="object-cover w-14 gap-14 bg-center"
                   />
                 </TableCell>
                 <TableCell>

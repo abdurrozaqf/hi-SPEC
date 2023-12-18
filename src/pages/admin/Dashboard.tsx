@@ -36,9 +36,7 @@ const Dashboard = () => {
 
   async function fetchData() {
     try {
-      const result = await axios.get(
-        `https://virtserver.swaggerhub.com/hi_specs/hi_specs/1.0.0/dashboard`
-      );
+      const result = await axios.get(`http://3.104.106.44:8000/dashboard`);
       setDatas(result.data.data);
     } catch (error: any) {
       toast({
@@ -115,8 +113,11 @@ const Dashboard = () => {
                 </TableCell>
                 <TableCell>
                   <img
-                    src="src/assets/example-laptop.png"
-                    alt="HP 14 inch Laptop 14s-fq0564AU"
+                    src={
+                      data.picture ||
+                      "https://www.iconpacks.net/icons/2/free-laptop-icon-1928-thumb.png"
+                    }
+                    alt={data.name || "Laptop"}
                   />
                 </TableCell>
                 <TableCell>{data.name}</TableCell>
