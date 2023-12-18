@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 
 import {
   EditProductSchema,
@@ -49,7 +49,6 @@ const EditProduct = (props: Props) => {
 
   const [datas, setDatas] = useState<Product>();
   const { toast } = useToast();
-  console.log(datas);
 
   async function fetchData() {
     try {
