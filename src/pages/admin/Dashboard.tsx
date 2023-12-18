@@ -30,8 +30,6 @@ type Datas = {
 
 const Dashboard = () => {
   const [datas, setDatas] = useState<Datas>();
-  console.log(datas);
-
   const { toast } = useToast();
 
   async function fetchData() {

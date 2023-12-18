@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+import debounce from "lodash.debounce";
+
+import { deleteProduct } from "@/utils/apis/products";
 
 import {
   Table,
@@ -9,6 +12,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import EditProduct from "@/components/form/EditProduct";
+import AddProduct from "@/components/form/AddProduct";
 import { useToast } from "@/components/ui/use-toast";
 import CustomDialog from "@/components/Dialog";
 import Alert from "@/components/AlertDialog";
@@ -16,10 +21,7 @@ import Layout from "@/components/Layout";
 
 import { FilePlus, Laptop, PencilLine, Trash2 } from "lucide-react";
 import axios from "axios";
-import debounce from "lodash.debounce";
-import AddProduct from "@/components/form/AddProduct";
-import { deleteProduct } from "@/utils/apis/products";
-import EditProduct from "@/components/form/EditProduct";
+import DetailCard from "@/components/DetailCard";
 
 // type Datas = {
 //   data: {
@@ -47,7 +49,6 @@ type Products = {
 const ProductsAdmin = () => {
   // const [products, setProducts] = useState<Datas>();
   const [products, setProducts] = useState<Products[]>();
-  console.log(products);
 
   const [search, setSearch] = useState("");
 
@@ -56,7 +57,7 @@ const ProductsAdmin = () => {
   async function fetchData() {
     try {
       const result = await axios.get(
-        `http://3.104.106.44:8000/product/search?name=${search}`
+        `http://3.104.106.44:8000/product/search?page=1&limit=10&name=${search}`
       );
       setProducts(result.data.data);
     } catch (error: any) {
@@ -91,7 +92,7 @@ const ProductsAdmin = () => {
 
   return (
     <Layout>
-      <div className="px-10 py-4 bg-white dark:bg-[#1265ae24] rounded-xl grow shadow-products-card overflow-auto font-poppins">
+      <div className="px-10 py-8 bg-white dark:bg-[#1265ae24] rounded-xl grow shadow-products-card overflow-auto font-poppins">
         <h1 className="text-2xl font-medium text-center">Database Products</h1>
         <div className="flex items-center justify-between mb-10">
           <input
@@ -146,7 +147,10 @@ const ProductsAdmin = () => {
                 </TableCell>
                 <TableCell>{product.category || "-"}</TableCell>
                 <TableCell>
-                  <CustomDialog title="Detail Laptop" description={"ASUS"}>
+                  <CustomDialog
+                    title="Detail Laptop"
+                    description={<DetailCard product_id={product.product_id} />}
+                  >
                     <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
                       <Laptop />
                     </div>

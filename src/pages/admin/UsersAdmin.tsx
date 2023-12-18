@@ -1,5 +1,17 @@
 import { useEffect, useState } from "react";
+import debounce from "lodash.debounce";
+import { format } from "date-fns";
+import axios from "axios";
 
+import { PencilLine, Trash2 } from "lucide-react";
+
+import { deleteUser } from "@/utils/apis/users";
+
+import { useToast } from "@/components/ui/use-toast";
+import EditUser from "@/components/form/EditUser";
+import CustomDialog from "@/components/Dialog";
+import Alert from "@/components/AlertDialog";
+import Layout from "@/components/Layout";
 import {
   Table,
   TableBody,
@@ -9,18 +21,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
-import { useToast } from "@/components/ui/use-toast";
-import CustomDialog from "@/components/Dialog";
-import Alert from "@/components/AlertDialog";
-import Layout from "@/components/Layout";
-
-import { PencilLine, Trash2 } from "lucide-react";
-import axios from "axios";
-import debounce from "lodash.debounce";
-import { format } from "date-fns";
-import { deleteUser } from "@/utils/apis/users";
-import EditUser from "@/components/form/EditUser";
 
 type Users = {
   user_id: number;
@@ -53,18 +53,18 @@ const UsersAdmin = () => {
     }
   }
 
-  async function handleDelete(user_id: number) {
-    try {
-      const result = await deleteUser(user_id);
-      toast({ description: result.message });
-    } catch (error: any) {
-      toast({
-        title: "Oops! Something went wrong.",
-        description: error.toString(),
-        variant: "destructive",
-      });
-    }
-  }
+  // async function handleDelete(user_id: number) {
+  //   try {
+  //     const result = await deleteUser(user_id);
+  //     toast({ description: result.message });
+  //   } catch (error: any) {
+  //     toast({
+  //       title: "Oops! Something went wrong.",
+  //       description: error.toString(),
+  //       variant: "destructive",
+  //     });
+  //   }
+  // }
 
   const debounceRequest = debounce((search: string) => setSearch(search), 1000);
 
@@ -74,7 +74,7 @@ const UsersAdmin = () => {
 
   return (
     <Layout>
-      <div className="px-10 py-4 bg-white dark:bg-[#1265ae24] rounded-xl grow shadow-products-card font-poppins overflow-auto">
+      <div className="px-10 py-8 bg-white dark:bg-[#1265ae24] rounded-xl grow shadow-products-card font-poppins overflow-auto">
         <h1 className="text-2xl font-medium text-center">Database Users</h1>
         <div className="flex items-center justify-between mb-10">
           <input

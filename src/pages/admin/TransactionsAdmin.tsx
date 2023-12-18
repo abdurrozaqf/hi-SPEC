@@ -7,8 +7,8 @@ import axios from "axios";
 
 import {
   Transactions,
-  deleteTransactions,
   getTransactions,
+  deleteTransactions,
 } from "@/utils/apis/admin";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -74,7 +74,6 @@ const TransactionsAdmin = () => {
       const promises = dataResponse.map(async (data: any) => {
         const res = await axios.get(
           `http://3.104.106.44:8000/product/${data.product_id}`
-          // `http://3.104.106.44:8000/product/2`
         );
         const dataProducts = res.data.data;
 
@@ -121,8 +120,6 @@ const TransactionsAdmin = () => {
         };
       }
     }) || [];
-  console.log(mergedData);
-
   // const mergedData: MergedData[] = transactions?.map((transaction) => {
   //   const matchingProduct = products?.find(
   //     (product) => product.product_id === transaction.product_id
@@ -167,7 +164,7 @@ const TransactionsAdmin = () => {
 
   return (
     <Layout>
-      <div className="px-10 py-4 bg-white dark:bg-[#1265ae24] rounded-xl grow shadow-products-card font-poppins overflow-auto">
+      <div className="px-10 py-8 bg-white dark:bg-[#1265ae24] rounded-xl grow shadow-products-card font-poppins overflow-auto">
         <h1 className="text-2xl font-medium text-center">
           Database Transactions
         </h1>
@@ -215,7 +212,8 @@ const TransactionsAdmin = () => {
                 <TableCell>
                   <img
                     src={data.product?.picture}
-                    className="object-cover w-14 h-14"
+                    alt={data.product?.name}
+                    className="object-cover h-24"
                   />
                 </TableCell>
                 <TableCell>{data.product?.name}</TableCell>
