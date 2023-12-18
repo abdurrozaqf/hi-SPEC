@@ -13,43 +13,33 @@ import { useToast } from "@/components/ui/use-toast";
 import Layout from "@/components/Layout";
 
 import { Box, DollarSign, Users } from "lucide-react";
+import axios from "axios";
 
-const datas = [1, 2, 3, 4, 5, 6];
+type Datas = {
+  total_user: string;
+  total_product: string;
+  total_transaction: string;
+  product: {
+    id: number;
+    category: string;
+    name: string;
+    price: number;
+    picture: string;
+  }[];
+};
 
 const Dashboard = () => {
-  const [products, setProducts] = useState([]);
-  const [transactions, setTransactions] = useState([]);
-  const [users, setUsers] = useState([]);
+  const [datas, setDatas] = useState<Datas>();
+  console.log(datas);
+
   const { toast } = useToast();
 
-  async function getDataProduct() {
+  async function fetchData() {
     try {
-      // const result = await getProducts();
-      // setProducts(result)
-    } catch (error: any) {
-      toast({
-        title: "Oops! Something went wrong.",
-        description: error.toString(),
-        variant: "destructive",
-      });
-    }
-  }
-  async function getDataUser() {
-    try {
-      // const result = await getUsers();
-      // setUsers(result)
-    } catch (error: any) {
-      toast({
-        title: "Oops! Something went wrong.",
-        description: error.toString(),
-        variant: "destructive",
-      });
-    }
-  }
-  async function getDataTransaction() {
-    try {
-      // const result = await getTransactions();
-      // setTransactions(result)
+      const result = await axios.get(
+        `https://virtserver.swaggerhub.com/hi_specs/hi_specs/1.0.0/dashboard`
+      );
+      setDatas(result.data.data);
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -60,9 +50,7 @@ const Dashboard = () => {
   }
 
   useEffect(() => {
-    getDataProduct();
-    getDataUser();
-    getDataTransaction();
+    fetchData();
   }, []);
 
   return (
@@ -73,7 +61,9 @@ const Dashboard = () => {
             <Box color="white" size={50} />
           </div>
           <p className="font-medium text-[#6B80AA] text-xl">Total Products</p>
-          <h1 className="font-bold text-4xl mt-3">1259</h1>
+          <h1 className="font-bold text-4xl mt-3">
+            {datas?.total_product || "0"}
+          </h1>
           <p className="text-black/50 dark:text-white/75 mt-6 tracking-wider">
             Total all products already in hi’SPEC
           </p>
@@ -83,7 +73,9 @@ const Dashboard = () => {
             <Users color="white" size={50} />
           </div>
           <p className="font-medium text-[#6B80AA] text-xl">Total Users</p>
-          <h1 className="font-bold text-4xl mt-3">259</h1>
+          <h1 className="font-bold text-4xl mt-3">
+            {datas?.total_user || "0"}
+          </h1>
           <p className="text-black/50 dark:text-white/75 mt-6 tracking-wider">
             Total cerate account in hi’SPEC
           </p>
@@ -95,18 +87,15 @@ const Dashboard = () => {
           <p className="font-medium text-[#6B80AA] text-xl">
             Total Transactions
           </p>
-          <h1 className="font-bold text-4xl mt-3">59</h1>
+          <h1 className="font-bold text-4xl mt-3">
+            {datas?.total_transaction || "0"}
+          </h1>
           <p className="text-black/50 dark:text-white/75 mt-6 tracking-wider">
             Total transactions user from hi’SPEC
           </p>
         </div>
       </div>
       <div className="p-10 bg-white dark:bg-[#1265ae24] rounded-xl grow shadow-products-card overflow-auto font-poppins">
-        <input
-          type="text"
-          placeholder="Search"
-          className="w-1/4 placeholder:italic placeholder:text-sm outline-none py-2 px-4 rounded-lg dark:bg-[#05152D] shadow dark:shadow-white mb-10"
-        />
         <Table>
           <TableCaption>A list of recent products.</TableCaption>
           <TableHeader>
@@ -119,23 +108,26 @@ const Dashboard = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {datas.map((index) => (
-              <>
-                <TableRow key={index}>
-                  <TableCell className="font-medium text-center">
-                    {index}
-                  </TableCell>
-                  <TableCell>
-                    <img
-                      src="src/assets/example-laptop.png"
-                      alt="HP 14 inch Laptop 14s-fq0564AU"
-                    />
-                  </TableCell>
-                  <TableCell>HP 14 inch Laptop 14s-fq0564AU</TableCell>
-                  <TableCell>Rp.5.299.000</TableCell>
-                  <TableCell>Office</TableCell>
-                </TableRow>
-              </>
+            {datas?.product.map((data, index) => (
+              <TableRow key={index}>
+                <TableCell className="font-medium text-center">
+                  {index + 1}
+                </TableCell>
+                <TableCell>
+                  <img
+                    src="src/assets/example-laptop.png"
+                    alt="HP 14 inch Laptop 14s-fq0564AU"
+                  />
+                </TableCell>
+                <TableCell>{data.name}</TableCell>
+                <TableCell>
+                  {data.price.toLocaleString("id-ID", {
+                    style: "currency",
+                    currency: "IDR",
+                  })}
+                </TableCell>
+                <TableCell>{data.category}</TableCell>
+              </TableRow>
             ))}
           </TableBody>
         </Table>

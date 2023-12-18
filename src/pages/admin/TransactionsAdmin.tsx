@@ -79,46 +79,44 @@ const TransactionsAdmin = () => {
           </TableHeader>
           <TableBody>
             {datas.map((index) => (
-              <>
-                <TableRow>
-                  <TableCell className="font-medium text-center">
-                    {index}
-                  </TableCell>
-                  <TableCell>
-                    <Avatar>
-                      <AvatarImage
-                        src="https://github.com/shadcn.png"
-                        alt="@shadcn"
-                      />
-                      <AvatarFallback>CN</AvatarFallback>
-                    </Avatar>
-                  </TableCell>
-                  <TableCell>John Doe</TableCell>
-                  <TableCell>johndoe@mail.com</TableCell>
-                  <TableCell>
-                    Jl. Veteran, Kec. Lowokwaru, Kota Malang, Jawa Timur
-                  </TableCell>
-                  <TableCell>Succes</TableCell>
-                  <TableCell className="flex justify-center items-center h-32 gap-4">
-                    <CustomDialog
-                      title="Edit Transactions"
-                      description={"Form Validation Transaction"}
-                    >
-                      <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
-                        <PencilLine />
-                      </div>
-                    </CustomDialog>
-                    <Alert
-                      title="Are you sure delete this User from Database?"
-                      onAction={() => handleDelete(index)}
-                    >
-                      <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
-                        <Trash2 />
-                      </div>
-                    </Alert>
-                  </TableCell>
-                </TableRow>
-              </>
+              <TableRow key={index}>
+                <TableCell className="font-medium text-center">
+                  {index}
+                </TableCell>
+                <TableCell>
+                  <Avatar>
+                    <AvatarImage
+                      src="https://github.com/shadcn.png"
+                      alt="@shadcn"
+                    />
+                    <AvatarFallback>CN</AvatarFallback>
+                  </Avatar>
+                </TableCell>
+                <TableCell>John Doe</TableCell>
+                <TableCell>johndoe@mail.com</TableCell>
+                <TableCell>
+                  Jl. Veteran, Kec. Lowokwaru, Kota Malang, Jawa Timur
+                </TableCell>
+                <TableCell>Succes</TableCell>
+                <TableCell className="flex justify-center items-center h-32 gap-4">
+                  <CustomDialog
+                    title="Edit Transactions"
+                    description={"Form Validation Transaction"}
+                  >
+                    <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
+                      <PencilLine />
+                    </div>
+                  </CustomDialog>
+                  <Alert
+                    title="Are you sure delete this User from Database?"
+                    onAction={() => handleDelete(index)}
+                  >
+                    <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
+                      <Trash2 />
+                    </div>
+                  </Alert>
+                </TableCell>
+              </TableRow>
             ))}
           </TableBody>
         </Table>

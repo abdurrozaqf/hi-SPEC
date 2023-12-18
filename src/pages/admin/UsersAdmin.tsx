@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import {
   Table,
@@ -10,22 +10,38 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { useToast } from "@/components/ui/use-toast";
 import CustomDialog from "@/components/Dialog";
 import Alert from "@/components/AlertDialog";
 import Layout from "@/components/Layout";
 
 import { PencilLine, Trash2 } from "lucide-react";
+import axios from "axios";
+import debounce from "lodash.debounce";
 
-const datas = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+type Users = {
+  user_id: number;
+  name: string;
+  email: string;
+  avatar: string;
+  address: string;
+  time: string;
+  phone_number: string;
+};
 
 const UsersAdmin = () => {
+  const [users, setUsers] = useState<Users[]>();
+  const [search, setSearch] = useState("");
+
   const { toast } = useToast();
 
   async function fetchData() {
     try {
-      // const result = await getUsers();
+      const result = await axios.get(
+        `http://3.104.106.44:8000/user/search?name=${search}`
+      );
+      setUsers(result.data);
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -35,9 +51,9 @@ const UsersAdmin = () => {
     }
   }
 
-  async function handleDelete(id: number) {
+  async function handleDelete(user_id: number) {
     try {
-      // const result = await deleteUsers(id);
+      // const result = await deleteUsers(user_id);
       // toast({ description: result.message });
     } catch (error: any) {
       toast({
@@ -48,9 +64,11 @@ const UsersAdmin = () => {
     }
   }
 
+  const debounceRequest = debounce((search: string) => setSearch(search), 1000);
+
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [search]);
 
   return (
     <Layout>
@@ -59,6 +77,7 @@ const UsersAdmin = () => {
         <div className="flex items-center justify-between mb-10">
           <input
             type="text"
+            onChange={(e) => debounceRequest(e.target.value)}
             placeholder="Search by name user"
             className="w-1/4 placeholder:italic placeholder:text-sm outline-none py-2 px-4 rounded-lg dark:bg-transparent shadow dark:shadow-white"
           />
@@ -78,48 +97,47 @@ const UsersAdmin = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {datas.map((index) => (
-              <>
-                <TableRow>
-                  <TableCell className="font-medium text-center">
-                    {index}
-                  </TableCell>
-                  <TableCell>
-                    <Avatar>
-                      <AvatarImage
-                        src="https://github.com/shadcn.png"
-                        alt="@shadcn"
-                      />
-                      <AvatarFallback>CN</AvatarFallback>
-                    </Avatar>
-                  </TableCell>
-                  <TableCell>John Doe</TableCell>
-                  <TableCell>johndoe@mail.com</TableCell>
-                  <TableCell>
-                    Jl. Veteran, Kec. Lowokwaru, Kota Malang, Jawa Timur
-                  </TableCell>
-                  <TableCell>+62 823 3378 9990</TableCell>
-                  <TableCell>Des, 15 2023</TableCell>
-                  <TableCell className="flex justify-center items-center h-32 gap-4">
-                    <CustomDialog
-                      title="Edit User"
-                      description={"Form Validation User"}
-                    >
-                      <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
-                        <PencilLine />
-                      </div>
-                    </CustomDialog>
-                    <Alert
-                      title="Are you sure delete this User from Database?"
-                      onAction={() => handleDelete(1)}
-                    >
-                      <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
-                        <Trash2 />
-                      </div>
-                    </Alert>
-                  </TableCell>
-                </TableRow>
-              </>
+            {users?.map((user, index) => (
+              <TableRow key={index}>
+                <TableCell className="font-medium text-center">
+                  {index + 1}
+                </TableCell>
+                <TableCell>
+                  <Avatar>
+                    <AvatarImage
+                      src={
+                        user.avatar ||
+                        "https://mlsn40jruh7z.i.optimole.com/w:auto/h:auto/q:mauto/f:best/https://jeffjbutler.com//wp-content/uploads/2018/01/default-user.png"
+                      }
+                      alt={user.name}
+                      className="object-cover"
+                    />
+                  </Avatar>
+                </TableCell>
+                <TableCell>{user.name}</TableCell>
+                <TableCell>{user.email}</TableCell>
+                <TableCell>{user.address}</TableCell>
+                <TableCell>{user.phone_number}</TableCell>
+                <TableCell>{user.time}</TableCell>
+                <TableCell className="flex justify-center items-center h-32 gap-4">
+                  <CustomDialog
+                    title="Edit User"
+                    description={"Form Validation User"}
+                  >
+                    <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
+                      <PencilLine />
+                    </div>
+                  </CustomDialog>
+                  <Alert
+                    title="Are you sure delete this User from Database?"
+                    onAction={() => handleDelete(1)}
+                  >
+                    <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
+                      <Trash2 />
+                    </div>
+                  </Alert>
+                </TableCell>
+              </TableRow>
             ))}
           </TableBody>
         </Table>
