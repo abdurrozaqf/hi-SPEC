@@ -1,38 +1,129 @@
 import { CustomFormField } from "@/components/CustomForm";
 import { Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { UpdateUserSchema, updateUserSchema } from "@/utils/apis/users";
+import {
+  UpdateUserSchema,
+  deleteUser,
+  getDetailUser,
+  tokenUser,
+  updateUser,
+  updateUserSchema,
+} from "@/utils/apis/users";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
-import { CameraIcon, X } from "lucide-react";
+import { CameraIcon, Loader2, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useToken } from "@/utils/contexts/token";
+import { useToast } from "@/components/ui/use-toast";
+import Alert from "@/components/AlertDialog";
 
 const EditProfile = () => {
+  const [profile, setProfile] = useState<tokenUser>();
+  const [isLoading, setIsLoading] = useState(false);
+  const { changeToken, user } = useToken();
   const navigate = useNavigate();
+  const { toast } = useToast();
+
+  async function fetchData() {
+    setIsLoading(true);
+    try {
+      const result = await getDetailUser(user.user?.user_id.toString()!);
+      setProfile(result.data);
+      setIsLoading(false);
+    } catch (error: any) {
+      toast({
+        title: "Oops! Something went wrong.",
+        description: error.toString(),
+        variant: "destructive",
+      });
+    }
+  }
 
   const form = useForm<UpdateUserSchema>({
     resolver: zodResolver(updateUserSchema),
     defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-      image: "",
+      name: profile?.user.name ?? "",
+      email: profile?.user.email ?? "",
       address: "",
-      phone_number: 0,
+      phone_number: "",
+      password: "",
+      newpassword: "",
+      avatar: profile?.user.avatar ?? "",
+    },
+    values: {
+      name: profile?.user.name!,
+      email: profile?.user.email!,
+      address: "", // kenapa gaaada address
+      phone_number: "", // kenapa gaaada phone number
+      password: "",
+      newpassword: "",
+      avatar: "",
     },
   });
 
-  const fileRef = form.register("image", { required: false });
+  const fileRef = form.register("avatar", { required: true });
+
+  async function onSubmit(data: UpdateUserSchema) {
+    try {
+      const formData = new FormData();
+      formData.append("name", data.name);
+      formData.append("email", data.email);
+      formData.append("address", data.address);
+      formData.append("phone_number", data.phone_number);
+      formData.append("newpassword", data.newpassword);
+      formData.append("password", data.password);
+      formData.append("avatar", data.avatar[0]);
+
+      const result = await updateUser(user.user?.user_id!, formData as any);
+      toast({ description: result.message });
+    } catch (error: any) {
+      toast({
+        title: "Oops! Something went wrong.",
+        description: error.toString(),
+        variant: "destructive",
+      });
+    }
+  }
+
+  async function handleDeleteProfile() {
+    try {
+      const result = await deleteUser(user.user?.user_id!);
+      toast({ description: result.message });
+      changeToken();
+
+      navigate("/");
+    } catch (error: any) {
+      toast({
+        title: "Oops! Something went wrong.",
+        description: error.toString(),
+        variant: "destructive",
+      });
+    }
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, [form.formState.isSubmitSuccessful]);
+
+  useEffect(() => {
+    if (form.formState.isSubmitSuccessful) {
+      form.reset();
+    }
+  }, [form.formState]);
 
   return (
     <Layout>
       <div className="grow bg-white shadow-lg rounded-xl p-32 font-poppins dark:bg-transparent">
         <h1 className=" pb-16 font-bold text-4xl">Profile</h1>
         <Form {...form}>
-          <form action="" className=" flex flex-col gap-6">
+          <form
+            className=" flex flex-col gap-6"
+            onSubmit={form.handleSubmit(onSubmit)}
+          >
             <div className="flex justify-between items-center mb-12">
               <div className="flex items-center">
                 <div className="relative">
@@ -51,22 +142,18 @@ const EditProfile = () => {
                     />
                   </label>
                 </div>
-                <p className=" pl-8 text-3xl font-bold">John Doe</p>
+                <p className=" pl-8 text-3xl font-bold">{user.user?.name}</p>
               </div>
               <Button
                 type="button"
-                className="w-fit h-fit"
+                className="w-fit h-14"
                 onClick={() => navigate(-1)}
               >
                 <X />
               </Button>
             </div>
             <div className="invisible absolute">
-              <CustomFormField
-                control={form.control}
-                name="image"
-                label="Profile Picture"
-              >
+              <CustomFormField control={form.control} name="avatar">
                 {() => (
                   <Input
                     {...fileRef}
@@ -114,7 +201,7 @@ const EditProfile = () => {
               {(field) => (
                 <Input
                   {...field}
-                  placeholder="******"
+                  placeholder="Old password"
                   type="password"
                   disabled={form.formState.isSubmitting}
                   aria-disabled={form.formState.isSubmitting}
@@ -123,13 +210,13 @@ const EditProfile = () => {
             </CustomFormField>
             <CustomFormField
               control={form.control}
-              name="password"
+              name="newpassword"
               label="New Password"
             >
               {(field) => (
                 <Input
                   {...field}
-                  placeholder="********"
+                  placeholder="New password"
                   type="password"
                   disabled={form.formState.isSubmitting}
                   aria-disabled={form.formState.isSubmitting}
@@ -166,12 +253,36 @@ const EditProfile = () => {
                 />
               )}
             </CustomFormField>
-            <Button type="submit" className=" bg-[#1FBB5C] h-12">
-              Submit
+            <Button
+              type="submit"
+              disabled={form.formState.isSubmitting}
+              aria-disabled={form.formState.isSubmitting}
+              className=" bg-[#1FBB5C] h-12"
+            >
+              {form.formState.isSubmitting ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please wait
+                </>
+              ) : (
+                "Submit"
+              )}
             </Button>
             <p className=" text-center">or</p>
-            <Button type="button" variant={"destructive"} className="h-12">
+            {/* <Button type="button" variant={"destructive"} className="h-12">
               Delete Account
+            </Button> */}
+            <Button
+              className=" text-black border h-fit hover:bg-gray-200 hover:text-black shadow-md"
+              type="button"
+              variant={"destructive"}
+            >
+              <Alert
+                title="Are you absolutely sure?"
+                description="This action cannot be undone. This will permanently delete your account and remove your data from our servers."
+                onAction={handleDeleteProfile}
+              >
+                <p>Delete Account</p>
+              </Alert>
             </Button>
           </form>
         </Form>
