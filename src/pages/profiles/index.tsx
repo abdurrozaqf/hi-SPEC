@@ -2,8 +2,10 @@ import { useNavigate } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/Layout";
+import { useToken } from "@/utils/contexts/token";
 
 const Profile = () => {
+  const { user } = useToken();
   const navigate = useNavigate();
   return (
     <Layout>
@@ -16,7 +18,7 @@ const Profile = () => {
               src="https://github.com/shadcn.png"
               alt="@shadcn"
             />
-            <p className=" pl-8 text-3xl font-bold">John Doe</p>
+            <p className=" pl-8 text-3xl font-bold">{user.user?.name}</p>
           </div>
 
           <Button
@@ -29,17 +31,20 @@ const Profile = () => {
         </div>
         <div>
           <p className=" font-semibold mb-4 text-xl">Full Name</p>
-          <div className="border rounded-md p-4 mb-4">John Doe</div>
+          <div className="border rounded-md p-4 mb-4">{user.user?.name}</div>
           <p className=" font-semibold mb-4">Email</p>
-          <div className="border p-4 mb-4 rounded-md">johndoe@gmail.com</div>
+          <div className="border p-4 mb-4 rounded-md">{user.user?.email}</div>
           <p className="font-semibold mb-4">Password</p>
-          <div className=" border p-4 mb-4 rounded-md">**********</div>
+          <div className=" border p-4 mb-4 rounded-md">**********</div>{" "}
+          {/* kenapa gaada {user.user?password} yaa? */}
           <p className=" font-semibold mb-4">Address</p>
           <div className=" border p-4 mb-4 rounded-md">
             Jl. Veteran, Kec. Lowokwaru, Kota Malang, Jawa Timur
           </div>
+          {/* kenapa gaada {user.user?address} yaa? */}
           <p className="font-semibold mb-4">Phone Number</p>
           <div className=" border p-4 mb-4 rounded-md">0819362731919</div>
+          {/* kenapa gaada {user.user?phone_number} yaa? */}
         </div>
       </div>
     </Layout>
