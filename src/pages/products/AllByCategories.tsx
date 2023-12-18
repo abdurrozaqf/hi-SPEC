@@ -17,7 +17,7 @@ const AllByCategories = () => {
   async function fetchData() {
     try {
       const result = await getCategoryProducts(params.category!);
-      setDatas(result);
+      setDatas(result.data);
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",

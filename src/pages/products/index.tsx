@@ -1,11 +1,12 @@
 import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
+import { getProducts } from "@/utils/apis/products";
+
 import BannerTagline from "@/components/BannerTagline";
 import { useToast } from "@/components/ui/use-toast";
 import ProductCard from "@/components/ProductCard";
 import Layout from "@/components/Layout";
-import { getProducts } from "@/utils/apis/products";
 
 interface Products {
   product_id: number;
@@ -24,28 +25,13 @@ const Products = () => {
 
   const { toast } = useToast();
 
-  let url = "";
-  function Endpoint(
-    name: string,
-    category: string,
-    minPrice: string,
-    maxPrice: string
-  ) {
-    if (name) {
-      url = `/product/search?name=${name}`;
-    } else if (name && category) {
-      url = `/product/search?name=${name}&category=${category}`;
-    } else if ((name && category && minPrice) || maxPrice) {
-      url = `/product/search?name=${name}&category=${category}&minPrice=${minPrice}&maxPrice=${maxPrice}`;
-    }
-  }
-
   // Fetch API
   async function fetchDataName() {
     try {
-      const result = await getProducts(name, category, minPrice, maxPrice);
+      const result = await getProducts();
+      // const result = await getProducts(name, category, minPrice, maxPrice);
 
-      setDatas(result);
+      setDatas(result.data);
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -62,7 +48,6 @@ const Products = () => {
   return (
     <Layout>
       <BannerTagline />
-
       {datas == undefined ? (
         <div className="flex items-center justify-center grow border">
           <h1 className="font-semibold  text-slate-500">Laptop not found</h1>

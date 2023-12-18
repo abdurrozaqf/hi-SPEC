@@ -19,7 +19,7 @@ const Home = () => {
   async function fetchDataOffice() {
     try {
       const result = await getCategoryProducts(`office`);
-      setOffices(result);
+      setOffices(result.data);
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -32,7 +32,7 @@ const Home = () => {
   async function fetchDataMultimedia() {
     try {
       const result = await getCategoryProducts(`multimedia`);
-      setMultimedias(result);
+      setMultimedias(result.data);
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -45,7 +45,7 @@ const Home = () => {
   async function fetchDataGaming() {
     try {
       const result = await getCategoryProducts(`gaming`);
-      setGamings(result);
+      setGamings(result.data);
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
