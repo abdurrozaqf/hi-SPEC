@@ -73,8 +73,8 @@ const TransactionsAdmin = () => {
 
       const promises = dataResponse.map(async (data: any) => {
         const res = await axios.get(
-          // `http://3.104.106.44:8000/product/${data.product_id}`
-          `http://3.104.106.44:8000/product/2`
+          `http://3.104.106.44:8000/product/${data.product_id}`
+          // `http://3.104.106.44:8000/product/2`
         );
         const dataProducts = res.data.data;
 
@@ -121,6 +121,7 @@ const TransactionsAdmin = () => {
         };
       }
     }) || [];
+  console.log(mergedData);
 
   // const mergedData: MergedData[] = transactions?.map((transaction) => {
   //   const matchingProduct = products?.find(
@@ -144,18 +145,18 @@ const TransactionsAdmin = () => {
   //   return transaction;
   // });
 
-  async function handleDelete(transaction_id: number) {
-    try {
-      const result = await deleteTransactions(transaction_id);
-      toast({ description: result.message });
-    } catch (error: any) {
-      toast({
-        title: "Oops! Something went wrong.",
-        description: error.toString(),
-        variant: "destructive",
-      });
-    }
-  }
+  // async function handleDelete(transaction_id: number) {
+  //   try {
+  //     const result = await deleteTransactions(transaction_id);
+  //     toast({ description: result.message });
+  //   } catch (error: any) {
+  //     toast({
+  //       title: "Oops! Something went wrong.",
+  //       description: error.toString(),
+  //       variant: "destructive",
+  //     });
+  //   }
+  // }
 
   const debounceRequest = debounce((search: string) => setSearch(search), 1000);
 
@@ -183,14 +184,15 @@ const TransactionsAdmin = () => {
           <TableHeader>
             <TableRow>
               <TableHead className="w-[50px] text-center">No.</TableHead>
-              <TableHead>Image</TableHead>
+              {/* <TableHead>Image</TableHead>
               <TableHead>Name</TableHead>
-              <TableHead>Email</TableHead>
+              <TableHead>Email</TableHead> */}
+              <TableHead>Image Product</TableHead>
               <TableHead>Name Product</TableHead>
               <TableHead>Total Price</TableHead>
               <TableHead>Date</TableHead>
               <TableHead>Status</TableHead>
-              <TableHead className="text-center">Action</TableHead>
+              {/* <TableHead className="text-center">Action</TableHead> */}
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -199,7 +201,7 @@ const TransactionsAdmin = () => {
                 <TableCell className="font-medium text-center">
                   {index + 1}
                 </TableCell>
-                <TableCell>
+                {/* <TableCell>
                   <Avatar>
                     <AvatarImage
                       src="https://github.com/shadcn.png"
@@ -209,7 +211,13 @@ const TransactionsAdmin = () => {
                   </Avatar>
                 </TableCell>
                 <TableCell>John Doe</TableCell>
-                <TableCell>johndoe@mail.com</TableCell>
+                <TableCell>johndoe@mail.com</TableCell> */}
+                <TableCell>
+                  <img
+                    src={data.product?.picture}
+                    className="object-cover w-14 h-14"
+                  />
+                </TableCell>
                 <TableCell>{data.product?.name}</TableCell>
                 <TableCell>
                   {data.total_price.toLocaleString("id-ID", {
@@ -221,7 +229,7 @@ const TransactionsAdmin = () => {
                   {format(new Date(data.timestamp), "iiii, dd MMMM Y")}
                 </TableCell>
                 <TableCell>{data.status}</TableCell>
-                <TableCell className="flex justify-center items-center h-32 gap-4">
+                {/* <TableCell className="flex justify-center items-center h-32 gap-4">
                   <CustomDialog
                     title="Edit Transactions"
                     description={"Form Validation Transaction"}
@@ -238,7 +246,7 @@ const TransactionsAdmin = () => {
                       <Trash2 />
                     </div>
                   </Alert>
-                </TableCell>
+                </TableCell> */}
               </TableRow>
             ))}
           </TableBody>
