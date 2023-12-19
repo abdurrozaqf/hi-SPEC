@@ -15,6 +15,7 @@ import TransactionsAdmin from "@/pages/admin/TransactionsAdmin";
 import NotFound from "@/pages/not-found";
 
 import ProtectedRoutes from "@/routes/protected-routes";
+import AllByCategories from "@/pages/products/AllByCategories";
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -32,6 +33,10 @@ export default function Router() {
         {
           path: "/products",
           element: <Products />,
+        },
+        {
+          path: "/categories/:category",
+          element: <AllByCategories />,
         },
         {
           path: "/detail-product",

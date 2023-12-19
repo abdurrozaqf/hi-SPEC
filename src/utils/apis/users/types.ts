@@ -9,10 +9,17 @@ export const updateUserSchema = z.object({
     .string()
     .min(1, { message: "Email is required" })
     .email("Invalid email"),
-  password: z.string().min(1, { message: "Password is required" }),
+  password: z
+    .string()
+    .min(1, { message: "Password is required" })
+    .min(8, { message: "Password minimum 8 character" }),
+  newpassword: z
+    .string()
+    .min(1, { message: "Password is required" })
+    .min(8, { message: "Password minimum 8 character" }),
   address: z.string().min(1, { message: "Address is required" }),
-  phone_number: z.number().min(1, { message: "Phone number is required" }),
-  image: z
+  phone_number: z.string().min(1, { message: "Phone number is required" }),
+  avatar: z
     .any()
     .refine((files) => files?.length == 1, "Image is required.")
     .refine(
