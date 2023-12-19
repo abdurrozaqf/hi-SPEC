@@ -3,11 +3,11 @@ import { getCategoryProducts, getProducts, addProduct, deleteProduct, editProduc
 import {Product,
   AddProductSchema,
   EditProductSchema,
-  
   ResponseProducts,
   addProductSchema,
   editProductSchema,
 } from "./types";
+import { getDetailProduk } from "./api";
 
 export {
   getProducts,
@@ -20,5 +20,5 @@ export {
 };
 
 export type { Product, AddProductSchema, EditProductSchema, ResponseProducts };
-export type { Product, AddProductSchema, ResponseProducts, EditProductSchema };
+
 
