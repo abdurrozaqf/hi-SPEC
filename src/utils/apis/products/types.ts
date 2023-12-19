@@ -1,12 +1,17 @@
 import * as z from "zod";
 
 const MAX_FILE_SIZE = 5000000;
-const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
+const ACCEPTED_IMAGE_TYPES = [
+  "image/jpeg",
+  "image/jpg",
+  "image/png",
+  "image/webp",
+];
 
 export const addProductSchema = z.object({
-  name: z.string().min(1, { message: "Name is required" }),
+  laptop: z.string().min(1, { message: "Name is required" }),
   category: z.string().min(1, { message: "Category is required" }),
-  image: z
+  picture: z
     .any()
     .refine((files) => files?.length == 1, "Image is required.")
     .refine(
@@ -23,7 +28,7 @@ export const addProductSchema = z.object({
 
 export const editProductSchema = z.object({
   name: z.string().min(1, { message: "Name is required" }),
-  cpu: z.boolean(),
+  cpu: z.string(),
   ram: z.string(),
   display: z.string(),
   storage: z.string(),
@@ -31,9 +36,9 @@ export const editProductSchema = z.object({
   weight: z.string(),
   bluetooth: z.string(),
   hdmi: z.string(),
-  price: z.number(),
+  price: z.string(),
   category: z.string().min(1, { message: "Category is required" }),
-  image: z
+  picture: z
     .any()
     .refine((files) => files?.length == 1, "Image is required.")
     .refine(
@@ -52,6 +57,7 @@ export type EditProductSchema = z.infer<typeof editProductSchema>;
 
 export type Product = {
   product_id: number;
+  category: string;
   name: string;
   cpu: string;
   ram: string;
@@ -61,8 +67,14 @@ export type Product = {
   weight: string;
   bluetooth: string;
   hdmi: string;
-  price: string;
+  price: number;
+  picture: string;
+};
+
+export type ResponseProducts = {
+  product_id: number;
   category: string;
-  image: string;
+  name: string;
+  price: number;
   picture: string;
 };

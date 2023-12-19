@@ -1,4 +1,10 @@
-import { StatusSchema, Transactions, statusSchema } from "./types";
+import { getDashboard, getTransactions } from "./api";
+import {
+  ResponseDashboard,
+  StatusSchema,
+  Transactions,
+  statusSchema,
+} from "./types";
 
-export { statusSchema };
-export type { Transactions, StatusSchema };
+export { getDashboard, getTransactions, statusSchema };
+export type { Transactions, StatusSchema, ResponseDashboard };

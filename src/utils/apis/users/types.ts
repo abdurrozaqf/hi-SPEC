@@ -37,14 +37,17 @@ export const updateUserSchema = z.object({
 export type UpdateUserSchema = z.infer<typeof updateUserSchema>;
 
 export type User = {
-  user_id: number;
-  name: string;
-  email: string;
-  avatar: string;
-  password: string;
+  user: {
+    user_id: number;
+    name: string;
+    email: string;
+    avatar: string;
+    phone_number: string;
+    address: string;
+  };
   my_favorite: {
-    product_id: number;
     favorite_id: number;
+    product_id: number;
     name: string;
     price: number;
     picture: string;
@@ -52,26 +55,11 @@ export type User = {
 };
 
 export type AllUser = {
-  id: number;
+  user_id: number;
   email: string;
   name: string;
   address: string;
   phone_number: string;
   avatar: string;
-};
-
-export type tokenUser<T = any> = {
-  user: {
-    user_id: number;
-    name: string;
-    email: string;
-    avatar: string;
-  };
-  my_favorite: {
-    product_id: number;
-    favorite_id: number;
-    name: string;
-    price: number;
-    picture: string;
-  }[];
+  time: Date;
 };

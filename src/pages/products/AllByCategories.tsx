@@ -1,7 +1,7 @@
-import { useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-import { ResponseProducts, getProducts } from "@/utils/apis/products";
+import { getProducts } from "@/utils/apis/products";
 import { Meta } from "@/utils/types/api";
 
 import BannerTagline from "@/components/BannerTagline";
@@ -10,19 +10,21 @@ import ProductCard from "@/components/ProductCard";
 import Pagination from "@/components/Pagination";
 import Layout from "@/components/Layout";
 
-const Products = () => {
-  const [datas, setDatas] = useState<ResponseProducts[]>();
+const AllByCategories = () => {
+  const [datas, setDatas] = useState([]);
+  const [meta, setMeta] = useState<Meta>();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const [meta, setMeta] = useState<Meta>();
-  const { toast } = useToast();
-
   useEffect(() => {
-    fetchDataName();
+    searchParams.set("category", params.category!);
+    setSearchParams(searchParams);
+    fetchData();
   }, [searchParams]);
 
-  // Fetch API
-  async function fetchDataName() {
+  const { toast } = useToast();
+  const params = useParams();
+
+  async function fetchData() {
     try {
       const query = Object.fromEntries([...searchParams]);
 
@@ -38,8 +40,9 @@ const Products = () => {
     }
   }
 
-  function handlePrevNextPage(page: string | number) {
+  function handlePrevNextPage(page: string | number, limit: string | number) {
     searchParams.set("page", String(page));
+    searchParams.set("limit", String(limit));
     setSearchParams(searchParams);
   }
 
@@ -63,8 +66,9 @@ const Products = () => {
         <div>
           <Pagination
             meta={meta}
-            onClickNext={() => handlePrevNextPage(meta?.page! + 1)}
-            onClickPrevious={() => handlePrevNextPage(meta?.page! - 1)}
+            datas={datas.length}
+            onClickNext={() => handlePrevNextPage(meta?.page! + 1, 10)}
+            onClickPrevious={() => handlePrevNextPage(meta?.page! - 1, 10)}
           />
         </div>
       </div>
@@ -72,4 +76,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default AllByCategories;

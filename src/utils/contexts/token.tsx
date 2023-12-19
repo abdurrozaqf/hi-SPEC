@@ -11,11 +11,11 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 
 import axiosWithConfig, { setAxiosConfig } from "@/utils/apis/axiosWithConfig";
-import { User, tokenUser, getDetailUser } from "@/utils/apis/users";
+import { User, getDetailUser } from "@/utils/apis/users";
 
 interface Context {
   token: string;
-  user: Partial<tokenUser>;
+  user: Partial<User>;
   changeToken: (token?: string) => void;
   changeUserID: (userID?: string) => void;
 }
@@ -38,7 +38,7 @@ export function TokenProvider({ children }: Readonly<Props>) {
 
   const [token, setToken] = useState(localStorage.getItem("token") ?? "");
   const [userID, setUserID] = useState(localStorage.getItem("userID") ?? "");
-  const [user, setUser] = useState<Partial<tokenUser>>({});
+  const [user, setUser] = useState<Partial<User>>({});
 
   useEffect(() => {
     setAxiosConfig(token);
@@ -68,14 +68,12 @@ export function TokenProvider({ children }: Readonly<Props>) {
         variant: "destructive",
       });
     }
-  }, [token]); // biar gak refresh di tambah parameter di dalam kurung siku sebagai tanda perubahan di user dia akan menjalankan functionnya kembali
+  }, [token]);
 
   const changeToken = useCallback(
     (token?: string) => {
       const newToken = token ?? "";
-
       setToken(newToken);
-
       if (token) {
         localStorage.setItem("token", newToken);
       } else {
