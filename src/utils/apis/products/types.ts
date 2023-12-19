@@ -51,7 +51,7 @@ export type AddProductSchema = z.infer<typeof addProductSchema>;
 export type EditProductSchema = z.infer<typeof editProductSchema>;
 
 export type Product = {
-  productID: 1;
+  product_id: number;
   name: string;
   cpu: string;
   ram: string;
@@ -64,4 +64,5 @@ export type Product = {
   price: string;
   category: string;
   image: string;
+  picture: string;
 };
