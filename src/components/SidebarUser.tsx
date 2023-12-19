@@ -20,6 +20,7 @@ import {
   MoonStarIcon,
   SunIcon,
 } from "lucide-react";
+import Alert from "./AlertDialog";
 
 const SidebarUser = () => {
   const { changeToken, changeUserID, user, token } = useToken();
@@ -186,24 +187,26 @@ const SidebarUser = () => {
             </p>
           </div>
           {token ? (
-            <div
-              className="flex items-center gap-2 cursor-pointer"
-              onClick={() => handleLogout()}
+            <Alert
+              title="Are you sure for Logout"
+              onAction={() => handleLogout}
             >
-              <div className="p-2 rounded-md shadow-md w-fit bg-[#FF5858]">
-                <LogOutIcon color="white" />
-              </div>
+              <div className="flex items-center gap-2 cursor-pointer">
+                <div className="p-2 rounded-md shadow-md w-fit bg-[#FF5858]">
+                  <LogOutIcon color="white" />
+                </div>
 
-              <p
-                className={
-                  isOpen
-                    ? `font-medium w-full opacity-100 translate-x-0 transition-all hover:bg-[#E4ECF1] dark:hover:bg-white rounded-md p-2 dark:hover:text-black`
-                    : `w-0 opacity-0 -translate-x-28 transition-all absolute`
-                }
-              >
-                Logout
-              </p>
-            </div>
+                <p
+                  className={
+                    isOpen
+                      ? `font-medium w-full opacity-100 translate-x-0 transition-all hover:bg-[#E4ECF1] dark:hover:bg-white rounded-md p-2 dark:hover:text-black`
+                      : `w-0 opacity-0 -translate-x-28 transition-all absolute`
+                  }
+                >
+                  Logout
+                </p>
+              </div>
+            </Alert>
           ) : (
             <div
               className="flex items-center gap-2 cursor-pointer"

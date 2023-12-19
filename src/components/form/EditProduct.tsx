@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 
 import {
   EditProductSchema,
+  Product,
   editProduct,
   editProductSchema,
 } from "@/utils/apis/products";
@@ -27,22 +28,6 @@ import axios from "axios";
 interface Props {
   product_id: number;
 }
-
-type Product = {
-  product_id: number;
-  category: string;
-  name: string;
-  cpu: string;
-  ram: string;
-  display: string;
-  storage: string;
-  thickness: string;
-  weight: string;
-  bluetooth: string;
-  hdmi: string;
-  price: number;
-  picture: string;
-};
 
 const EditProduct = (props: Props) => {
   const { product_id } = props;
@@ -80,7 +65,7 @@ const EditProduct = (props: Props) => {
       bluetooth: datas?.bluetooth ?? "",
       hdmi: datas?.hdmi ?? "",
       price: datas?.price.toString() ?? "",
-      image: datas?.picture ?? "",
+      picture: datas?.picture ?? "",
     },
     values: {
       category: datas?.category ?? "",
@@ -94,11 +79,11 @@ const EditProduct = (props: Props) => {
       bluetooth: datas?.bluetooth ?? "",
       hdmi: datas?.hdmi ?? "",
       price: datas?.price.toString() ?? "",
-      image: "",
+      picture: "",
     },
   });
 
-  const fileRef = form.register("image", { required: true });
+  const fileRef = form.register("picture", { required: true });
   async function onSubmit(data: EditProductSchema) {
     try {
       const formData = new FormData();
@@ -113,7 +98,7 @@ const EditProduct = (props: Props) => {
       formData.append("bluetooth", data.bluetooth);
       formData.append("hdmi", data.hdmi);
       formData.append("price", data.price.toString());
-      formData.append("image", data.image[0]);
+      formData.append("picture", data.picture[0]);
 
       const result = await editProduct(product_id, formData as any);
 
@@ -138,7 +123,7 @@ const EditProduct = (props: Props) => {
   }, [form.formState]);
 
   return (
-    <div className="pr-6 h-[35rem] overflow-auto">
+    <div className="pl-2 pr-6 h-[35rem] overflow-auto">
       <Form {...form}>
         <form
           className="flex flex-col w-full mx-auto gap-6 mt-10"
@@ -318,7 +303,7 @@ const EditProduct = (props: Props) => {
               </Select>
             )}
           </CustomFormField>
-          <CustomFormField control={form.control} name="image" label="Image">
+          <CustomFormField control={form.control} name="picture" label="Image">
             {() => (
               <Input
                 {...fileRef}

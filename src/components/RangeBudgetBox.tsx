@@ -61,7 +61,7 @@ const RangeBudgetBox = (props: Props) => {
               <Input
                 {...field}
                 placeholder="Rp. Minimum"
-                type="tel"
+                type="number"
                 disabled={form.formState.isSubmitting}
                 aria-disabled={form.formState.isSubmitting}
                 className="border rounded-md outline-none shadow py-1 px-4 placeholder:text-sm dark:bg-black"
@@ -74,7 +74,7 @@ const RangeBudgetBox = (props: Props) => {
               <Input
                 {...field}
                 placeholder="Rp. Maximum"
-                type="tel"
+                type="number"
                 disabled={form.formState.isSubmitting}
                 aria-disabled={form.formState.isSubmitting}
                 className="border rounded-md outline-none shadow py-1 px-4 placeholder:text-sm dark:bg-black"
