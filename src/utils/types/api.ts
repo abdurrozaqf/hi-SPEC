@@ -18,10 +18,12 @@ export type ResponsePagination<T = any> = {
   pagination: {
     limit: number;
     page: number;
+    total_page: number;
   };
 };
 
 export interface Meta {
   limit: number;
   page: number;
+  total_page: number;
 }

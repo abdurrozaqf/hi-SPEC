@@ -1,17 +1,25 @@
-import { getCategoryProducts, getProducts, addProduct, deleteProduct, editProduct } from "./api";
+import {
+  getCategoryProducts,
+  getProducts,
+  addProduct,
+  deleteProduct,
+  editProduct,
+  getDetailProduk,
+} from "./api";
 
-import {Product,
+import {
+  Product,
   AddProductSchema,
   EditProductSchema,
   ResponseProducts,
   addProductSchema,
   editProductSchema,
 } from "./types";
-import { getDetailProduk } from "./api";
 
 export {
   getProducts,
   getCategoryProducts,
+  getDetailProduk,
   addProduct,
   editProduct,
   deleteProduct,
@@ -20,5 +28,3 @@ export {
 };
 
 export type { Product, AddProductSchema, EditProductSchema, ResponseProducts };
-
-

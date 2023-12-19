@@ -1,12 +1,27 @@
-import { Response } from "@/utils/types/api";
-import { User, tokenUser, AllUser, UpdateUserSchema } from "./types";
+import { Request, Response, ResponsePagination } from "@/utils/types/api";
+import { User, UpdateUserSchema } from "./types";
 import axiosWithConfig from "@/utils/apis/axiosWithConfig";
 
-export const getUser = async () => {
+export const getUser = async (params?: Request) => {
   try {
-    const response = await axiosWithConfig.get(`/users/`);
+    let query = "";
 
-    return response.data as Response<AllUser>;
+    if (params) {
+      const queryParams: string[] = [];
+
+      let key: keyof typeof params;
+      for (key in params) {
+        queryParams.push(`${key}=${params[key]}`);
+      }
+
+      query = queryParams.join("&");
+    }
+
+    const url = query ? `/user/search?${query}` : `/users`;
+
+    const response = await axiosWithConfig.get(url);
+
+    return response.data as ResponsePagination;
   } catch (error: any) {
     throw Error(error.response.data.message);
   }
@@ -16,14 +31,13 @@ export const getDetailUser = async (user_id: string) => {
   try {
     const response = await axiosWithConfig.get(`/user/${user_id}`);
 
-    return response.data as Response<tokenUser>;
+    return response.data as Response<User>;
   } catch (error: any) {
     throw Error(error.response.data.message);
   }
 };
 
-
-export const updateUser = async (user_id: number, body: any) => {
+export const updateUser = async (user_id: number, body: UpdateUserSchema) => {
   try {
     const response = await axiosWithConfig.patch(`/user/${user_id}`, body);
 
@@ -43,9 +57,9 @@ export const deleteUser = async (user_id: number) => {
   }
 };
 
-export const addWishlist = async (body: UpdateUserSchema) => {
+export const addWishlist = async (product_id: number) => {
   try {
-    const response = await axiosWithConfig.post(`/users`, body);
+    const response = await axiosWithConfig.post(`/user/fav/${product_id}`);
 
     return response.data as Response;
   } catch (error: any) {
@@ -53,9 +67,9 @@ export const addWishlist = async (body: UpdateUserSchema) => {
   }
 };
 
-export const deleteWishlist = async (user_id: number) => {
+export const deleteWishlist = async (product_id: number) => {
   try {
-    const response = await axiosWithConfig.delete(`/fav/${user_id}`);
+    const response = await axiosWithConfig.delete(`/user/fav/${product_id}`);
 
     return response.data as Response;
   } catch (error: any) {

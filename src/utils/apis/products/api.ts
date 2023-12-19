@@ -1,6 +1,6 @@
-import { AddProductSchema, EditProductSchema,Product } from "./types";
+import { AddProductSchema, EditProductSchema, Product } from "./types";
 import axiosWithConfig from "../axiosWithConfig";
-import { Response,Request, ResponsePagination } from "@/utils/types/api";
+import { Response, Request, ResponsePagination } from "@/utils/types/api";
 
 export const getProducts = async (params?: Request) => {
   try {
@@ -43,7 +43,7 @@ export const getDetailProducts = async (product_id: number) => {
   try {
     const response = await axiosWithConfig.get(`/product/${product_id}`);
 
-    return response.data as Product;
+    return response.data as Response;
   } catch (error: any) {
     throw Error(error.response.data.message);
   }
@@ -78,7 +78,7 @@ export const editProduct = async (
 export const deleteProduct = async (product_id: number) => {
   try {
     const response = await axiosWithConfig.delete(`/product/${product_id}`);
-    
+
     return response.data as Response;
   } catch (error: any) {
     throw Error(error.response.data.message);
@@ -88,7 +88,7 @@ export const deleteProduct = async (product_id: number) => {
 export const getDetailProduk = async (product_id: number) => {
   try {
     const response = await axiosWithConfig.get(`/product/${product_id}`);
-    
+
     return response.data as Response;
   } catch (error: any) {
     throw Error(error.response.data.message);

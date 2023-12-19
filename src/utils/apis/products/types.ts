@@ -38,7 +38,7 @@ export const editProductSchema = z.object({
   hdmi: z.string(),
   price: z.string(),
   category: z.string().min(1, { message: "Category is required" }),
-  image: z
+  picture: z
     .any()
     .refine((files) => files?.length == 1, "Image is required.")
     .refine(
@@ -56,7 +56,8 @@ export type AddProductSchema = z.infer<typeof addProductSchema>;
 export type EditProductSchema = z.infer<typeof editProductSchema>;
 
 export type Product = {
-  productID: 1;
+  product_id: number;
+  category: string;
   name: string;
   cpu: string;
   ram: string;
@@ -66,15 +67,14 @@ export type Product = {
   weight: string;
   bluetooth: string;
   hdmi: string;
-  price: string;
-  category: string;
-  image: string;
+  price: number;
+  picture: string;
 };
 
 export type ResponseProducts = {
   product_id: number;
+  category: string;
   name: string;
   price: number;
   picture: string;
-  category: string;
 };
