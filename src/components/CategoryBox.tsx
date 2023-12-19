@@ -8,11 +8,15 @@ const CategoryBox = (props: Props) => {
   const { isOpen } = props;
 
   const navigate = useNavigate();
-  const [category, setCategory] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  function handleCategory(e: any) {
-    setCategory();
-    setCategory({ category: e });
+  function handleCategory(value: string) {
+    if (value !== "") {
+      searchParams.set("category", value);
+    } else {
+      searchParams.delete("category");
+    }
+    setSearchParams(searchParams);
   }
 
   return (
@@ -25,7 +29,7 @@ const CategoryBox = (props: Props) => {
     >
       <h1 className="font-medium">Categories:</h1>
       <div
-        className="flex items-center gap-2 ml-4"
+        className="flex ml-4 gap-2 items-center"
         onClick={() => navigate("/products")}
       >
         {/* <Checkbox id="all" value="" onChange={handleChange} /> */}
@@ -39,67 +43,67 @@ const CategoryBox = (props: Props) => {
         />
         <label
           htmlFor="all"
-          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+          className="cursor-pointer font-medium text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
         >
           All
         </label>
       </div>
       <div
-        className="flex items-center gap-2 ml-4"
+        className="flex ml-4 gap-2 items-center"
         onClick={() => navigate("/products")}
       >
         {/* <Checkbox id="office" value="office" onChange={handleChange} /> */}
         <input
           onChange={(e) => handleCategory(e.target.value)}
           type="radio"
-          value="office"
+          value="Office"
           id="office"
           name="category"
           className="cursor-pointer"
         />
         <label
           htmlFor="office"
-          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+          className="cursor-pointer font-medium text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
         >
           Office
         </label>
       </div>
       <div
-        className="flex items-center gap-2 ml-4"
+        className="flex ml-4 gap-2 items-center"
         onClick={() => navigate("/products")}
       >
         {/* <Checkbox id="multimedia" /> */}
         <input
           onChange={(e) => handleCategory(e.target.value)}
           type="radio"
-          value="multimedia"
+          value="Multimedia"
           id="multimedia"
           name="category"
           className="cursor-pointer"
         />
         <label
           htmlFor="multimedia"
-          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+          className="cursor-pointer font-medium text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
         >
           Multimedia
         </label>
       </div>
       <div
-        className="flex items-center gap-2 ml-4"
+        className="flex ml-4 gap-2 items-center"
         onClick={() => navigate("/products")}
       >
         {/* <Checkbox id="gaming" /> */}
         <input
           onChange={(e) => handleCategory(e.target.value)}
           type="radio"
-          value="gaming"
+          value="Gaming"
           id="gaming"
           name="category"
           className="cursor-pointer"
         />
         <label
           htmlFor="gaming"
-          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+          className="cursor-pointer font-medium text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
         >
           Gaming
         </label>

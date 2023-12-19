@@ -5,20 +5,25 @@ import { SearchCode } from "lucide-react";
 
 const SearchBox = () => {
   const [keyword, setKeyword] = useState("");
-  const [search, setSearch] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setSearch({ name: keyword });
+    if (keyword !== "") {
+      searchParams.set("name", keyword);
+    } else {
+      searchParams.delete("name");
+    }
+    setSearchParams(searchParams);
   }
 
   return (
-    <div className="w-1/2 bg-white shadow-md rounded-full p-2 ">
+    <div className="bg-white rounded-full shadow-md p-2 w-1/2 ">
       <form
         className="flex gap-4 items-center"
         onSubmit={(event) => onSubmit(event)}
       >
-        <Button className="p-1 bg-[#E4ECF1] rounded-full w-fit h-fit">
+        <Button className="rounded-full h-fit bg-[#E4ECF1] w-fit p-1">
           <SearchCode color="black" />
         </Button>
         <input
@@ -26,7 +31,7 @@ const SearchBox = () => {
           value={keyword}
           onChange={(event) => setKeyword(event.target.value)}
           placeholder="Enter your search name"
-          className="w-full placeholder:italic placeholder:text-sm text-black outline-none bg-transparent text-sm"
+          className="bg-transparent outline-none text-black text-sm w-full placeholder:italic placeholder:text-sm"
         />
       </form>
     </div>

@@ -4,12 +4,22 @@ import { Product } from "./types";
 
 export const getProducts = async (params?: Request) => {
   try {
-    const url = params ? `/product/search?${params}` : `/products`;
+    let query = "";
+
+    if (params) {
+      const queryParams: string[] = [];
+
+      let key: keyof typeof params;
+      for (key in params) {
+        queryParams.push(`${key}=${params[key]}`);
+      }
+
+      query = queryParams.join("&");
+    }
+
+    const url = query ? `/product/search?${query}` : `/products`;
 
     const response = await axiosWithConfig.get(url);
-    // const response = await axiosWithConfig.get(
-    //   `/product/search?name=${name}&category=${category}&minPrice=${minPrice}&maxPrice=${maxPrice}`
-    // );
 
     return response.data as Response;
   } catch (error: any) {

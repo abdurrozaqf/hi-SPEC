@@ -22,7 +22,7 @@ const RangeSchema = z.object({
 const RangeBudgetBox = (props: Props) => {
   const { isOpen } = props;
 
-  const [price, setPrice] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const form = useForm<z.infer<typeof RangeSchema>>({
     resolver: zodResolver(RangeSchema),
@@ -33,14 +33,21 @@ const RangeBudgetBox = (props: Props) => {
   });
 
   async function onSubmit(data: z.infer<typeof RangeSchema>) {
-    setPrice({ minPrice: data.minPrice, maxPrice: data.maxPrice });
+    if (data.maxPrice !== "" && data.minPrice !== "") {
+      searchParams.set("minPrice", data.minPrice);
+      searchParams.set("maxPrice", data.maxPrice);
+    } else {
+      searchParams.delete("minPrice");
+      searchParams.delete("maxPrice");
+    }
+    setSearchParams(searchParams);
   }
 
-  useEffect(() => {
-    if (form.formState.isSubmitSuccessful) {
-      form.reset();
-    }
-  }, [form.formState]);
+  // useEffect(() => {
+  //   if (form.formState.isSubmitSuccessful) {
+  //     form.reset();
+  //   }
+  // }, [form.formState]);
 
   return (
     <div
@@ -64,7 +71,7 @@ const RangeBudgetBox = (props: Props) => {
                 type="number"
                 disabled={form.formState.isSubmitting}
                 aria-disabled={form.formState.isSubmitting}
-                className="rounded-md placeholder:text-sm outline-none dark:bg-black px-4 py-1 border shadow"
+                className="border rounded-md outline-none shadow py-1 px-4 placeholder:text-sm dark:bg-black"
               />
             )}
           </CustomFormField>
@@ -77,11 +84,11 @@ const RangeBudgetBox = (props: Props) => {
                 type="number"
                 disabled={form.formState.isSubmitting}
                 aria-disabled={form.formState.isSubmitting}
-                className="rounded-md placeholder:text-sm outline-none dark:bg-black px-4 py-1 border shadow"
+                className="border rounded-md outline-none shadow py-1 px-4 placeholder:text-sm dark:bg-black"
               />
             )}
           </CustomFormField>
-          <Button type="submit" className=" h-fit w-full bg-[#48B774] mt-6">
+          <Button type="submit" className=" h-fit bg-[#48B774] mt-6 w-full">
             <p className="font-medium">Submit</p>
           </Button>
         </form>

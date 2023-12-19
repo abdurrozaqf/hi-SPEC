@@ -18,18 +18,19 @@ interface Products {
 const Products = () => {
   const [datas, setDatas] = useState<Products[]>();
   const [searchParams] = useSearchParams();
-  const name = searchParams.get("name") ?? "";
-  const category = searchParams.get("category") ?? "";
-  const minPrice = searchParams.get("minPrice") ?? "";
-  const maxPrice = searchParams.get("maxPrice") ?? "";
 
   const { toast } = useToast();
+
+  useEffect(() => {
+    fetchDataName();
+  }, [searchParams]);
 
   // Fetch API
   async function fetchDataName() {
     try {
-      const result = await getProducts();
-      // const result = await getProducts(name, category, minPrice, maxPrice);
+      const query = Object.fromEntries([...searchParams]);
+
+      const result = await getProducts({ ...query });
 
       setDatas(result.data);
     } catch (error: any) {
@@ -41,19 +42,15 @@ const Products = () => {
     }
   }
 
-  useEffect(() => {
-    fetchDataName();
-  }, [name, category, maxPrice]);
-
   return (
     <Layout>
       <BannerTagline />
       {datas == undefined ? (
-        <div className="flex items-center justify-center grow border">
+        <div className="border flex items-center justify-center grow">
           <h1 className="font-semibold  text-slate-500">Laptop not found</h1>
         </div>
       ) : (
-        <div className="grid grid-cols-5 gap-6 mt-10">
+        <div className="mt-10 grid gap-6 grid-cols-5">
           {datas?.map((data, index) => {
             return <ProductCard key={index} data={data} />;
           })}
