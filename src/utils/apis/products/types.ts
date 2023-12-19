@@ -66,7 +66,7 @@ export type Product = {
   image: string;
 };
 
-export type ResponseAllProducts = {
+export type ResponseProducts = {
   product_id: number;
   name: string;
   price: number;

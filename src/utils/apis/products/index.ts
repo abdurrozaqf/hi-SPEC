@@ -3,7 +3,7 @@ import {
   AddProductSchema,
   EditProductSchema,
   Product,
-  ResponseAllProducts,
+  ResponseProducts,
   addProductSchema,
   editProductSchema,
 } from "./types";
@@ -14,9 +14,4 @@ export {
   addProductSchema,
   editProductSchema,
 };
-export type {
-  Product,
-  ResponseAllProducts,
-  AddProductSchema,
-  EditProductSchema,
-};
+export type { Product, ResponseProducts, AddProductSchema, EditProductSchema };
