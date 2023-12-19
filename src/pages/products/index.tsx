@@ -1,24 +1,20 @@
 import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-import { getProducts } from "@/utils/apis/products";
+import { ResponseProducts, getProducts } from "@/utils/apis/products";
+import { Meta } from "@/utils/types/api";
 
 import BannerTagline from "@/components/BannerTagline";
 import { useToast } from "@/components/ui/use-toast";
 import ProductCard from "@/components/ProductCard";
+import Pagination from "@/components/Pagination";
 import Layout from "@/components/Layout";
 
-interface Products {
-  product_id: number;
-  name: string;
-  price: number;
-  picture: string;
-}
-
 const Products = () => {
-  const [datas, setDatas] = useState<Products[]>();
-  const [searchParams] = useSearchParams();
+  const [datas, setDatas] = useState<ResponseProducts[]>();
+  const [searchParams, setSearchParams] = useSearchParams();
 
+  const [meta, setMeta] = useState<Meta>();
   const { toast } = useToast();
 
   useEffect(() => {
@@ -31,8 +27,8 @@ const Products = () => {
       const query = Object.fromEntries([...searchParams]);
 
       const result = await getProducts({ ...query });
-
       setDatas(result.data);
+      setMeta(result.pagination);
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -42,20 +38,37 @@ const Products = () => {
     }
   }
 
+  function handlePrevNextPage(page: string | number, limit: string | number) {
+    searchParams.set("page", String(page));
+    searchParams.set("limit", String(limit));
+    setSearchParams(searchParams);
+  }
+
   return (
     <Layout>
-      <BannerTagline />
-      {datas == undefined ? (
-        <div className="border flex items-center justify-center grow">
-          <h1 className="font-semibold  text-slate-500">Laptop not found</h1>
+      <div className="flex flex-col gap-8 grow">
+        <div>
+          <BannerTagline />
         </div>
-      ) : (
-        <div className="mt-10 grid gap-6 grid-cols-5">
-          {datas?.map((data, index) => {
-            return <ProductCard key={index} data={data} />;
-          })}
+        {datas == undefined ? (
+          <div className="flex items-center justify-center grow">
+            <h1 className="font-semibold  text-slate-500">Laptop not found</h1>
+          </div>
+        ) : (
+          <div className="grid gap-6 grid-cols-5 grow">
+            {datas?.map((data, index) => {
+              return <ProductCard key={index} data={data} />;
+            })}
+          </div>
+        )}
+        <div>
+          <Pagination
+            meta={meta}
+            onClickNext={() => handlePrevNextPage(meta?.page! + 1, 10)}
+            onClickPrevious={() => handlePrevNextPage(meta?.page! - 1, 10)}
+          />
         </div>
-      )}
+      </div>
     </Layout>
   );
 };

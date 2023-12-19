@@ -15,10 +15,10 @@ const Home = () => {
 
   const { toast } = useToast();
 
-  // Fetch data Apis
+  // Fetch Api
   async function fetchDataOffice() {
     try {
-      const result = await getCategoryProducts(`office`);
+      const result = await getCategoryProducts(`office`, 5);
       setOffices(result.data);
     } catch (error: any) {
       toast({
@@ -31,7 +31,7 @@ const Home = () => {
 
   async function fetchDataMultimedia() {
     try {
-      const result = await getCategoryProducts(`multimedia`);
+      const result = await getCategoryProducts(`multimedia`, 5);
       setMultimedias(result.data);
     } catch (error: any) {
       toast({
@@ -44,7 +44,7 @@ const Home = () => {
 
   async function fetchDataGaming() {
     try {
-      const result = await getCategoryProducts(`gaming`);
+      const result = await getCategoryProducts(`gaming`, 5);
       setGamings(result.data);
     } catch (error: any) {
       toast({
@@ -73,13 +73,9 @@ const Home = () => {
             </Link>
           </div>
           <div className="grid grid-cols-5 gap-6">
-            {offices
-              .map((office, index) =>
-                index < 5 ? (
-                  <ProductCard key={index} data={office} />
-                ) : undefined
-              )
-              .filter((office) => office !== undefined)}
+            {offices.map((office, index) => (
+              <ProductCard key={index} data={office} />
+            ))}
           </div>
         </div>
         <div className="flex flex-col gap-3">
@@ -90,13 +86,9 @@ const Home = () => {
             </Link>
           </div>
           <div className="grid grid-cols-5 gap-6">
-            {multimedias
-              .map((multimedia, index) =>
-                index < 5 ? (
-                  <ProductCard key={index} data={multimedia} />
-                ) : undefined
-              )
-              .filter((multimedia) => multimedia !== undefined)}
+            {multimedias.map((multimedia, index) => (
+              <ProductCard key={index} data={multimedia} />
+            ))}
           </div>
         </div>
         <div className="flex flex-col gap-3">
@@ -107,13 +99,9 @@ const Home = () => {
             </Link>
           </div>
           <div className="grid grid-cols-5 gap-6">
-            {gamings
-              .map((gaming, index) =>
-                index < 5 ? (
-                  <ProductCard key={index} data={gaming} />
-                ) : undefined
-              )
-              .filter((gaming) => gaming !== undefined)}
+            {gamings.map((gaming, index) => (
+              <ProductCard key={index} data={gaming} />
+            ))}
           </div>
         </div>
       </div>
