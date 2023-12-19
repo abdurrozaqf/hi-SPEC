@@ -1,4 +1,5 @@
+import { deleteTransactions, getTransactions } from "./api";
 import { StatusSchema, Transactions, statusSchema } from "./types";
 
-export { statusSchema };
+export { getTransactions, deleteTransactions, statusSchema };
 export type { Transactions, StatusSchema };

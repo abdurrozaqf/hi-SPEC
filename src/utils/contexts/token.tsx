@@ -11,7 +11,7 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 
 import axiosWithConfig, { setAxiosConfig } from "@/utils/apis/axiosWithConfig";
-import { User, tokenUser, getDetailUser } from "@/utils/apis/users";
+import { tokenUser, getDetailUser } from "@/utils/apis/users";
 
 interface Context {
   token: string;
@@ -73,9 +73,7 @@ export function TokenProvider({ children }: Readonly<Props>) {
   const changeToken = useCallback(
     (token?: string) => {
       const newToken = token ?? "";
-
       setToken(newToken);
-
       if (token) {
         localStorage.setItem("token", newToken);
       } else {

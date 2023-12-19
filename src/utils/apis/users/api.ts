@@ -22,7 +22,8 @@ export const getDetailUser = async (user_id: string) => {
   }
 };
 
-export const updateUser = async (user_id: number, body: UpdateUserSchema) => {
+
+export const updateUser = async (user_id: number, body: any) => {
   try {
     const response = await axiosWithConfig.patch(`/user/${user_id}`, body);
 
@@ -34,15 +35,13 @@ export const updateUser = async (user_id: number, body: UpdateUserSchema) => {
 
 export const deleteUser = async (user_id: number) => {
   try {
-    const response = await axiosWithConfig.delete(`/users/${user_id}`);
+    const response = await axiosWithConfig.delete(`/user/${user_id}`);
 
     return response.data as Response;
   } catch (error: any) {
     throw Error(error.response.data.message);
   }
 };
-
-// ========================= tambahan wishlist =========================
 
 export const addWishlist = async (body: UpdateUserSchema) => {
   try {

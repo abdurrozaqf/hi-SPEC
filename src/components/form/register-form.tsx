@@ -45,7 +45,7 @@ const RegisterForm = () => {
   }
 
   return (
-    <div className="text-[#1E1E1E] font-poppins">
+    <div className="font-poppins">
       <h1>Register your account now to get full access</h1>
       <Form {...form}>
         <form

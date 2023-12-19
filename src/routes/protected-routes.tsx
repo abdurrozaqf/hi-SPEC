@@ -34,6 +34,7 @@ const ProtectedRoutes = () => {
     "/products",
     "/categories",
     "/compare",
+    "/categories",
     "/wishlist",
     "/detail-product",
   ];
@@ -42,15 +43,15 @@ const ProtectedRoutes = () => {
     if (token) return <Navigate to="/" />;
   }
 
+  if (roleUserProtected.includes(pathname)) {
+    if (user.user?.name === "admin") return <Navigate to="/dashboard" />;
+  }
+
   if (tokenProtected.includes(pathname)) {
     if (!token) return <Navigate to="/login" />;
 
     if (roleAdminProtected.includes(pathname)) {
       if (user.user?.name !== "admin") return <Navigate to="/" />;
-    }
-
-    if (roleUserProtected.includes(pathname)) {
-      if (user.user?.name === "admin") return <Navigate to="/dashboard" />;
     }
   }
 
