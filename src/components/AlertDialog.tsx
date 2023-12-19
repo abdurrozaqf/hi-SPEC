@@ -16,8 +16,8 @@ type Props = {
   title?: string;
   children: ReactNode;
   description?: string | any;
-  onCancel?: () => {};
-  onAction?: () => {};
+  onCancel?: () => void;
+  onAction?: () => void;
 };
 
 const Alert = (props: Props) => {

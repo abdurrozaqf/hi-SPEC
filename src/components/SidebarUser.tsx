@@ -189,7 +189,7 @@ const SidebarUser = () => {
           {token ? (
             <Alert
               title="Are you sure for Logout"
-              onAction={() => handleLogout}
+              onAction={() => handleLogout()}
             >
               <div className="flex items-center gap-2 cursor-pointer">
                 <div className="p-2 rounded-md shadow-md w-fit bg-[#FF5858]">

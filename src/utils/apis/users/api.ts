@@ -67,9 +67,9 @@ export const addWishlist = async (product_id: number) => {
   }
 };
 
-export const deleteWishlist = async (product_id: number) => {
+export const deleteWishlist = async (favorite_id: number) => {
   try {
-    const response = await axiosWithConfig.delete(`/user/fav/${product_id}`);
+    const response = await axiosWithConfig.delete(`/user/fav/${favorite_id}`);
 
     return response.data as Response;
   } catch (error: any) {
