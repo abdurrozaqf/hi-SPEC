@@ -1,23 +1,36 @@
 import { Link } from "react-router-dom";
 
+import { ResponseProducts } from "@/utils/apis/products";
+
 interface Props {
-  name: string;
-  img: string;
+  data: Partial<ResponseProducts>;
 }
 
 const ProductCard = (props: Props) => {
-  const { name, img } = props;
+  const { data } = props;
   return (
-    <Link to="/detail-product">
+    <Link to={`/detail-product/${data.product_id}`}>
       <div className="w-full h-72 flex flex-col rounded-xl shadow-products-card overflow-auto">
         <div className="flex justify-center py-4 grow">
-          <img src={img || "src/assets/example-laptop.png"} className="h-36" />
+          <img
+            src={
+              data.picture ||
+              "https://www.iconpacks.net/icons/2/free-laptop-icon-1928-thumb.png"
+            }
+            alt={data.name || "Unknown"}
+            className="h-36"
+          />
         </div>
         <div className="bg-white dark:bg-[#1265ae24] px-4 py-3 font-poppins">
-          <p className="text-[#757575] dark:text-[#b5b5b5] font-bold text-[0.625rem] text-sm tracking-tight truncate">
-            {name || "HP 14 inch Laptop 14s-fq0564AU"}
+          <p className="text-[#757575] dark:text-[#b5b5b5] font-semibold text-[0.625rem] text-sm tracking-tight truncate">
+            {data.name || "Unknown"}
           </p>
-          <h1 className="font-bold text-lg">Rp 5.299.000</h1>
+          <h1 className="font-bold text-lg">
+            {data.price!.toLocaleString("id-ID", {
+              style: "currency",
+              currency: "IDR",
+            }) || "Unknown"}
+          </h1>
           <p className="font-medium text-end text-[0.625rem] mt-4">
             check detail
           </p>

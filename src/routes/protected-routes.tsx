@@ -32,6 +32,7 @@ const ProtectedRoutes = () => {
   const roleUserProtected = [
     "/",
     "/products",
+    "/categories",
     "/compare",
     "/wishlist",
     "/detail-product",

@@ -58,20 +58,6 @@
   }
 }
 
-.bg-navbar {
-  background-image: url("src/assets/icons-navbar.svg");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-}
-
-.bg-banner-tagline {
-  background-image: url("src/assets/banner-tagline.svg");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-}
-
 .shadow-products-card {
   box-shadow: 0px 0px 10px #bebebe;
 }
