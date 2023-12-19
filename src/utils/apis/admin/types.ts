@@ -7,9 +7,9 @@ export const statusSchema = z.object({
 export type StatusSchema = z.infer<typeof statusSchema>;
 
 export type Transactions = {
-  transactionID: number;
+  transaction_id: number;
   product_id: number;
-  totalPrice: number;
+  total_price: number;
   status: string;
-  timestamp: Date;
+  timestamp: Date | string;
 };

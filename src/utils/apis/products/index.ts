@@ -1,12 +1,24 @@
-import {
+import { getCategoryProducts, getProducts, addProduct, deleteProduct, editProduct } from "./api";
+
+import {Product,
   AddProductSchema,
   EditProductSchema,
-  Product,
+  ResponseProducts,
   addProductSchema,
   editProductSchema,
 } from "./types";
 import { getDetailProduk } from "./api";
 
-export { addProductSchema, editProductSchema };
-export type { Product, AddProductSchema, EditProductSchema };
-export { getDetailProduk };
+export {
+  getProducts,
+  getCategoryProducts,
+  addProduct,
+  editProduct,
+  deleteProduct,
+  addProductSchema,
+  editProductSchema,
+};
+
+export type { Product, AddProductSchema, EditProductSchema, ResponseProducts };
+
+

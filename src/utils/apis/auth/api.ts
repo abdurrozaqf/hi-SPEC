@@ -4,7 +4,7 @@ import axiosWithConfig from "@/utils/apis/axiosWithConfig";
 
 export const RegisterAccount = async (body: RegisterSchema) => {
   try {
-    const response = await axiosWithConfig.post("/register", body);
+    const response = await axiosWithConfig.post(`/register`, body);
 
     return response.data as Response;
   } catch (error: any) {

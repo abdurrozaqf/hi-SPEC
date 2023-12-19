@@ -17,7 +17,7 @@ const LoginForm = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  const { changeToken, changeUserID } = useToken();
+  const { changeToken, changeUserID, user } = useToken();
 
   const form = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
@@ -33,8 +33,6 @@ const LoginForm = () => {
       toast({ description: result.message });
       changeUserID(result.data.user_id);
       changeToken(result.data.token);
-
-      navigate("/");
     } catch (error: any) {
       toast({
         title: "Oops, something went wrong!",
@@ -45,7 +43,7 @@ const LoginForm = () => {
   }
 
   return (
-    <div className="text-[#1E1E1E] font-poppins">
+    <div className="font-poppins">
       <h1>Login to your account using email</h1>
       <Form {...form}>
         <form
@@ -71,7 +69,7 @@ const LoginForm = () => {
             {(field) => (
               <Input
                 {...field}
-                placeholder="Password minimum 8 character"
+                placeholder="Password 8 character"
                 type="password"
                 disabled={form.formState.isSubmitting}
                 aria-disabled={form.formState.isSubmitting}

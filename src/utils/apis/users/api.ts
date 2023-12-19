@@ -22,9 +22,10 @@ export const getDetailUser = async (user_id: string) => {
   }
 };
 
-export const updateUser = async (body: UpdateUserSchema) => {
+
+export const updateUser = async (user_id: number, body: any) => {
   try {
-    const response = await axiosWithConfig.patch(`/users`, body);
+    const response = await axiosWithConfig.patch(`/user/${user_id}`, body);
 
     return response.data as Response;
   } catch (error: any) {
@@ -34,7 +35,27 @@ export const updateUser = async (body: UpdateUserSchema) => {
 
 export const deleteUser = async (user_id: number) => {
   try {
-    const response = await axiosWithConfig.delete(`/users/${user_id}`);
+    const response = await axiosWithConfig.delete(`/user/${user_id}`);
+
+    return response.data as Response;
+  } catch (error: any) {
+    throw Error(error.response.data.message);
+  }
+};
+
+export const addWishlist = async (body: UpdateUserSchema) => {
+  try {
+    const response = await axiosWithConfig.post(`/users`, body);
+
+    return response.data as Response;
+  } catch (error: any) {
+    throw Error(error.response.data.message);
+  }
+};
+
+export const deleteWishlist = async (user_id: number) => {
+  try {
+    const response = await axiosWithConfig.delete(`/fav/${user_id}`);
 
     return response.data as Response;
   } catch (error: any) {
