@@ -66,6 +66,7 @@ const AllByCategories = () => {
         <div>
           <Pagination
             meta={meta}
+            datas={datas.length}
             onClickNext={() => handlePrevNextPage(meta?.page! + 1, 10)}
             onClickPrevious={() => handlePrevNextPage(meta?.page! - 1, 10)}
           />

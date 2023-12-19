@@ -6,10 +6,11 @@ interface Props {
   meta?: Meta;
   onClickPrevious: () => void;
   onClickNext: () => void;
+  datas?: number;
 }
 
 const Pagination = (props: Props) => {
-  const { meta, onClickPrevious, onClickNext } = props;
+  const { meta, datas, onClickPrevious, onClickNext } = props;
 
   return (
     <div className="flex justify-center items-center gap-8">
@@ -17,11 +18,7 @@ const Pagination = (props: Props) => {
         <ChevronLeft className="h-4 w-4" />
       </Button>
 
-      <Button
-        size="icon"
-        // disabled={meta?.page === meta?.totalPages}
-        onClick={onClickNext}
-      >
+      <Button size="icon" disabled={datas! <= 10} onClick={onClickNext}>
         <ChevronRight className="h-4 w-4" />
       </Button>
     </div>
