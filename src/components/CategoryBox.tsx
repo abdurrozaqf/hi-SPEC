@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 interface Props {
   isOpen: boolean;
@@ -8,7 +7,6 @@ interface Props {
 const CategoryBox = (props: Props) => {
   const { isOpen } = props;
 
-  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
 
   function handleCategory(value: string) {
@@ -21,7 +19,6 @@ const CategoryBox = (props: Props) => {
   }
 
   const category = searchParams.get("category");
-  console.log(category);
 
   return (
     <div
@@ -55,6 +52,7 @@ const CategoryBox = (props: Props) => {
           value="Office"
           id="office"
           name="category"
+          checked={category === "Office"}
           className="cursor-pointer"
         />
         <label
@@ -71,6 +69,7 @@ const CategoryBox = (props: Props) => {
           value="Multimedia"
           id="multimedia"
           name="category"
+          checked={category === "Multimedia"}
           className="cursor-pointer"
         />
         <label
@@ -87,6 +86,7 @@ const CategoryBox = (props: Props) => {
           value="Gaming"
           id="gaming"
           name="category"
+          checked={category === "Gaming"}
           className="cursor-pointer"
         />
         <label

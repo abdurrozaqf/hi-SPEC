@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 
-import { ResponseAllProducts } from "@/utils/apis/products";
+import { ResponseProducts } from "@/utils/apis/products";
 
 interface Props {
-  data: Partial<ResponseAllProducts>;
+  data: Partial<ResponseProducts>;
 }
 
 const ProductCard = (props: Props) => {
@@ -15,7 +15,7 @@ const ProductCard = (props: Props) => {
           <img
             src={
               data.picture ||
-              "src/assets/example-laptop.pnghttps://www.iconpacks.net/icons/2/free-laptop-icon-1928-thumb.png"
+              "https://www.iconpacks.net/icons/2/free-laptop-icon-1928-thumb.png"
             }
             alt={data.name || "Unknown"}
             className="h-36"

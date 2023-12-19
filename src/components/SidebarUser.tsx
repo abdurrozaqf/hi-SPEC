@@ -1,11 +1,13 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
+import { useTheme } from "@/utils/contexts/theme-provider";
 import { useToken } from "@/utils/contexts/token";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useTheme } from "@/utils/contexts/theme-provider";
+import RangeBudgetBox from "@/components/RangeBudgetBox";
 import { useToast } from "@/components/ui/use-toast";
+import CategoryBox from "@/components/CategoryBox";
 
 import {
   BoxIcon,
@@ -18,13 +20,11 @@ import {
   MoonStarIcon,
   SunIcon,
 } from "lucide-react";
-import RangeBudgetBox from "./RangeBudgetBox";
-import CategoryBox from "./CategoryBox";
 
 const SidebarUser = () => {
   const { changeToken, changeUserID, user, token } = useToken();
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const { setTheme, theme } = useTheme();
   const { pathname } = useLocation();
   const navigate = useNavigate();

@@ -1,14 +1,13 @@
 import { z } from "zod";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useSearchParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import { CustomFormField } from "@/components/CustomForm";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Form } from "@/components/ui/form";
-import { useSearchParams } from "react-router-dom";
-import { useEffect } from "react";
 
 interface Props {
   isOpen: boolean;
@@ -34,20 +33,14 @@ const RangeBudgetBox = (props: Props) => {
 
   async function onSubmit(data: z.infer<typeof RangeSchema>) {
     if (data.maxPrice !== "" && data.minPrice !== "") {
-      searchParams.set("minPrice", data.minPrice);
-      searchParams.set("maxPrice", data.maxPrice);
+      searchParams.set("minprice", data.minPrice);
+      searchParams.set("maxprice", data.maxPrice);
     } else {
-      searchParams.delete("minPrice");
-      searchParams.delete("maxPrice");
+      searchParams.delete("minprice");
+      searchParams.delete("maxprice");
     }
     setSearchParams(searchParams);
   }
-
-  // useEffect(() => {
-  //   if (form.formState.isSubmitSuccessful) {
-  //     form.reset();
-  //   }
-  // }, [form.formState]);
 
   return (
     <div
@@ -68,7 +61,7 @@ const RangeBudgetBox = (props: Props) => {
               <Input
                 {...field}
                 placeholder="Rp. Minimum"
-                type="number"
+                type="tel"
                 disabled={form.formState.isSubmitting}
                 aria-disabled={form.formState.isSubmitting}
                 className="border rounded-md outline-none shadow py-1 px-4 placeholder:text-sm dark:bg-black"
@@ -81,15 +74,18 @@ const RangeBudgetBox = (props: Props) => {
               <Input
                 {...field}
                 placeholder="Rp. Maximum"
-                type="number"
+                type="tel"
                 disabled={form.formState.isSubmitting}
                 aria-disabled={form.formState.isSubmitting}
                 className="border rounded-md outline-none shadow py-1 px-4 placeholder:text-sm dark:bg-black"
               />
             )}
           </CustomFormField>
-          <Button type="submit" className=" h-fit bg-[#48B774] mt-6 w-full">
-            <p className="font-medium">Submit</p>
+          <Button
+            type="submit"
+            className="h-fit bg-[#48B774] mt-6 w-full text-white"
+          >
+            <p className="font-semibold ">Submit</p>
           </Button>
         </form>
       </Form>
