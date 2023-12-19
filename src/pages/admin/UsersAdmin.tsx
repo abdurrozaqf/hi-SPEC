@@ -1,10 +1,10 @@
+import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import debounce from "lodash.debounce";
 import { format } from "date-fns";
 import axios from "axios";
 
 import { PencilLine, Trash2 } from "lucide-react";
-
 import { deleteUser } from "@/utils/apis/users";
 
 import { useToast } from "@/components/ui/use-toast";
@@ -12,6 +12,7 @@ import EditUser from "@/components/form/EditUser";
 import CustomDialog from "@/components/Dialog";
 import Alert from "@/components/AlertDialog";
 import Layout from "@/components/Layout";
+
 import {
   Table,
   TableBody,
@@ -34,14 +35,16 @@ type Users = {
 
 const UsersAdmin = () => {
   const [users, setUsers] = useState<Users[]>();
-  const [search, setSearch] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const { toast } = useToast();
 
   async function fetchData() {
     try {
+      const query = searchParams.get("name") ?? "";
+
       const result = await axios.get(
-        `http://3.104.106.44:8000/user/search?name=${search}`
+        `http://3.104.106.44:8000/user/search?name=${query}`
       );
       setUsers(result.data);
     } catch (error: any) {
@@ -66,17 +69,29 @@ const UsersAdmin = () => {
   //   }
   // }
 
-  const debounceRequest = debounce((search: string) => setSearch(search), 1000);
+  function handleSearch(value: string) {
+    if (value !== "") {
+      searchParams.set("name", value);
+    } else {
+      searchParams.delete("name");
+    }
+    setSearchParams(searchParams);
+  }
+
+  const debounceRequest = debounce(
+    (search: string) => handleSearch(search),
+    1000
+  );
 
   useEffect(() => {
     fetchData();
-  }, [search]);
+  }, [searchParams]);
 
   return (
     <Layout>
       <div className="px-10 py-8 bg-white dark:bg-[#1265ae24] rounded-xl grow shadow-products-card font-poppins overflow-auto">
         <h1 className="text-2xl font-medium text-center">Database Users</h1>
-        <div className="flex items-center justify-between mb-10">
+        <div className="flex mb-10">
           <input
             type="text"
             onChange={(e) => debounceRequest(e.target.value)}

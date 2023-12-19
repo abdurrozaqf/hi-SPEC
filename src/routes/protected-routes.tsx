@@ -33,6 +33,7 @@ const ProtectedRoutes = () => {
     "/",
     "/products",
     "/compare",
+    "/categories",
     "/wishlist",
     "/detail-product",
   ];

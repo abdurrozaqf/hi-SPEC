@@ -22,21 +22,13 @@ import Layout from "@/components/Layout";
 import { FilePlus, Laptop, PencilLine, Trash2 } from "lucide-react";
 import axios from "axios";
 import DetailCard from "@/components/DetailCard";
-
-// type Datas = {
-//   data: {
-//     product_id: number;
-//     category: string;
-//     name: string;
-//     price: number;
-//     picture: string;
-//   }[];
-//   message: string;
-//   pagination: {
-//     limit: number;
-//     page: number;
-//   };
-// };
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 type Products = {
   product_id: number;
@@ -47,17 +39,17 @@ type Products = {
 };
 
 const ProductsAdmin = () => {
-  // const [products, setProducts] = useState<Datas>();
   const [products, setProducts] = useState<Products[]>();
 
   const [search, setSearch] = useState("");
+  const [category, setCategory] = useState("");
 
   const { toast } = useToast();
 
   async function fetchData() {
     try {
       const result = await axios.get(
-        `http://3.104.106.44:8000/product/search?page=1&limit=10&name=${search}`
+        `http://3.104.106.44:8000/product/search?limit=100&name=${search}&category=${category}`
       );
       setProducts(result.data.data);
     } catch (error: any) {
@@ -84,23 +76,54 @@ const ProductsAdmin = () => {
     }
   }
 
-  const debounceRequest = debounce((search: string) => setSearch(search), 1000);
+  function handleCategory(value: string) {
+    if (value !== "") {
+      setCategory(value);
+    } else {
+      setCategory("");
+    }
+  }
+
+  const debounceRequest1 = debounce(
+    (search: string) => setSearch(search),
+    1000
+  );
+  const debounceRequest2 = debounce(
+    (category: string) => handleCategory(category),
+    1000
+  );
 
   useEffect(() => {
     fetchData();
-  }, [search]);
+  }, [search, category]);
 
   return (
     <Layout>
       <div className="px-10 py-8 bg-white dark:bg-[#1265ae24] rounded-xl grow shadow-products-card overflow-auto font-poppins">
         <h1 className="text-2xl font-medium text-center">Database Products</h1>
         <div className="flex items-center justify-between mb-10">
-          <input
-            type="text"
-            onChange={(e) => debounceRequest(e.target.value)}
-            placeholder="Search by name product"
-            className="w-1/4 placeholder:italic placeholder:text-sm outline-none py-2 px-4 rounded-lg dark:bg-transparent shadow dark:shadow-white"
-          />
+          <div className="flex items-center space-x-6">
+            <input
+              type="text"
+              onChange={(e) => debounceRequest1(e.target.value)}
+              placeholder="Search by name product"
+              className="w-fit placeholder:italic placeholder:text-sm outline-none py-2 px-4 rounded-lg dark:bg-transparent shadow dark:shadow-white"
+            />
+
+            <div>
+              <Select onValueChange={(value) => debounceRequest2(value)}>
+                <SelectTrigger className="w-fit">
+                  <SelectValue placeholder="Select by categories" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value={` `}>Default</SelectItem>
+                  <SelectItem value="Office">Office</SelectItem>
+                  <SelectItem value="Multimedia">Multimedia</SelectItem>
+                  <SelectItem value="Gaming">Gaming</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
           <CustomDialog title="Add Products" description={<AddProduct />}>
             <div className="p-3 bg-White shadow dark:shadow-white flex items-center justify-center rounded-xl">
               <FilePlus size={30} />
