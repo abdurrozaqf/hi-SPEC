@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 interface Props {
@@ -19,6 +20,9 @@ const CategoryBox = (props: Props) => {
     setSearchParams(searchParams);
   }
 
+  const category = searchParams.get("category");
+  console.log(category);
+
   return (
     <div
       className={
@@ -28,11 +32,7 @@ const CategoryBox = (props: Props) => {
       }
     >
       <h1 className="font-medium">Categories:</h1>
-      <div
-        className="flex ml-4 gap-2 items-center"
-        onClick={() => navigate("/products")}
-      >
-        {/* <Checkbox id="all" value="" onChange={handleChange} /> */}
+      <div className="flex ml-4 gap-2 items-center">
         <input
           onChange={(e) => handleCategory(e.target.value)}
           type="radio"
@@ -48,11 +48,7 @@ const CategoryBox = (props: Props) => {
           All
         </label>
       </div>
-      <div
-        className="flex ml-4 gap-2 items-center"
-        onClick={() => navigate("/products")}
-      >
-        {/* <Checkbox id="office" value="office" onChange={handleChange} /> */}
+      <div className="flex ml-4 gap-2 items-center">
         <input
           onChange={(e) => handleCategory(e.target.value)}
           type="radio"
@@ -68,11 +64,7 @@ const CategoryBox = (props: Props) => {
           Office
         </label>
       </div>
-      <div
-        className="flex ml-4 gap-2 items-center"
-        onClick={() => navigate("/products")}
-      >
-        {/* <Checkbox id="multimedia" /> */}
+      <div className="flex ml-4 gap-2 items-center">
         <input
           onChange={(e) => handleCategory(e.target.value)}
           type="radio"
@@ -88,11 +80,7 @@ const CategoryBox = (props: Props) => {
           Multimedia
         </label>
       </div>
-      <div
-        className="flex ml-4 gap-2 items-center"
-        onClick={() => navigate("/products")}
-      >
-        {/* <Checkbox id="gaming" /> */}
+      <div className="flex ml-4 gap-2 items-center">
         <input
           onChange={(e) => handleCategory(e.target.value)}
           type="radio"
