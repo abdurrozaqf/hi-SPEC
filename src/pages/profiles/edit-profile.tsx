@@ -1,45 +1,48 @@
-import { CustomFormField } from "@/components/CustomForm";
-import { Form } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { CameraIcon, Loader2, X } from "lucide-react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+
 import {
   UpdateUserSchema,
   deleteUser,
   getDetailUser,
-  tokenUser,
+  User,
   updateUser,
   updateUserSchema,
 } from "@/utils/apis/users";
-
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import Layout from "@/components/Layout";
-import { Button } from "@/components/ui/button";
-import { CameraIcon, Loader2, X } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
 import { useToken } from "@/utils/contexts/token";
+
+import { CustomFormField } from "@/components/CustomForm";
 import { useToast } from "@/components/ui/use-toast";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import Alert from "@/components/AlertDialog";
+import { Form } from "@/components/ui/form";
+import Layout from "@/components/Layout";
 
 const EditProfile = () => {
-  const [profile, setProfile] = useState<tokenUser>();
+  const [profile, setProfile] = useState<User>();
   const [isLoading, setIsLoading] = useState(false);
   const { changeToken, user } = useToken();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const params = useParams();
 
   async function fetchData() {
     setIsLoading(true);
     try {
-      const result = await getDetailUser(user.user?.user_id.toString()!);
+      const result = await getDetailUser(params.user_id!);
       setProfile(result.data);
-      setIsLoading(false);
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
         description: error.toString(),
         variant: "destructive",
       });
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -48,8 +51,8 @@ const EditProfile = () => {
     defaultValues: {
       name: profile?.user.name ?? "",
       email: profile?.user.email ?? "",
-      address: "",
-      phone_number: "",
+      address: profile?.user.address ?? "",
+      phone_number: profile?.user.phone_number ?? "",
       password: "",
       newpassword: "",
       avatar: profile?.user.avatar ?? "",
@@ -57,8 +60,8 @@ const EditProfile = () => {
     values: {
       name: profile?.user.name!,
       email: profile?.user.email!,
-      address: "", // kenapa gaaada address
-      phone_number: "", // kenapa gaaada phone number
+      address: profile?.user.address!,
+      phone_number: profile?.user.phone_number!,
       password: "",
       newpassword: "",
       avatar: "",
@@ -91,7 +94,7 @@ const EditProfile = () => {
 
   async function handleDeleteProfile() {
     try {
-      const result = await deleteUser(user.user?.user_id!);
+      const result = await deleteUser(+params.user_id!);
       toast({ description: result.message });
       changeToken();
 
@@ -128,9 +131,12 @@ const EditProfile = () => {
               <div className="flex items-center">
                 <div className="relative">
                   <img
-                    className=" rounded-full w-36 h-36 relative"
-                    src="https://github.com/shadcn.png"
-                    alt="@shadcn"
+                    className="object-cover rounded-full w-36 h-36 relative"
+                    src={
+                      user.user?.avatar ||
+                      "https://mlsn40jruh7z.i.optimole.com/w:auto/h:auto/q:mauto/f:best/https://jeffjbutler.com//wp-content/uploads/2018/01/default-user.png"
+                    }
+                    alt={user.user?.name || "Guest"}
                   />
                   <label
                     htmlFor="input-image"
@@ -146,7 +152,7 @@ const EditProfile = () => {
               </div>
               <Button
                 type="button"
-                className="w-fit h-14"
+                className="w-fit h-fit"
                 onClick={() => navigate(-1)}
               >
                 <X />

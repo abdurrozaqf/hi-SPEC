@@ -38,9 +38,8 @@ const Products = () => {
     }
   }
 
-  function handlePrevNextPage(page: string | number, limit: string | number) {
+  function handlePrevNextPage(page: string | number) {
     searchParams.set("page", String(page));
-    searchParams.set("limit", String(limit));
     setSearchParams(searchParams);
   }
 
@@ -64,9 +63,8 @@ const Products = () => {
         <div>
           <Pagination
             meta={meta}
-            datas={datas?.length}
-            onClickNext={() => handlePrevNextPage(meta?.page! + 1, 10)}
-            onClickPrevious={() => handlePrevNextPage(meta?.page! - 1, 10)}
+            onClickNext={() => handlePrevNextPage(meta?.page! + 1)}
+            onClickPrevious={() => handlePrevNextPage(meta?.page! - 1)}
           />
         </div>
       </div>

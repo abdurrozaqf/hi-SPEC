@@ -39,7 +39,7 @@ export default function Router() {
           element: <AllByCategories />,
         },
         {
-          path: "/detail-product",
+          path: "/detail-product/:product_id",
           element: <DetailProduct />,
         },
         {
@@ -51,7 +51,7 @@ export default function Router() {
           element: <Profile />,
         },
         {
-          path: "/edit-profile",
+          path: "/edit-profile/:user_id",
           element: <EditProfile />,
         },
         {

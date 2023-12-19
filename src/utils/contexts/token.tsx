@@ -11,11 +11,11 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 
 import axiosWithConfig, { setAxiosConfig } from "@/utils/apis/axiosWithConfig";
-import { tokenUser, getDetailUser } from "@/utils/apis/users";
+import { User, getDetailUser } from "@/utils/apis/users";
 
 interface Context {
   token: string;
-  user: Partial<tokenUser>;
+  user: Partial<User>;
   changeToken: (token?: string) => void;
   changeUserID: (userID?: string) => void;
 }
@@ -38,7 +38,7 @@ export function TokenProvider({ children }: Readonly<Props>) {
 
   const [token, setToken] = useState(localStorage.getItem("token") ?? "");
   const [userID, setUserID] = useState(localStorage.getItem("userID") ?? "");
-  const [user, setUser] = useState<Partial<tokenUser>>({});
+  const [user, setUser] = useState<Partial<User>>({});
 
   useEffect(() => {
     setAxiosConfig(token);

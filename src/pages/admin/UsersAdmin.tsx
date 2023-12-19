@@ -2,15 +2,12 @@ import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import debounce from "lodash.debounce";
 import { format } from "date-fns";
-import axios from "axios";
 
-import { PencilLine, Trash2 } from "lucide-react";
-import { deleteUser } from "@/utils/apis/users";
+import { AllUser, getUser } from "@/utils/apis/users";
+import { Meta } from "@/utils/types/api";
 
 import { useToast } from "@/components/ui/use-toast";
-import EditUser from "@/components/form/EditUser";
-import CustomDialog from "@/components/Dialog";
-import Alert from "@/components/AlertDialog";
+import Pagination from "@/components/Pagination";
 import Layout from "@/components/Layout";
 
 import {
@@ -23,30 +20,21 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-type Users = {
-  user_id: number;
-  name: string;
-  email: string;
-  avatar: string;
-  address: string;
-  time: Date;
-  phone_number: string;
-};
-
 const UsersAdmin = () => {
-  const [users, setUsers] = useState<Users[]>();
+  const [users, setUsers] = useState<AllUser[]>();
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const [meta, setMeta] = useState<Meta>();
   const { toast } = useToast();
 
   async function fetchData() {
     try {
-      const query = searchParams.get("name") ?? "";
+      const query = Object.fromEntries([...searchParams]);
 
-      const result = await axios.get(
-        `http://3.104.106.44:8000/user/search?name=${query}`
-      );
+      const result = await getUser({ ...query });
+
       setUsers(result.data);
+      setMeta(result.pagination);
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -55,19 +43,6 @@ const UsersAdmin = () => {
       });
     }
   }
-
-  // async function handleDelete(user_id: number) {
-  //   try {
-  //     const result = await deleteUser(user_id);
-  //     toast({ description: result.message });
-  //   } catch (error: any) {
-  //     toast({
-  //       title: "Oops! Something went wrong.",
-  //       description: error.toString(),
-  //       variant: "destructive",
-  //     });
-  //   }
-  // }
 
   function handleSearch(value: string) {
     if (value !== "") {
@@ -80,8 +55,13 @@ const UsersAdmin = () => {
 
   const debounceRequest = debounce(
     (search: string) => handleSearch(search),
-    1000
+    500
   );
+
+  function handlePrevNextPage(page: string | number) {
+    searchParams.set("page", String(page));
+    setSearchParams(searchParams);
+  }
 
   useEffect(() => {
     fetchData();
@@ -89,7 +69,7 @@ const UsersAdmin = () => {
 
   return (
     <Layout>
-      <div className="px-10 py-8 bg-white dark:bg-[#1265ae24] rounded-xl grow shadow-products-card font-poppins overflow-auto">
+      <div className="px-10 py-8 bg-white dark:bg-[#1265ae24] rounded-xl flex flex-col grow shadow-products-card font-poppins overflow-auto">
         <h1 className="text-2xl font-medium text-center">Database Users</h1>
         <div className="flex mb-10">
           <input
@@ -101,24 +81,19 @@ const UsersAdmin = () => {
         </div>
         <Table>
           <TableCaption>A list of your recent Users.</TableCaption>
-          <TableHeader>
+          <TableHeader className="sticky top-0 bg-[#05152D]">
             <TableRow>
-              <TableHead className="w-[50px] text-center">No.</TableHead>
               <TableHead>Image</TableHead>
               <TableHead>Name</TableHead>
               <TableHead>Email</TableHead>
               <TableHead>Address</TableHead>
               <TableHead>Phone Number</TableHead>
               <TableHead>Create at</TableHead>
-              {/* <TableHead className="text-center">Action</TableHead> */}
             </TableRow>
           </TableHeader>
           <TableBody>
             {users?.map((user, index) => (
               <TableRow key={index}>
-                <TableCell className="font-medium text-center">
-                  {index + 1}
-                </TableCell>
                 <TableCell>
                   <img
                     src={
@@ -136,28 +111,17 @@ const UsersAdmin = () => {
                 <TableCell>
                   {format(new Date(user.time), "iiii, dd MMMM Y")}
                 </TableCell>
-                {/* <TableCell className="flex justify-center items-center h-32 gap-4">
-                  <CustomDialog
-                    title="Edit User"
-                    description={<EditUser user_id={user.user_id} />}
-                  >
-                    <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
-                      <PencilLine />
-                    </div>
-                  </CustomDialog>
-                  <Alert
-                    title={`Are you sure delete ${user.name.toUpperCase()} from database?`}
-                    onAction={() => handleDelete(1)}
-                  >
-                    <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
-                      <Trash2 />
-                    </div>
-                  </Alert>
-                </TableCell> */}
               </TableRow>
             ))}
           </TableBody>
         </Table>
+        <div className="mt-4">
+          <Pagination
+            meta={meta}
+            onClickNext={() => handlePrevNextPage(meta?.page! + 1)}
+            onClickPrevious={() => handlePrevNextPage(meta?.page! - 1)}
+          />
+        </div>
       </div>
     </Layout>
   );

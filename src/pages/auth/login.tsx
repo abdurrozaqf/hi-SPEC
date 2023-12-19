@@ -29,7 +29,7 @@ const Login = () => {
               </Button>
             </CustomDialog>
 
-            <Separator className="my-8 w-11/12" />
+            <Separator className="my-8 w-11/12 dark:bg-white" />
             <p className="bg-white w-[59px] text-[#1E1E1E] rounded-full font-medium text-xs text-center flex items-center justify-center -mt-10">
               or
             </p>

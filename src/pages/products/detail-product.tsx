@@ -1,34 +1,24 @@
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
-import Layout from "@/components/Layout";
-import { Button } from "@/components/ui/button";
+import { Product, getDetailProduk } from "@/utils/apis/products";
+import { addWishlist } from "@/utils/apis/users";
+
 import { useToast } from "@/components/ui/use-toast";
-import { ArrowLeft } from "lucide-react";
-import { getDetailProduk } from "@/utils/apis/products";
+import { Button } from "@/components/ui/button";
+import Layout from "@/components/Layout";
 
-type Product = {
-  product_id: number;
-  name: string;
-  cpu: string;
-  ram: string;
-  display: string;
-  storage: string;
-  thickness: string;
-  weight: string;
-  bluetooth: string;
-  hdmi: string;
-  price: string;
-  category: string;
-  image: string;
-  picture: string;
-};
+import { ArrowLeft } from "lucide-react";
+
+import BannerSponsorDetailProduct from "@/assets/Iklan.png";
+import IconWishlist from "@/assets/wishlist-icon.png";
 
 const DetailProduct = () => {
   const [product, setProduct] = useState<Product>();
+  const params = useParams();
 
-  const { toast } = useToast();
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   useEffect(() => {
     fetchData();
@@ -36,7 +26,7 @@ const DetailProduct = () => {
 
   async function fetchData() {
     try {
-      const result = await getDetailProduk(2);
+      const result = await getDetailProduk(+params.product_id!);
       setProduct(result.data);
     } catch (error: any) {
       toast({
@@ -47,14 +37,26 @@ const DetailProduct = () => {
     }
   }
 
-  function handleWishlist() {}
+  async function handleWishlist(product_id: number) {
+    try {
+      const result = await addWishlist(product_id);
+
+      toast({ description: result.message });
+    } catch (error: any) {
+      toast({
+        title: "Oops! Something went wrong.",
+        description: error.toString(),
+        variant: "destructive",
+      });
+    }
+  }
 
   return (
     <Layout>
       <div className="flex flex-col gap-10 lg:gap-6 lg:flex-row grow bg-white dark:bg-[#1265ae24] rounded-lg px-10 py-6">
         <div className="flex flex-col">
           <Button
-            onClick={() => navigate(-1)}
+            onClick={() => navigate("/products")}
             className="flex w-fit h-fit items-center bg-transparent text-black dark:text-white hover:bg-transparent"
           >
             <div className="mr-4">
@@ -110,17 +112,23 @@ const DetailProduct = () => {
                 <p>Sub total:</p>
                 <h1 className="font-bold text-xl">{product?.price}</h1>
               </div>
-              <Button className="w-full bg-[#48B774]">Buy Now</Button>
+              <a
+                href="https://api.codingbeautydev.com/blog"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <Button className="w-full bg-[#48B774]">Buy Now</Button>
+              </a>
 
               <div className="flex justify-between items-center mt-3">
                 <p className="text-xs">Make your Wishlist come true</p>
                 <div
-                  onClick={() => handleWishlist()}
+                  onClick={() => handleWishlist(product?.product_id!)}
                   className="flex items-center gap-2 cursor-pointer"
                 >
                   <p className="font-bold text-xs">Wishlist</p>
                   <img
-                    src="src/assets/wishlist-icon.png"
+                    src={IconWishlist}
                     alt="wishlist icon"
                     className="w-6 h-6"
                   />
@@ -130,7 +138,7 @@ const DetailProduct = () => {
           </div>
 
           <div className="mt-6">
-            <img src="src/assets/Iklan.png" alt="iklan" />
+            <img src={BannerSponsorDetailProduct} alt="iklan" />
           </div>
         </div>
       </div>

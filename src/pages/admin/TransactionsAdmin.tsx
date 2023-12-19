@@ -1,19 +1,15 @@
+import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import debounce from "lodash.debounce";
 import { format } from "date-fns";
 
-import { PencilLine, Trash2 } from "lucide-react";
-import debounce from "lodash.debounce";
-import axios from "axios";
-
-import {
-  Transactions,
-  getTransactions,
-  deleteTransactions,
-} from "@/utils/apis/admin";
+import { Transactions, getTransactions } from "@/utils/apis/admin";
+import { getDetailProducts } from "@/utils/apis/products/api";
+import { Product } from "@/utils/apis/products";
+import { Meta } from "@/utils/types/api";
 
 import { useToast } from "@/components/ui/use-toast";
-import CustomDialog from "@/components/Dialog";
-import Alert from "@/components/AlertDialog";
+import Pagination from "@/components/Pagination";
 import Layout from "@/components/Layout";
 import {
   Table,
@@ -25,22 +21,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-type Product = {
-  product_id: number;
-  category: string;
-  name: string;
-  cpu: string;
-  ram: string;
-  display: string;
-  storage: string;
-  thickness: string;
-  weight: string;
-  bluetooth: string;
-  hdmi: string;
-  price: number;
-  picture: string;
-};
-
 interface MergedData extends Transactions {
   product: Pick<Product, "name" | "picture" | "price" | "category">;
 }
@@ -48,7 +28,8 @@ interface MergedData extends Transactions {
 const TransactionsAdmin = () => {
   const [transactions, setTransactions] = useState<Transactions[]>();
   const [products, setProducts] = useState<Product[]>();
-  const [search, setSearch] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [meta, setMeta] = useState<Meta>();
 
   const { toast } = useToast();
 
@@ -56,6 +37,7 @@ const TransactionsAdmin = () => {
     try {
       const result = await getTransactions();
       setTransactions(result.data);
+      setMeta(result.pagination);
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -71,10 +53,8 @@ const TransactionsAdmin = () => {
       const dataResponse = Response.data;
 
       const promises = dataResponse.map(async (data: any) => {
-        const res = await axios.get(
-          `http://3.104.106.44:8000/product/${data.product_id}`
-        );
-        const dataProducts = res.data.data;
+        const res = await getDetailProducts(data.product_id);
+        const dataProducts = res.data;
 
         return dataProducts;
       });
@@ -106,7 +86,6 @@ const TransactionsAdmin = () => {
           },
         };
       } else {
-        // Handle case when matching product is not found
         return {
           ...transaction,
           product: {
@@ -120,25 +99,29 @@ const TransactionsAdmin = () => {
       }
     }) || [];
 
-  // async function handleDelete(transaction_id: number) {
-  //   try {
-  //     const result = await deleteTransactions(transaction_id);
-  //     toast({ description: result.message });
-  //   } catch (error: any) {
-  //     toast({
-  //       title: "Oops! Something went wrong.",
-  //       description: error.toString(),
-  //       variant: "destructive",
-  //     });
-  //   }
-  // }
+  function handleSearch(value: string) {
+    if (value !== "") {
+      searchParams.set("name", value);
+    } else {
+      searchParams.delete("name");
+    }
+    setSearchParams(searchParams);
+  }
 
-  const debounceRequest = debounce((search: string) => setSearch(search), 1000);
+  const debounceRequest = debounce(
+    (search: string) => handleSearch(search),
+    500
+  );
+
+  function handlePrevNextPage(page: string | number) {
+    searchParams.set("page", String(page));
+    setSearchParams(searchParams);
+  }
 
   useEffect(() => {
     fetchData();
     fetchDataProduct();
-  }, []);
+  }, [searchParams]);
 
   return (
     <Layout>
@@ -163,7 +146,7 @@ const TransactionsAdmin = () => {
         ) : (
           <Table>
             <TableCaption>A list of user recent invoices.</TableCaption>
-            <TableHeader>
+            <TableHeader className="sticky top-0 bg-[#05152D]">
               <TableRow>
                 <TableHead className="w-[50px] text-center">No.</TableHead>
                 <TableHead>Image Product</TableHead>
@@ -187,7 +170,9 @@ const TransactionsAdmin = () => {
                         className="object-cover h-24"
                       />
                     </TableCell>
-                    <TableCell>{data.product?.name}</TableCell>
+                    <TableCell>
+                      <p className="truncate">{data.product?.name}</p>
+                    </TableCell>
                     <TableCell>
                       {data.total_price.toLocaleString("id-ID", {
                         style: "currency",
@@ -198,30 +183,19 @@ const TransactionsAdmin = () => {
                       {format(new Date(data.timestamp), "iiii, dd MMMM Y")}
                     </TableCell>
                     <TableCell>{data.status}</TableCell>
-                    {/* <TableCell className="flex justify-center items-center h-32 gap-4">
-                  <CustomDialog
-                    title="Edit Transactions"
-                    description={"Form Validation Transaction"}
-                  >
-                    <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
-                      <PencilLine />
-                    </div>
-                  </CustomDialog> 
-                  <Alert
-                    title="Are you sure delete this User from Database?"
-                    onAction={() => handleDelete(data.transaction_id)}
-                  >
-                    <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
-                      <Trash2 />
-                    </div>
-                  </Alert>
-                </TableCell> */}
                   </TableRow>
                 ))}
               </>
             </TableBody>
           </Table>
         )}
+        <div className="mt-4">
+          <Pagination
+            meta={meta}
+            onClickNext={() => handlePrevNextPage(meta?.page! + 1)}
+            onClickPrevious={() => handlePrevNextPage(meta?.page! - 1)}
+          />
+        </div>
       </div>
     </Layout>
   );

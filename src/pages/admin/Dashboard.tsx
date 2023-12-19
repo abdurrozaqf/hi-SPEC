@@ -13,29 +13,16 @@ import { useToast } from "@/components/ui/use-toast";
 import Layout from "@/components/Layout";
 
 import { Box, DollarSign, Users } from "lucide-react";
-import axios from "axios";
-
-type Datas = {
-  total_user: string;
-  total_product: string;
-  total_transaction: string;
-  product: {
-    id: number;
-    category: string;
-    name: string;
-    price: number;
-    picture: string;
-  }[];
-};
+import { ResponseDashboard, getDashboard } from "@/utils/apis/admin";
 
 const Dashboard = () => {
-  const [datas, setDatas] = useState<Datas>();
+  const [datas, setDatas] = useState<ResponseDashboard>();
   const { toast } = useToast();
 
   async function fetchData() {
     try {
-      const result = await axios.get(`http://3.104.106.44:8000/dashboard`);
-      setDatas(result.data.data);
+      const result = await getDashboard();
+      setDatas(result.data);
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
