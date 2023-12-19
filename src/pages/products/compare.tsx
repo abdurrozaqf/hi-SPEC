@@ -1,164 +1,64 @@
 import { ArrowLeft, Search, X } from "lucide-react";
-import { useState } from "react";
-import {
-  TypeProducts,
-  productsSampleData,
-} from "@/pages/products/sampleDataCompare";
+import { useEffect, useState } from "react";
 import CardCompare from "@/components/CardCompare";
 import Layout from "@/components/Layout";
+import { Product, getProducts } from "@/utils/apis/products";
+
+import { useSearchParams } from "react-router-dom";
+import { useToast } from "@/components/ui/use-toast";
+import debounce from "lodash.debounce";
+import { getDetailProducts } from "@/utils/apis/products/api";
 
 const Compare = () => {
-  const [query1, setQuery1] = useState("");
-  const [query2, setQuery2] = useState("");
-  const [query3, setQuery3] = useState("");
+  const [datas, setDatas] = useState<Product[]>();
+  const [searchParams, setSearchParams] = useSearchParams();
+  console.log(datas);
 
-  const handleInputChange1 = (event: any) => {
-    setQuery1(event.target.value);
-  };
-  const handleInputChange2 = (event: any) => {
-    setQuery2(event.target.value);
-  };
-  const handleInputChange3 = (event: any) => {
-    setQuery3(event.target.value);
-  };
+  const { toast } = useToast();
 
-  const filteredItems1 = productsSampleData.filter(
-    (product) => product.name.toLowerCase().indexOf(query1.toLowerCase()) !== -1
-  );
-  const filteredItems2 = productsSampleData.filter(
-    (product) => product.name.toLowerCase().indexOf(query2.toLowerCase()) !== -1
-  );
-  const filteredItems3 = productsSampleData.filter(
-    (product) => product.name.toLowerCase().indexOf(query3.toLowerCase()) !== -1
-  );
+  const fetchDataProduct = async () => {
+    try {
+      const query = Object.fromEntries([...searchParams]);
+      const result = await getProducts({ ...query });
+      const datas = result.data;
 
-  function filteredData1(datas: TypeProducts[], query: string) {
-    let filteredProducts = datas;
+      const promises = datas.map(async (data: any) => {
+        const res = await getDetailProducts(data.product_id);
+        const dataProducts = res.data;
+        console.log("data product", dataProducts);
 
-    // Filtering Input Items
-    if (query) {
-      filteredProducts = filteredItems1;
+        return dataProducts;
+      });
+      const results: any = await Promise.all(promises);
+      setDatas(results);
+    } catch (error: any) {
+      toast({
+        title: "Oops! Something went wrong.",
+        description: error.toString(),
+        variant: "destructive",
+      });
     }
+  };
 
-    return filteredProducts.map(
-      ({
-        name,
-        cpu,
-        ram,
-        display,
-        storage,
-        thickness,
-        weight,
-        bluetooth,
-        hdmi,
-        price,
-        category,
-        image,
-      }) => (
-        <CardCompare
-          key={Math.random()}
-          name={name}
-          cpu={cpu}
-          ram={ram}
-          display={display}
-          storage={storage}
-          thickness={thickness}
-          weight={weight}
-          bluetooth={bluetooth}
-          hdmi={hdmi}
-          price={price}
-          category={category}
-          image={image}
-        />
-      )
-    );
-  }
-  function filteredData2(datas: TypeProducts[], query: string) {
-    let filteredProducts = datas;
-
-    // Filtering Input Items
-    if (query) {
-      filteredProducts = filteredItems2;
+  function handleSearch(value: string) {
+    if (value !== "") {
+      searchParams.set("name", value);
+    } else {
+      searchParams.delete("name");
     }
-
-    return filteredProducts.map(
-      ({
-        name,
-        cpu,
-        ram,
-        display,
-        storage,
-        thickness,
-        weight,
-        bluetooth,
-        hdmi,
-        price,
-        category,
-        image,
-      }) => (
-        <CardCompare
-          key={Math.random()}
-          name={name}
-          cpu={cpu}
-          ram={ram}
-          display={display}
-          storage={storage}
-          thickness={thickness}
-          weight={weight}
-          bluetooth={bluetooth}
-          hdmi={hdmi}
-          price={price}
-          category={category}
-          image={image}
-        />
-      )
-    );
-  }
-  function filteredData3(datas: TypeProducts[], query: string) {
-    let filteredProducts = datas;
-
-    // Filtering Input Items
-    if (query) {
-      filteredProducts = filteredItems3;
-    }
-
-    return filteredProducts.map(
-      ({
-        name,
-        cpu,
-        ram,
-        display,
-        storage,
-        thickness,
-        weight,
-        bluetooth,
-        hdmi,
-        price,
-        category,
-        image,
-      }) => (
-        <CardCompare
-          key={Math.random()}
-          name={name}
-          cpu={cpu}
-          ram={ram}
-          display={display}
-          storage={storage}
-          thickness={thickness}
-          weight={weight}
-          bluetooth={bluetooth}
-          hdmi={hdmi}
-          price={price}
-          category={category}
-          image={image}
-        />
-      )
-    );
+    setSearchParams(searchParams);
   }
 
-  const result1 = filteredData1(productsSampleData, query1);
-  const result2 = filteredData2(productsSampleData, query2);
-  const result3 = filteredData3(productsSampleData, query3);
+  const debounceHandle = debounce(
+    (search: string) => handleSearch(search),
+    500
+  );
+
+  useEffect(() => {
+    searchParams.set("limit", "1");
+    setSearchParams(searchParams);
+    fetchDataProduct();
+  }, [searchParams]);
 
   return (
     <Layout>
@@ -180,64 +80,23 @@ const Compare = () => {
                   <Search />
                 </div>
                 <input
-                  onChange={(e) => setQuery1(e.target.value)}
+                  onChange={(e) => debounceHandle(e.target.value)}
                   type="text"
                   placeholder="Asus ROG Strix"
-                  className=" outline-none grow mx-4 dark:bg-transparent "
+                  className=" outline-none grow mx-4 dark:bg-transparent border py-2 px-4"
                 />
               </div>
               <div className="">
                 <X />
               </div>
             </div>
-
-            {/* manggil function */}
-            {query1 && <>{filteredData1(productsSampleData, query1)}</>}
+            {datas?.map((data, index) => (
+              <CardCompare key={index} data={data} />
+            ))}
           </div>
 
-          <div className="  h-fit border rounded-md p-8">
-            <div className="flex justify-between">
-              <div className="flex w-full">
-                <div>
-                  <Search />
-                </div>
-                <input
-                  onChange={(e) => setQuery2(e.target.value)}
-                  type="text"
-                  placeholder="Asus ROG Strix"
-                  className=" outline-none grow mx-4 dark:bg-transparent "
-                />
-              </div>
-              <div className="">
-                <X />
-              </div>
-            </div>
-
-            {/* manggil function */}
-            {query2 && <>{filteredData2(productsSampleData, query2)}</>}
-          </div>
-
-          <div className=" h-fit border rounded-md p-8">
-            <div className="flex justify-between">
-              <div className="flex w-full">
-                <div>
-                  <Search />
-                </div>
-                <input
-                  onChange={(e) => setQuery3(e.target.value)}
-                  type="text"
-                  placeholder="Asus ROG Strix"
-                  className=" outline-none grow mx-4 dark:bg-transparent "
-                />
-              </div>
-              <div className="">
-                <X />
-              </div>
-            </div>
-
-            {/* manggil function */}
-            {query3 && <>{filteredData3(productsSampleData, query3)}</>}
-          </div>
+          {/* <CardCompare data={datas![0]} /> */}
+          {/* <p>{datas![0].name}</p> */}
         </div>
       </div>
     </Layout>
