@@ -14,8 +14,20 @@ interface Props {
 }
 
 const RangeSchema = z.object({
-  minPrice: z.string().min(1, { message: "Required" }),
-  maxPrice: z.string().min(1, { message: "Required" }),
+  minPrice: z
+    .string()
+    .min(1, { message: "Min 1 digit" })
+    .max(9, { message: "Maxs 9 digit" })
+    .refine((data) => /^[1-9]\d*$/.test(data), {
+      message: "Angka pertama tidak boleh 0",
+    }),
+  maxPrice: z
+    .string()
+    .min(1, { message: "Min 1 digit" })
+    .max(9, { message: "Maxs 9 digit" })
+    .refine((data) => /^[1-9]\d*$/.test(data), {
+      message: "Angka pertama tidak boleh 0",
+    }),
 });
 
 const RangeBudgetBox = (props: Props) => {
@@ -35,6 +47,7 @@ const RangeBudgetBox = (props: Props) => {
     if (data.maxPrice !== "" && data.minPrice !== "") {
       searchParams.set("minprice", data.minPrice);
       searchParams.set("maxprice", data.maxPrice);
+      searchParams.delete("page");
     } else {
       searchParams.delete("minprice");
       searchParams.delete("maxprice");
@@ -46,7 +59,7 @@ const RangeBudgetBox = (props: Props) => {
     <div
       className={
         isOpen
-          ? `translate-x-0 w-fit flex flex-col gap-4 opacity-100 transition-all`
+          ? `translate-x-0 w-fit flex flex-col opacity-100 transition-all`
           : `-translate-x-28 w-0 opacity-50 transition-all hidden`
       }
     >
@@ -64,11 +77,11 @@ const RangeBudgetBox = (props: Props) => {
                 type="number"
                 disabled={form.formState.isSubmitting}
                 aria-disabled={form.formState.isSubmitting}
-                className="border rounded-md outline-none shadow py-1 px-4 placeholder:text-sm dark:bg-black"
+                className="border rounded-md outline-none shadow placeholder:text-sm dark:bg-black"
               />
             )}
           </CustomFormField>
-          <p className="text-center">to</p>
+          <p className="text-center leading-none">to</p>
           <CustomFormField control={form.control} name="maxPrice">
             {(field) => (
               <Input
@@ -77,13 +90,13 @@ const RangeBudgetBox = (props: Props) => {
                 type="number"
                 disabled={form.formState.isSubmitting}
                 aria-disabled={form.formState.isSubmitting}
-                className="border rounded-md outline-none shadow py-1 px-4 placeholder:text-sm dark:bg-black"
+                className="border rounded-md outline-none shadow placeholder:text-sm dark:bg-black"
               />
             )}
           </CustomFormField>
           <Button
             type="submit"
-            className="h-fit bg-[#48B774] mt-6 w-full text-white"
+            className="h-fit bg-[#48B774] w-full text-white mt-2"
           >
             <p className="font-semibold ">Submit</p>
           </Button>

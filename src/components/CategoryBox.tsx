@@ -12,6 +12,7 @@ const CategoryBox = (props: Props) => {
   function handleCategory(value: string) {
     if (value !== "") {
       searchParams.set("category", value);
+      searchParams.delete("page");
     } else {
       searchParams.delete("category");
     }

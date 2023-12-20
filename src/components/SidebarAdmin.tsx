@@ -5,6 +5,8 @@ import { useTheme } from "@/utils/contexts/theme-provider";
 import { useToken } from "@/utils/contexts/token";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useToast } from "@/components/ui/use-toast";
+import Alert from "@/components/AlertDialog";
 
 import {
   BoxIcon,
@@ -18,7 +20,6 @@ import {
   SunIcon,
   Users,
 } from "lucide-react";
-import { useToast } from "./ui/use-toast";
 
 const SidebarAdmin = () => {
   const { changeToken, changeUserID, user, token } = useToken();
@@ -150,7 +151,7 @@ const SidebarAdmin = () => {
           <div className="flex gap-2 items-center">
             <Avatar
               onClick={() => navigate("/profile")}
-              className="cursor-pointer hover:shadow-[#1265AE] dark:shadow-white hover:shadow-lg rounded-full"
+              className="cursor-pointer shadow-md hover:shadow-[#1265AE] dark:shadow-white/50 hover:shadow-lg rounded-full"
             >
               <AvatarImage
                 src={
@@ -194,25 +195,27 @@ const SidebarAdmin = () => {
             </p>
           </div>
           {token ? (
-            <div
-              className="flex items-center gap-2 cursor-pointer"
-              onClick={() => handleLogout()}
+            <Alert
+              title="Are you sure for Logout"
+              onAction={() => handleLogout()}
+              onActionTitle="Logout"
             >
-              <div className="p-2 rounded-md shadow-md w-fit bg-[#FF5858]">
-                <LogOutIcon color="white" />
-              </div>
+              <div className="flex items-center gap-2 cursor-pointer">
+                <div className="p-2 rounded-md shadow-md w-fit bg-[#FF5858]">
+                  <LogOutIcon color="white" />
+                </div>
 
-              <p
-                className={
-                  isOpen
-                    ? `font-medium w-full opacity-100 translate-x-0 transition-all hover:bg-[#E4ECF1] dark:hover:bg-white rounded-md p-2 dark:hover:text-black`
-                    : `w-0 opacity-0 -translate-x-28 transition-all absolute`
-                }
-                onClick={() => handleLogout()}
-              >
-                Logout
-              </p>
-            </div>
+                <p
+                  className={
+                    isOpen
+                      ? `font-medium w-full opacity-100 translate-x-0 transition-all hover:bg-[#E4ECF1] dark:hover:bg-white rounded-md p-2 dark:hover:text-black`
+                      : `w-0 opacity-0 -translate-x-28 transition-all absolute`
+                  }
+                >
+                  Logout
+                </p>
+              </div>
+            </Alert>
           ) : (
             <div
               className="flex items-center gap-2 cursor-pointer"
