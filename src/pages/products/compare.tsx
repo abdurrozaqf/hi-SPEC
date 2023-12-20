@@ -1,36 +1,36 @@
-import { ArrowLeft, Search, X } from "lucide-react";
-import { useEffect, useState } from "react";
-import CardCompare from "@/components/CardCompare";
-import Layout from "@/components/Layout";
-import { Product, getProducts } from "@/utils/apis/products";
-
 import { useSearchParams } from "react-router-dom";
-import { useToast } from "@/components/ui/use-toast";
+import { ArrowLeft, X } from "lucide-react";
+import { useEffect, useState } from "react";
 import debounce from "lodash.debounce";
+
+import SearchCompareBox from "@/components/SearchCompareBox";
+import { useToast } from "@/components/ui/use-toast";
+import CardCompare from "@/components/CardCompare";
+import { Button } from "@/components/ui/button";
+import Layout from "@/components/Layout";
+
+import { ResponseProducts, getProducts, Product } from "@/utils/apis/products";
 import { getDetailProducts } from "@/utils/apis/products/api";
+import { useCompareStore } from "@/utils/state";
 
 const Compare = () => {
-  const [datas, setDatas] = useState<Product[]>();
+  const { compares, addCompare, updateCompare, deleteCompare } =
+    useCompareStore((state) => state);
+  const [datas, setDatas] = useState<ResponseProducts[]>();
   const [searchParams, setSearchParams] = useSearchParams();
-  console.log(datas);
 
   const { toast } = useToast();
 
+  useEffect(() => {
+    fetchDataProduct();
+  }, []);
+
   const fetchDataProduct = async () => {
     try {
-      const query = Object.fromEntries([...searchParams]);
-      const result = await getProducts({ ...query });
+      const result = await getProducts();
       const datas = result.data;
 
-      const promises = datas.map(async (data: any) => {
-        const res = await getDetailProducts(data.product_id);
-        const dataProducts = res.data;
-        console.log("data product", dataProducts);
-
-        return dataProducts;
-      });
-      const results: any = await Promise.all(promises);
-      setDatas(results);
+      setDatas(datas);
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -39,6 +39,19 @@ const Compare = () => {
       });
     }
   };
+
+  async function fetchDetail(id: number, index: number) {
+    try {
+      const result = await getDetailProducts(id);
+      updateCompare(index, result.data);
+    } catch (error: any) {
+      toast({
+        title: "Oops, someting went wrong.",
+        description: error.toString(),
+        variant: "destructive",
+      });
+    }
+  }
 
   function handleSearch(value: string) {
     if (value !== "") {
@@ -54,49 +67,50 @@ const Compare = () => {
     500
   );
 
-  useEffect(() => {
-    searchParams.set("limit", "1");
-    setSearchParams(searchParams);
-    fetchDataProduct();
-  }, [searchParams]);
-
   return (
     <Layout>
-      <div className="grow bg-white dark:bg-[#1265ae24] shadow-lg rounded-xl  p-32 font-poppins">
-        <div className="flex items-center mb-10">
+      <div className="bg-white rounded-xl flex flex-col font-poppins shadow-lg p-32 grow overflow-auto dark:bg-[#1265ae24]">
+        <div className="flex mb-10 items-center">
           <button className="flex">
             <div className="mr-4">
               <ArrowLeft />
             </div>
             <div>Back</div>
           </button>
-          <h1 className=" grow text-center text-4xl font-bold">Compare</h1>
+          <h1 className="font-bold text-center text-4xl grow">Compare</h1>
         </div>
-        <div className="grid gap-6 grid-cols-3">
-          <div className=" h-fit border rounded-md p-8">
-            <div className="flex justify-between">
-              <div className="flex w-full">
-                <div>
-                  <Search />
+        <div className="grid gap-4 grid-cols-3 place-items-center">
+          {compares.map((data, index) => (
+            <div className="border rounded-md flex flex-col border-slate-400 h-[75rem] p-6 grow">
+              <div className="flex justify-between items-center">
+                <div className="flex w-full">
+                  <SearchCompareBox
+                    placeholder="Search product by name"
+                    onSelectProduct={(id) => fetchDetail(id, index)}
+                  />
+                  {/* <input
+                    onChange={(e) => debounceHandle(e.target.value)}
+                    type="text"
+                    placeholder="Asus ROG Strix"
+                    className=" border outline-none mx-4 py-2 px-4 grow dark:bg-transparent"
+                  /> */}
                 </div>
-                <input
-                  onChange={(e) => debounceHandle(e.target.value)}
-                  type="text"
-                  placeholder="Asus ROG Strix"
-                  className=" outline-none grow mx-4 dark:bg-transparent border py-2 px-4"
-                />
+                <X onClick={() => deleteCompare(index)} />
               </div>
-              <div className="">
-                <X />
+              <div className="flex items-center justify-center grow">
+                {Object.keys(data).length !== 0 ? (
+                  <CardCompare key={index} data={data as Product} />
+                ) : (
+                  <p className="flex-1 text-center text-gray-400 items-center">
+                    Search Product
+                  </p>
+                )}
               </div>
             </div>
-            {datas?.map((data, index) => (
-              <CardCompare key={index} data={data} />
-            ))}
-          </div>
-
-          {/* <CardCompare data={datas![0]} /> */}
-          {/* <p>{datas![0].name}</p> */}
+          ))}
+          <Button className="w-fit" onClick={() => addCompare()}>
+            add new compare
+          </Button>
         </div>
       </div>
     </Layout>
