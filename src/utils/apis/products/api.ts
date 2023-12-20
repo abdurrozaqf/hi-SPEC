@@ -4,7 +4,7 @@ import {
   Product,
   ResponseProducts,
 } from "./types";
-import axiosWithConfig from "../axiosWithConfig";
+import axiosWithConfig from "@/utils/apis/axiosWithConfig";
 import { Response, Request, ResponsePagination } from "@/utils/types/api";
 
 export const getProducts = async (params?: Request) => {
@@ -32,23 +32,11 @@ export const getProducts = async (params?: Request) => {
   }
 };
 
-export const getCategoryProducts = async (category: string, limit: number) => {
-  try {
-    const response = await axiosWithConfig.get(
-      `/product/search?category=${category}&limit=${limit}`
-    );
-
-    return response.data as ResponsePagination;
-  } catch (error: any) {
-    throw Error(error.response.data.message);
-  }
-};
-
 export const getDetailProduct = async (product_id: number) => {
   try {
     const response = await axiosWithConfig.get(`/product/${product_id}`);
 
-    return response.data as Response;
+    return response.data as Response<Product>;
   } catch (error: any) {
     throw Error(error.response.data.message);
   }

@@ -6,7 +6,13 @@ import {
   addWishlist,
   deleteWishlist,
 } from "./api";
-import { User, UpdateUserSchema, updateUserSchema, AllUser } from "./types";
+import {
+  User,
+  UpdateUserSchema,
+  updateUserSchema,
+  AllUser,
+  MyWishlist,
+} from "./types";
 
 export {
   getUser,
@@ -17,4 +23,4 @@ export {
   deleteWishlist,
   updateUserSchema,
 };
-export type { User, AllUser, UpdateUserSchema };
+export type { User, AllUser, UpdateUserSchema, MyWishlist };

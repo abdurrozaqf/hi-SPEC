@@ -63,3 +63,11 @@ export type AllUser = {
   avatar: string;
   time: Date;
 };
+
+export type MyWishlist = {
+  favorite_id: number;
+  product_id: number;
+  name: string;
+  price: number;
+  picture: string;
+};

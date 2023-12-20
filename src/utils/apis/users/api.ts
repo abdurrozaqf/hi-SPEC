@@ -1,6 +1,6 @@
 import { Request, Response, ResponsePagination } from "@/utils/types/api";
-import { User, UpdateUserSchema } from "./types";
 import axiosWithConfig from "@/utils/apis/axiosWithConfig";
+import { User, UpdateUserSchema } from "./types";
 
 export const getUser = async (params?: Request) => {
   try {

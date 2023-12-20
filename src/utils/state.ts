@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-import { Product } from "./apis/products";
+import { Product } from "@/utils/apis/products";
 
 interface WishlistState {
   compares: Partial<Product>[];

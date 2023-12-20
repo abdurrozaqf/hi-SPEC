@@ -1,5 +1,5 @@
-import { Response, ResponsePagination } from "@/utils/types/api";
-import axiosWithConfig from "../axiosWithConfig";
+import { Request, Response, ResponsePagination } from "@/utils/types/api";
+import axiosWithConfig from "@/utils/apis/axiosWithConfig";
 import { Transactions } from "./types";
 
 export const getDashboard = async () => {
@@ -25,9 +25,24 @@ export const buyProducts = async (body: {
   }
 };
 
-export const getTransactions = async () => {
+export const getTransactions = async (params?: Request) => {
   try {
-    const response = await axiosWithConfig.get(`/transactions`);
+    let query = "";
+
+    if (params) {
+      const queryParams: string[] = [];
+
+      let key: keyof typeof params;
+      for (key in params) {
+        queryParams.push(`${key}=${params[key]}`);
+      }
+
+      query = queryParams.join("&");
+    }
+
+    const url = query ? `/transactions?${query}` : `/transactions`;
+
+    const response = await axiosWithConfig.get(url);
 
     return response.data as ResponsePagination;
   } catch (error: any) {

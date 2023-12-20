@@ -1,5 +1,4 @@
 import {
-  getCategoryProducts,
   getProducts,
   addProduct,
   deleteProduct,
@@ -18,7 +17,6 @@ import {
 
 export {
   getProducts,
-  getCategoryProducts,
   getDetailProduct,
   addProduct,
   editProduct,

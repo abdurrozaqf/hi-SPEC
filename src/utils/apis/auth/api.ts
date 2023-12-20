@@ -1,6 +1,6 @@
-import { Response } from "@/utils/types/api";
-import { LoginSchema, RegisterSchema } from "./types";
 import axiosWithConfig from "@/utils/apis/axiosWithConfig";
+import { LoginSchema, RegisterSchema } from "./types";
+import { Response } from "@/utils/types/api";
 
 export const RegisterAccount = async (body: RegisterSchema) => {
   try {
