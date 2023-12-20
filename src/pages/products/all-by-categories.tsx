@@ -12,8 +12,8 @@ import { Meta } from "@/utils/types/api";
 
 const AllByCategories = () => {
   const [datas, setDatas] = useState<ResponseProducts[]>();
-  const [meta, setMeta] = useState<Meta>();
   const [searchParams, setSearchParams] = useSearchParams();
+  const [meta, setMeta] = useState<Meta>();
 
   useEffect(() => {
     searchParams.set("category", params.category!);
@@ -27,8 +27,8 @@ const AllByCategories = () => {
   async function fetchData() {
     try {
       const query = Object.fromEntries([...searchParams]);
-
       const result = await getProducts({ ...query });
+
       setDatas(result.data);
       setMeta(result.pagination);
     } catch (error: any) {

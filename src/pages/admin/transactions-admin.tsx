@@ -1,6 +1,6 @@
 import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import debounce from "lodash.debounce";
+// import debounce from "lodash.debounce";
 import { format } from "date-fns";
 
 import { useToast } from "@/components/ui/use-toast";
@@ -19,6 +19,7 @@ import {
 import { Transactions, getTransactions } from "@/utils/apis/admin";
 import { getDetailProduct } from "@/utils/apis/products";
 import { Product } from "@/utils/apis/products";
+import { formatPrice } from "@/utils/formatter";
 import { Meta } from "@/utils/types/api";
 
 interface MergedData extends Transactions {
@@ -27,15 +28,22 @@ interface MergedData extends Transactions {
 
 const TransactionsAdmin = () => {
   const [transactions, setTransactions] = useState<Transactions[]>();
-  const [products, setProducts] = useState<Product[]>();
   const [searchParams, setSearchParams] = useSearchParams();
+  const [products, setProducts] = useState<Product[]>();
   const [meta, setMeta] = useState<Meta>();
 
   const { toast } = useToast();
 
+  useEffect(() => {
+    fetchData();
+    fetchDataProduct();
+  }, [searchParams]);
+
   async function fetchData() {
     try {
-      const result = await getTransactions();
+      const query = Object.fromEntries([...searchParams]);
+      const result = await getTransactions({ ...query });
+
       setTransactions(result.data);
       setMeta(result.pagination);
     } catch (error: any) {
@@ -55,7 +63,6 @@ const TransactionsAdmin = () => {
       const promises = dataResponse.map(async (data: any) => {
         const res = await getDetailProduct(data.product_id);
         const dataProducts = res.data;
-
         return dataProducts;
       });
       const results: any = await Promise.all(promises);
@@ -99,43 +106,38 @@ const TransactionsAdmin = () => {
       }
     }) || [];
 
-  function handleSearch(value: string) {
-    if (value !== "") {
-      searchParams.set("name", value);
-    } else {
-      searchParams.delete("name");
-    }
-    setSearchParams(searchParams);
-  }
+  // function handleSearch(value: string) {
+  //   if (value !== "") {
+  //     searchParams.set("name", value);
+  //   } else {
+  //     searchParams.delete("name");
+  //   }
+  //   setSearchParams(searchParams);
+  // }
 
-  const debounceRequest = debounce(
-    (search: string) => handleSearch(search),
-    500
-  );
+  // const debounceRequest = debounce(
+  //   (search: string) => handleSearch(search),
+  //   500
+  // );
 
   function handlePrevNextPage(page: string | number) {
     searchParams.set("page", String(page));
     setSearchParams(searchParams);
   }
 
-  useEffect(() => {
-    fetchData();
-    fetchDataProduct();
-  }, [searchParams]);
-
   return (
     <Layout>
-      <div className="px-10 py-8 bg-white dark:bg-[#1265ae24] rounded-xl grow flex flex-col shadow-products-card font-poppins overflow-auto">
+      <div className="px-10 py-8 bg-white dark:bg-[#1265ae24] rounded-xl flex flex-col justify-start grow shadow-products-card font-poppins overflow-auto">
         <h1 className="text-2xl font-medium text-center">
           Database Transactions
         </h1>
         <div className="flex mb-10">
-          <input
-            type="text"
+          {/* <input
+            type="search"
             placeholder="Search..."
             onChange={(e) => debounceRequest(e.target.value)}
             className="w-1/4 placeholder:italic placeholder:text-sm outline-none py-2 px-4 rounded-lg dark:bg-transparent shadow dark:shadow-white"
-          />
+          /> */}
         </div>
         {transactions === null ? (
           <div className="flex grow justify-center items-center">
@@ -173,12 +175,7 @@ const TransactionsAdmin = () => {
                     <TableCell>
                       <p className="truncate">{data.product?.name}</p>
                     </TableCell>
-                    <TableCell>
-                      {data.total_price.toLocaleString("id-ID", {
-                        style: "currency",
-                        currency: "IDR",
-                      })}
-                    </TableCell>
+                    <TableCell>{formatPrice(data.total_price!)}</TableCell>
                     <TableCell>
                       {format(new Date(data.timestamp), "iiii, dd MMMM Y")}
                     </TableCell>

@@ -6,10 +6,8 @@ const ProtectedRoutes = () => {
   const { pathname } = useLocation();
   const { token, user } = useToken();
 
-  // bagi yg udh login tidak bisa ke sini
   const authProtected = ["/login"];
 
-  // bagi yang belum login tidak bisa ke sini
   const tokenProtected = [
     "/profile",
     "/edit-profile",
@@ -20,7 +18,6 @@ const ProtectedRoutes = () => {
     "/transactions-admin",
   ];
 
-  // bagi yang login dan user bukan admin tidak bisa ke sini
   const roleAdminProtected = [
     "/dashboard",
     "/products-admin",
@@ -28,7 +25,6 @@ const ProtectedRoutes = () => {
     "/transactions-admin",
   ];
 
-  // bagi yang login dan user admin tidak bisa ke sini
   const roleUserProtected = [
     "/",
     "/products",
@@ -43,16 +39,16 @@ const ProtectedRoutes = () => {
     if (token) return <Navigate to="/" />;
   }
 
-  if (roleUserProtected.includes(pathname)) {
-    if (user.user?.name === "admin") return <Navigate to="/dashboard" />;
-  }
-
   if (tokenProtected.includes(pathname)) {
     if (!token) return <Navigate to="/login" />;
 
     if (roleAdminProtected.includes(pathname)) {
       if (user.user?.name !== "admin") return <Navigate to="/" />;
     }
+  }
+
+  if (roleUserProtected.includes(pathname)) {
+    if (user.user?.name === "admin") return <Navigate to="/dashboard" />;
   }
 
   return <Outlet />;

@@ -35,6 +35,7 @@ import {
   getProducts,
 } from "@/utils/apis/products";
 import { Meta } from "@/utils/types/api";
+import { formatPrice } from "@/utils/formatter";
 
 const ProductsAdmin = () => {
   const [products, setProducts] = useState<ResponseProducts[]>();
@@ -50,8 +51,8 @@ const ProductsAdmin = () => {
   async function fetchData() {
     try {
       const query = Object.fromEntries([...searchParams]);
-
       const result = await getProducts({ ...query });
+
       setProducts(result.data);
       setMeta(result.pagination);
     } catch (error: any) {
@@ -66,7 +67,6 @@ const ProductsAdmin = () => {
   async function handleDelete(product_id: number) {
     try {
       const result = await deleteProduct(product_id);
-
       toast({ description: result.message });
       fetchData();
     } catch (error: any) {
@@ -121,12 +121,11 @@ const ProductsAdmin = () => {
         <div className="flex items-center justify-between mb-10">
           <div className="flex items-center space-x-6">
             <input
-              type="text"
+              type="search"
               onChange={(e) => debounceRequest1(e.target.value)}
               placeholder="Search by name product"
               className="w-fit placeholder:italic placeholder:text-sm outline-none py-2 px-4 rounded-lg dark:bg-transparent shadow dark:shadow-white"
             />
-
             <div>
               <Select onValueChange={(value) => debounceRequest2(value)}>
                 <SelectTrigger className="w-52 placeholder:italic placeholder:text-sm outline-none py-2 px-4 rounded-lg dark:bg-transparent shadow dark:shadow-white border-none">
@@ -172,14 +171,9 @@ const ProductsAdmin = () => {
                     className="object-cover w-14 gap-14 bg-center"
                   />
                 </TableCell>
-                <TableCell>{product.name || "Unknown"}</TableCell>
-                <TableCell>
-                  {product.price.toLocaleString("id-ID", {
-                    style: "currency",
-                    currency: "IDR",
-                  })}
-                </TableCell>
-                <TableCell>{product.category || "-"}</TableCell>
+                <TableCell>{product.name}</TableCell>
+                <TableCell>{formatPrice(product.price!)}</TableCell>
+                <TableCell>{product.category}</TableCell>
                 <TableCell>
                   <CustomDialog
                     title="Detail Laptop"

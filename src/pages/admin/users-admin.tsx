@@ -30,7 +30,6 @@ const UsersAdmin = () => {
   async function fetchData() {
     try {
       const query = Object.fromEntries([...searchParams]);
-
       const result = await getUser({ ...query });
 
       setUsers(result.data);

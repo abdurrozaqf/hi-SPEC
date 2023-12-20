@@ -1,7 +1,5 @@
-import { useSearchParams } from "react-router-dom";
 import { ArrowLeft, X } from "lucide-react";
 import { useEffect, useState } from "react";
-import debounce from "lodash.debounce";
 
 import SearchCompareBox from "@/components/SearchCompareBox";
 import { useToast } from "@/components/ui/use-toast";
@@ -10,14 +8,13 @@ import { Button } from "@/components/ui/button";
 import Layout from "@/components/Layout";
 
 import { ResponseProducts, getProducts, Product } from "@/utils/apis/products";
-import { getDetailProducts } from "@/utils/apis/products/api";
+import { getDetailProduct } from "@/utils/apis/products/api";
 import { useCompareStore } from "@/utils/state";
 
 const Compare = () => {
   const { compares, addCompare, updateCompare, deleteCompare } =
     useCompareStore((state) => state);
   const [datas, setDatas] = useState<ResponseProducts[]>();
-  const [searchParams, setSearchParams] = useSearchParams();
 
   const { toast } = useToast();
 
@@ -42,7 +39,7 @@ const Compare = () => {
 
   async function fetchDetail(id: number, index: number) {
     try {
-      const result = await getDetailProducts(id);
+      const result = await getDetailProduct(id);
       updateCompare(index, result.data);
     } catch (error: any) {
       toast({
@@ -52,20 +49,6 @@ const Compare = () => {
       });
     }
   }
-
-  function handleSearch(value: string) {
-    if (value !== "") {
-      searchParams.set("name", value);
-    } else {
-      searchParams.delete("name");
-    }
-    setSearchParams(searchParams);
-  }
-
-  const debounceHandle = debounce(
-    (search: string) => handleSearch(search),
-    500
-  );
 
   return (
     <Layout>
@@ -81,19 +64,16 @@ const Compare = () => {
         </div>
         <div className="grid gap-4 grid-cols-3 place-items-center">
           {compares.map((data, index) => (
-            <div className="border rounded-md flex flex-col border-slate-400 h-[75rem] p-6 grow">
+            <div
+              key={index}
+              className="border rounded-md flex flex-col border-slate-400 h-[75rem] p-6 grow"
+            >
               <div className="flex justify-between items-center">
                 <div className="flex w-full">
                   <SearchCompareBox
                     placeholder="Search product by name"
                     onSelectProduct={(id) => fetchDetail(id, index)}
                   />
-                  {/* <input
-                    onChange={(e) => debounceHandle(e.target.value)}
-                    type="text"
-                    placeholder="Asus ROG Strix"
-                    className=" border outline-none mx-4 py-2 px-4 grow dark:bg-transparent"
-                  /> */}
                 </div>
                 <X onClick={() => deleteCompare(index)} />
               </div>
@@ -109,7 +89,7 @@ const Compare = () => {
             </div>
           ))}
           <Button className="w-fit" onClick={() => addCompare()}>
-            add new compare
+            Add new compare
           </Button>
         </div>
       </div>

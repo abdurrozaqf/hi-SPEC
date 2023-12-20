@@ -1,21 +1,20 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import ProtectedRoutes from "@/routes/protected-routes";
 
 import Home from "@/pages";
 import Login from "@/pages/auth/login";
 import Products from "@/pages/products";
+import AllByCategories from "@/pages/products/all-by-categories";
 import DetailProduct from "@/pages/products/detail-product";
 import Compare from "@/pages/products/compare";
 import Profile from "@/pages/profiles";
 import EditProfile from "@/pages/profiles/edit-profile";
 import WishList from "@/pages/profiles/wishlist";
-import Dashboard from "@/pages/admin/Dashboard";
-import ProductsAdmin from "@/pages/admin/ProductsAdmin";
-import UsersAdmin from "@/pages/admin/UsersAdmin";
-import TransactionsAdmin from "@/pages/admin/TransactionsAdmin";
+import Dashboard from "@/pages/admin/dashboard";
+import ProductsAdmin from "@/pages/admin/products-admin";
+import UsersAdmin from "@/pages/admin/users-admin";
+import TransactionsAdmin from "@/pages/admin/transactions-admin";
 import NotFound from "@/pages/not-found";
-
-import ProtectedRoutes from "@/routes/protected-routes";
-import AllByCategories from "@/pages/products/AllByCategories";
 
 export default function Router() {
   const router = createBrowserRouter([

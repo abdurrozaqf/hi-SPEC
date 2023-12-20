@@ -6,19 +6,18 @@ import { useToast } from "@/components/ui/use-toast";
 import ProductCard from "@/components/ProductCard";
 import Layout from "@/components/Layout";
 
-import { getCategoryProducts } from "@/utils/apis/products";
+import { ResponseProducts, getProducts } from "@/utils/apis/products";
 
 const Home = () => {
-  const [multimedias, setMultimedias] = useState([]);
-  const [offices, setOffices] = useState([]);
-  const [gamings, setGamings] = useState([]);
-
+  const [multimedias, setMultimedias] = useState<ResponseProducts[]>([]);
+  const [offices, setOffices] = useState<ResponseProducts[]>([]);
+  const [gamings, setGamings] = useState<ResponseProducts[]>([]);
   const { toast } = useToast();
 
   // Fetch Api
   async function fetchDataOffice() {
     try {
-      const result = await getCategoryProducts(`office`, 5);
+      const result = await getProducts({ category: "office", limit: 5 });
       setOffices(result.data);
     } catch (error: any) {
       toast({
@@ -31,7 +30,7 @@ const Home = () => {
 
   async function fetchDataMultimedia() {
     try {
-      const result = await getCategoryProducts(`multimedia`, 5);
+      const result = await getProducts({ category: "multimedia", limit: 5 });
       setMultimedias(result.data);
     } catch (error: any) {
       toast({
@@ -44,7 +43,7 @@ const Home = () => {
 
   async function fetchDataGaming() {
     try {
-      const result = await getCategoryProducts(`gaming`, 5);
+      const result = await getProducts({ category: "gaming", limit: 5 });
       setGamings(result.data);
     } catch (error: any) {
       toast({

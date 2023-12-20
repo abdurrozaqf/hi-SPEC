@@ -13,7 +13,6 @@ const Login = () => {
   return (
     <div className="w-full h-screen font-poppins bg-[url('src/assets/Home-page-background.png')] bg-cover bg-no-repeat flex flex-col">
       <div className="container flex flex-col lg:flex-row items-center justify-center lg:justify-around grow">
-        {/* Bagian kiri */}
         <div>
           <h1 className="text-white font-poppins font-bold text-[45px]">
             Smart solution <br /> for your brand are here
@@ -55,7 +54,6 @@ const Login = () => {
           </div>
         </div>
 
-        {/* Bagian kanan */}
         <div className="h-full lg:flex items-end -mb-1 hidden absolute lg:relative">
           <img
             src="src/assets/Home-page-human.png"
@@ -65,7 +63,6 @@ const Login = () => {
         </div>
       </div>
 
-      {/* footer */}
       <footer className="bg-[#E4ECF1] w-full h-20 flex items-center justify-center z-10">
         <Marquee pauseOnHover direction="right">
           <img src="src/assets/Home-page-sponsor.png" alt="sponsor" />

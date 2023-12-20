@@ -11,17 +11,17 @@ import { Product, getDetailProduct } from "@/utils/apis/products";
 import { useToken } from "@/utils/contexts/token";
 import { addWishlist } from "@/utils/apis/users";
 import { buyProducts } from "@/utils/apis/admin";
+import { formatPrice } from "@/utils/formatter";
 
 import BannerSponsorDetailProduct from "@/assets/Iklan.png";
 import IconWishlist from "@/assets/wishlist-icon.png";
 
 const DetailProduct = () => {
   const [product, setProduct] = useState<Product>();
-  const { token } = useToken();
-  const params = useParams();
-
   const navigate = useNavigate();
+  const { token } = useToken();
   const { toast } = useToast();
+  const params = useParams();
 
   useEffect(() => {
     fetchData();
@@ -43,7 +43,6 @@ const DetailProduct = () => {
   async function handleWishlist(product_id: number) {
     try {
       const result = await addWishlist(product_id);
-
       toast({ description: result.message });
     } catch (error: any) {
       toast({
@@ -60,7 +59,6 @@ const DetailProduct = () => {
   }) {
     try {
       const response = await buyProducts(data);
-
       window.open(`${response.data.url}`);
     } catch (error: any) {
       toast({
@@ -88,16 +86,12 @@ const DetailProduct = () => {
             <img src={product?.picture} alt={product?.name} className="w-96" />
           </div>
         </div>
-
         <div className="flex flex-col justify-center px-6 grow">
           <h3 className="text-[#1E1E1E] dark:text-white font-semibold text-lg mt-4 mb-1">
             {product?.name}
           </h3>
           <h1 className="text-[#1E1E1E] dark:text-white font-bold text-3xl mb-2">
-            {product?.price.toLocaleString("id-ID", {
-              style: "currency",
-              currency: "IDR",
-            })}
+            {formatPrice(product?.price!)}
           </h1>
           <hr className="bg-[#757575]" />
           <p className="text-[#48B774] font-bold text-base my-2">Details</p>
@@ -120,7 +114,6 @@ const DetailProduct = () => {
           <p>HDMI: {product?.hdmi}</p>
           <p>Weight: {product?.weight}</p>
         </div>
-
         <div className="flex flex-col justify-center items-center px-6 lg:px-0">
           {token && (
             <div className="border border-solid border-[#D9D9D9] p-6 rounded-lg">
@@ -133,31 +126,24 @@ const DetailProduct = () => {
 
               <div className="flex items-center justify-between my-4">
                 <p>Sub total:</p>
-
                 <h1 className="font-bold text-xl">
-                  {product?.price.toLocaleString("id-ID", {
-                    style: "currency",
-                    currency: "IDR",
-                  })}
+                  {formatPrice(product?.price!)}
                 </h1>
               </div>
-
               <Alert
                 title="Are you sure want buy this Product?"
                 description={
-                  <div className="flex flex-col justify-center items-center mb-10">
-                    <img src={product?.picture} className="h-80 w-fit" />
-                    <h1 className="font-bold text-2xl text-center">
-                      {product?.name}
-                    </h1>
-                    <p className="font-semibold text-xl">
-                      Product price:{" "}
-                      {product?.price.toLocaleString("id-ID", {
-                        style: "currency",
-                        currency: "IDR",
-                      })}
-                    </p>
-                  </div>
+                  <>
+                    <div className="flex flex-col justify-center items-center mb-10">
+                      <img src={product?.picture} className="h-80 w-fit" />
+                      <h1 className="font-bold text-2xl text-center">
+                        {product?.name}
+                      </h1>
+                      <p className="font-semibold text-xl">
+                        Product price: {formatPrice(product?.price!)}
+                      </p>
+                    </div>
+                  </>
                 }
                 onAction={() =>
                   handleBuyProduct({
@@ -169,7 +155,6 @@ const DetailProduct = () => {
               >
                 <Button className="w-[17rem] bg-[#48B774]">Buy Now</Button>
               </Alert>
-
               <div className="flex justify-between items-center mt-3">
                 <p className="text-xs">Make your Wishlist come true</p>
                 <div

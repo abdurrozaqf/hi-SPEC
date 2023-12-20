@@ -13,7 +13,6 @@ import { Meta } from "@/utils/types/api";
 const Products = () => {
   const [datas, setDatas] = useState<ResponseProducts[]>();
   const [searchParams, setSearchParams] = useSearchParams();
-
   const [meta, setMeta] = useState<Meta>();
   const { toast } = useToast();
 
@@ -21,12 +20,11 @@ const Products = () => {
     fetchDataName();
   }, [searchParams]);
 
-  // Fetch API
   async function fetchDataName() {
     try {
       const query = Object.fromEntries([...searchParams]);
-
       const result = await getProducts({ ...query });
+
       setDatas(result.data);
       setMeta(result.pagination);
     } catch (error: any) {
@@ -50,7 +48,7 @@ const Products = () => {
           <BannerTagline />
           {datas == undefined ? (
             <div className="flex items-center justify-center grow">
-              <h1 className="font-medium italic  text-slate-500">
+              <h1 className="font-medium italic text-slate-500">
                 Laptop not found
               </h1>
             </div>

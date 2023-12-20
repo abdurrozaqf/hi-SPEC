@@ -24,7 +24,6 @@ import { useToken } from "@/utils/contexts/token";
 
 const EditProfile = () => {
   const [profile, setProfile] = useState<User>();
-  const [isLoading, setIsLoading] = useState(false);
   const { changeToken, user } = useToken();
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -33,13 +32,13 @@ const EditProfile = () => {
   const form = useForm<UpdateUserSchema>({
     resolver: zodResolver(updateUserSchema),
     defaultValues: {
-      name: profile?.user.name ?? "",
-      email: profile?.user.email ?? "",
-      address: profile?.user.address ?? "",
-      phone_number: profile?.user.phone_number ?? "",
+      name: profile?.user.name! ?? "",
+      email: profile?.user.email! ?? "",
+      address: profile?.user.address! ?? "",
+      phone_number: profile?.user.phone_number! ?? "",
       password: "",
       newpassword: "",
-      avatar: profile?.user.avatar ?? "",
+      avatar: profile?.user.avatar! ?? "",
     },
     values: {
       name: profile?.user.name!,
@@ -63,7 +62,6 @@ const EditProfile = () => {
   }, [form.formState]);
 
   async function fetchData() {
-    setIsLoading(true);
     try {
       const result = await getDetailUser(params.user_id!);
       setProfile(result.data);
@@ -73,12 +71,10 @@ const EditProfile = () => {
         description: error.toString(),
         variant: "destructive",
       });
-    } finally {
-      setIsLoading(false);
     }
   }
 
-  const fileRef = form.register("avatar", { required: true });
+  const fileRef = form.register("avatar", { required: false });
   async function onSubmit(data: UpdateUserSchema) {
     try {
       const formData = new FormData();
@@ -123,19 +119,19 @@ const EditProfile = () => {
         <h1 className=" pb-16 font-bold text-4xl">Profile</h1>
         <Form {...form}>
           <form
-            className=" flex flex-col gap-6"
+            className=" flex flex-col gap-6 relative"
             onSubmit={form.handleSubmit(onSubmit)}
           >
             <div className="flex justify-between items-center mb-12">
               <div className="flex items-center">
                 <div className="relative">
                   <img
-                    className="object-cover rounded-full w-36 h-36 relative"
                     src={
                       user.user?.avatar ||
                       "https://mlsn40jruh7z.i.optimole.com/w:auto/h:auto/q:mauto/f:best/https://jeffjbutler.com//wp-content/uploads/2018/01/default-user.png"
                     }
                     alt={user.user?.name || "Guest"}
+                    className="object-cover rounded-full w-36 h-36 relative"
                   />
                   <label
                     htmlFor="input-image"
@@ -151,13 +147,13 @@ const EditProfile = () => {
               </div>
               <Button
                 type="button"
-                className="w-fit h-fit"
+                className="w-fit h-fit hover:bg-blue-800"
                 onClick={() => navigate(-1)}
               >
                 <X />
               </Button>
             </div>
-            <div className="invisible absolute">
+            <div className="hidden absolute top-0">
               <CustomFormField control={form.control} name="avatar">
                 {() => (
                   <Input
@@ -262,7 +258,7 @@ const EditProfile = () => {
               type="submit"
               disabled={form.formState.isSubmitting}
               aria-disabled={form.formState.isSubmitting}
-              className=" bg-[#1FBB5C] h-12"
+              className=" bg-[#1FBB5C] shadow-md"
             >
               {form.formState.isSubmitting ? (
                 <>
@@ -273,13 +269,10 @@ const EditProfile = () => {
               )}
             </Button>
             <p className=" text-center">or</p>
-            {/* <Button type="button" variant={"destructive"} className="h-12">
-              Delete Account
-            </Button> */}
             <Button
-              className=" text-black border h-fit hover:bg-gray-200 hover:text-black shadow-md"
               type="button"
               variant={"destructive"}
+              className="border hover:text-black shadow-md"
             >
               <Alert
                 title="Are you absolutely sure?"

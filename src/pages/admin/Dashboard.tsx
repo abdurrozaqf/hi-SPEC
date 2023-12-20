@@ -14,6 +14,7 @@ import { useToast } from "@/components/ui/use-toast";
 import Layout from "@/components/Layout";
 
 import { ResponseDashboard, getDashboard } from "@/utils/apis/admin";
+import { formatPrice } from "@/utils/formatter";
 
 const Dashboard = () => {
   const [datas, setDatas] = useState<ResponseDashboard>();
@@ -102,16 +103,11 @@ const Dashboard = () => {
                       data.picture ||
                       "https://www.iconpacks.net/icons/2/free-laptop-icon-1928-thumb.png"
                     }
-                    alt={data.name || "Laptop"}
+                    alt={data.name || "unknown"}
                   />
                 </TableCell>
                 <TableCell>{data.name}</TableCell>
-                <TableCell>
-                  {data.price.toLocaleString("id-ID", {
-                    style: "currency",
-                    currency: "IDR",
-                  })}
-                </TableCell>
+                <TableCell>{formatPrice(data.price!)}</TableCell>
                 <TableCell>{data.category}</TableCell>
               </TableRow>
             ))}
