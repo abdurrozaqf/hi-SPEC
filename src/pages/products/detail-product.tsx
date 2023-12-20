@@ -1,20 +1,23 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-
-import { Product, getDetailProduk } from "@/utils/apis/products";
-import { addWishlist } from "@/utils/apis/users";
+import { ArrowLeft } from "lucide-react";
 
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
+import Alert from "@/components/AlertDialog";
 import Layout from "@/components/Layout";
 
-import { ArrowLeft } from "lucide-react";
+import { Product, getDetailProduct } from "@/utils/apis/products";
+import { useToken } from "@/utils/contexts/token";
+import { addWishlist } from "@/utils/apis/users";
+import { buyProducts } from "@/utils/apis/admin";
 
 import BannerSponsorDetailProduct from "@/assets/Iklan.png";
 import IconWishlist from "@/assets/wishlist-icon.png";
 
 const DetailProduct = () => {
   const [product, setProduct] = useState<Product>();
+  const { token } = useToken();
   const params = useParams();
 
   const navigate = useNavigate();
@@ -26,7 +29,7 @@ const DetailProduct = () => {
 
   async function fetchData() {
     try {
-      const result = await getDetailProduk(+params.product_id!);
+      const result = await getDetailProduct(+params.product_id!);
       setProduct(result.data);
     } catch (error: any) {
       toast({
@@ -51,12 +54,29 @@ const DetailProduct = () => {
     }
   }
 
+  async function handleBuyProduct(data: {
+    product_id: number;
+    total_price: number;
+  }) {
+    try {
+      const response = await buyProducts(data);
+
+      window.open(`${response.data.url}`);
+    } catch (error: any) {
+      toast({
+        title: "Oops, someting went wrong.",
+        description: error.toString(),
+        variant: "destructive",
+      });
+    }
+  }
+
   return (
     <Layout>
-      <div className="flex flex-col gap-10 lg:gap-6 lg:flex-row grow bg-white dark:bg-[#1265ae24] rounded-lg px-10 py-6">
+      <div className="flex flex-col gap-10 lg:gap-6 lg:flex-row grow bg-white dark:bg-[#1265ae24] rounded-lg px-10 py-6 shadow">
         <div className="flex flex-col">
           <Button
-            onClick={() => navigate("/products")}
+            onClick={() => navigate(-1)}
             className="flex w-fit h-fit items-center bg-transparent text-black dark:text-white hover:bg-transparent"
           >
             <div className="mr-4">
@@ -69,12 +89,15 @@ const DetailProduct = () => {
           </div>
         </div>
 
-        <div className=" px-6 grow">
+        <div className="flex flex-col justify-center px-6 grow">
           <h3 className="text-[#1E1E1E] dark:text-white font-semibold text-lg mt-4 mb-1">
             {product?.name}
           </h3>
           <h1 className="text-[#1E1E1E] dark:text-white font-bold text-3xl mb-2">
-            {product?.price}
+            {product?.price.toLocaleString("id-ID", {
+              style: "currency",
+              currency: "IDR",
+            })}
           </h1>
           <hr className="bg-[#757575]" />
           <p className="text-[#48B774] font-bold text-base my-2">Details</p>
@@ -98,27 +121,54 @@ const DetailProduct = () => {
           <p>Weight: {product?.weight}</p>
         </div>
 
-        <div className="px-6 lg:px-0">
-          <div className="border border-solid border-[#D9D9D9] p-3 rounded-lg">
-            <div className="m-2">
-              <h2 className="font-bold mb-4">Enter the purchase amount here</h2>
+        <div className="flex flex-col justify-center items-center px-6 lg:px-0">
+          {token && (
+            <div className="border border-solid border-[#D9D9D9] p-6 rounded-lg">
+              <h2 className="font-bold mb-4">Purchase amount</h2>
               <div className="flex border border-solid border-[#D9D9D9] rounded-md justify-center px-2 py-1">
                 {/* <p className="text-[#D9D9D9]">-</p> */}
                 <p className="font-semibold">1</p>
                 {/* <p className="text-[#48B774]">+</p> */}
               </div>
 
-              <div className="flex justify-between my-1">
+              <div className="flex items-center justify-between my-4">
                 <p>Sub total:</p>
-                <h1 className="font-bold text-xl">{product?.price}</h1>
+
+                <h1 className="font-bold text-xl">
+                  {product?.price.toLocaleString("id-ID", {
+                    style: "currency",
+                    currency: "IDR",
+                  })}
+                </h1>
               </div>
-              <a
-                href="https://api.codingbeautydev.com/blog"
-                target="_blank"
-                rel="noreferrer"
+
+              <Alert
+                title="Are you sure want buy this Product?"
+                description={
+                  <div className="flex flex-col justify-center items-center mb-10">
+                    <img src={product?.picture} className="h-80 w-fit" />
+                    <h1 className="font-bold text-2xl text-center">
+                      {product?.name}
+                    </h1>
+                    <p className="font-semibold text-xl">
+                      Product price:{" "}
+                      {product?.price.toLocaleString("id-ID", {
+                        style: "currency",
+                        currency: "IDR",
+                      })}
+                    </p>
+                  </div>
+                }
+                onAction={() =>
+                  handleBuyProduct({
+                    product_id: product?.product_id!,
+                    total_price: product?.price!,
+                  })
+                }
+                onActionTitle="Buy Now"
               >
-                <Button className="w-full bg-[#48B774]">Buy Now</Button>
-              </a>
+                <Button className="w-[17rem] bg-[#48B774]">Buy Now</Button>
+              </Alert>
 
               <div className="flex justify-between items-center mt-3">
                 <p className="text-xs">Make your Wishlist come true</p>
@@ -135,8 +185,7 @@ const DetailProduct = () => {
                 </div>
               </div>
             </div>
-          </div>
-
+          )}
           <div className="mt-6">
             <img src={BannerSponsorDetailProduct} alt="iklan" />
           </div>

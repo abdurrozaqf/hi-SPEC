@@ -1,10 +1,5 @@
-import { getDashboard, getTransactions } from "./api";
-import {
-  ResponseDashboard,
-  StatusSchema,
-  Transactions,
-  statusSchema,
-} from "./types";
+import { buyProducts, getDashboard, getTransactions } from "./api";
+import { ResponseDashboard, Transactions } from "./types";
 
-export { getDashboard, getTransactions, statusSchema };
-export type { Transactions, StatusSchema, ResponseDashboard };
+export { getDashboard, getTransactions, buyProducts };
+export type { Transactions, ResponseDashboard };

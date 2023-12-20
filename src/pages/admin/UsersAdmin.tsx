@@ -3,9 +3,6 @@ import { useEffect, useState } from "react";
 import debounce from "lodash.debounce";
 import { format } from "date-fns";
 
-import { AllUser, getUser } from "@/utils/apis/users";
-import { Meta } from "@/utils/types/api";
-
 import { useToast } from "@/components/ui/use-toast";
 import Pagination from "@/components/Pagination";
 import Layout from "@/components/Layout";
@@ -19,6 +16,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+
+import { AllUser, getUser } from "@/utils/apis/users";
+import { Meta } from "@/utils/types/api";
 
 const UsersAdmin = () => {
   const [users, setUsers] = useState<AllUser[]>();
@@ -47,6 +47,7 @@ const UsersAdmin = () => {
   function handleSearch(value: string) {
     if (value !== "") {
       searchParams.set("name", value);
+      searchParams.delete("page");
     } else {
       searchParams.delete("name");
     }
@@ -81,7 +82,7 @@ const UsersAdmin = () => {
         </div>
         <Table>
           <TableCaption>A list of your recent Users.</TableCaption>
-          <TableHeader className="sticky top-0 bg-[#05152D]">
+          <TableHeader className="sticky top-0 bg-white dark:bg-[#05152D]">
             <TableRow>
               <TableHead>Image</TableHead>
               <TableHead>Name</TableHead>
@@ -118,6 +119,7 @@ const UsersAdmin = () => {
         <div className="mt-4">
           <Pagination
             meta={meta}
+            onClickPage={(page) => handlePrevNextPage(page)}
             onClickNext={() => handlePrevNextPage(meta?.page! + 1)}
             onClickPrevious={() => handlePrevNextPage(meta?.page! - 1)}
           />

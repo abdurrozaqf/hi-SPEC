@@ -146,7 +146,7 @@ const SidebarUser = () => {
           <div className="flex gap-2 items-center">
             <Avatar
               onClick={() => navigate("/profile")}
-              className="cursor-pointer hover:shadow-[#1265AE] dark:shadow-white hover:shadow-lg rounded-full"
+              className="cursor-pointer shadow-md hover:shadow-[#1265AE] dark:shadow-white/50 hover:shadow-lg rounded-full"
             >
               <AvatarImage
                 src={user.user?.avatar || `https://github.com/shadcn.png`}
@@ -190,6 +190,7 @@ const SidebarUser = () => {
             <Alert
               title="Are you sure for Logout"
               onAction={() => handleLogout()}
+              onActionTitle="Logout"
             >
               <div className="flex items-center gap-2 cursor-pointer">
                 <div className="p-2 rounded-md shadow-md w-fit bg-[#FF5858]">

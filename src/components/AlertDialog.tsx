@@ -18,10 +18,12 @@ type Props = {
   description?: string | any;
   onCancel?: () => void;
   onAction?: () => void;
+  onActionTitle?: string;
 };
 
 const Alert = (props: Props) => {
-  const { title, description, children, onCancel, onAction } = props;
+  const { title, onActionTitle, description, children, onCancel, onAction } =
+    props;
 
   return (
     <div>
@@ -35,7 +37,9 @@ const Alert = (props: Props) => {
           <AlertDialogFooter>
             <AlertDialogCancel onClick={onCancel}>Cancel</AlertDialogCancel>
             {onAction && (
-              <AlertDialogAction onClick={onAction}>Continue</AlertDialogAction>
+              <AlertDialogAction onClick={onAction}>
+                {onActionTitle}
+              </AlertDialogAction>
             )}
           </AlertDialogFooter>
         </AlertDialogContent>

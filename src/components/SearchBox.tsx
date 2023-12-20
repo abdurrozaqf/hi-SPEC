@@ -14,6 +14,7 @@ const SearchBox = () => {
     event.preventDefault();
     if (keyword !== "") {
       searchParams.set("name", keyword);
+      searchParams.delete("page");
     } else {
       searchParams.delete("name");
     }
@@ -23,6 +24,7 @@ const SearchBox = () => {
   function handleSearch(value: string) {
     if (value !== "") {
       searchParams.set("name", value);
+      searchParams.delete("page");
     } else {
       searchParams.delete("name");
     }

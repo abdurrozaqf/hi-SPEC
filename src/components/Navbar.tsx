@@ -7,7 +7,7 @@ import SearchBox from "@/components/SearchBox";
 
 const Navbar = () => {
   const { pathname } = useLocation();
-  const { user } = useToken();
+  const { token, user } = useToken();
 
   return (
     <header className="bg-gradient-to-r from-[#1265AE] to-[#48B774]">
@@ -18,11 +18,25 @@ const Navbar = () => {
             <span className="text-4xl font-black">SPEC</span>
           </h1>
         </Link>
-        {pathname === "/products" && <SearchBox />}
+        {pathname === "/products" ? (
+          <SearchBox />
+        ) : pathname === "/categories/office" ? (
+          <SearchBox />
+        ) : pathname === "/categories/gaming" ? (
+          <SearchBox />
+        ) : pathname === "/categories/multimedia" ? (
+          <SearchBox />
+        ) : undefined}
         {user.user?.name !== "admin" && (
-          <Link to="/wishlist">
-            <div className="p-3 bg-white rounded-xl shadow-md">
-              <BookHeartIcon color="black" size={30} />
+          <Link to={token ? `/wishlist` : `/`}>
+            <div
+              className={
+                token
+                  ? `p-3 bg-white rounded-xl shadow-md visible`
+                  : `invisible`
+              }
+            >
+              <BookHeartIcon color="black" size={25} />
             </div>
           </Link>
         )}

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 import { deleteWishlist, getDetailUser } from "@/utils/apis/users";
 import { useToken } from "@/utils/contexts/token";
@@ -10,17 +11,20 @@ import Layout from "@/components/Layout";
 
 type MyFavorite = {
   favorite_id: number;
-  name: string;
-  picture: string;
-  price: number;
   product_id: number;
+  name: string;
+  price: number;
+  picture: string;
 };
 
 const WishList = () => {
   const [wishlists, setWishlists] = useState<MyFavorite[]>();
-
   const { toast } = useToast();
   const { user } = useToken();
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   async function fetchData() {
     try {
@@ -52,15 +56,11 @@ const WishList = () => {
     }
   }
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   return (
     <Layout>
       <div className="flex flex-col gap-8 grow">
         <BannerTagline />
-        <div className="grid gap-6 grid-cols-5 grow">
+        <div className="grid gap-14 grid-cols-5 grow">
           {wishlists?.map((wishlist) => {
             return (
               <div
@@ -68,18 +68,27 @@ const WishList = () => {
                 key={wishlist.product_id}
               >
                 <div>
-                  <div className="flex justify-center py-4">
-                    <img src={wishlist.picture} className="h-32" />
-                  </div>
+                  <Link to={`/detail-product/${wishlist.product_id}`}>
+                    <div className="flex justify-center py-4">
+                      <img src={wishlist.picture} className="h-32" />
+                    </div>
+                  </Link>
                   <div className="bg-white dark:bg-[#1265ae24] px-4 py-3 font-poppins">
-                    <p className="text-[#757575] dark:text-[#b5b5b5] font-bold text-sm tracking-tight truncate">
-                      {wishlist.name}
-                    </p>
-                    <h1 className="font-bold text-lg">{wishlist.price}</h1>
-                    <p className="font-medium text-end text-[0.625rem] mt-4">
-                      check detail
-                    </p>
-                    <hr className="border-2 my-2" />
+                    <Link to={`/detail-product/${wishlist.product_id}`}>
+                      <p className="text-[#757575] dark:text-[#b5b5b5] font-bold text-sm tracking-tight truncate">
+                        {wishlist.name}
+                      </p>
+                      <h1 className="font-bold text-lg">
+                        {wishlist.price.toLocaleString("id-ID", {
+                          style: "currency",
+                          currency: "IDR",
+                        })}
+                      </h1>
+                      <p className="font-medium text-end text-[0.625rem] mt-4">
+                        check detail
+                      </p>
+                      <hr className="border-2 my-2" />
+                    </Link>
                     <Button
                       onClick={() => handleDeleteWishlist(wishlist.favorite_id)}
                       variant={"destructive"}

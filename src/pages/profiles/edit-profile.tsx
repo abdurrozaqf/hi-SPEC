@@ -1,8 +1,16 @@
+import { useNavigate, useParams } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CameraIcon, Loader2, X } from "lucide-react";
-import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+
+import { CustomFormField } from "@/components/CustomForm";
+import { useToast } from "@/components/ui/use-toast";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import Alert from "@/components/AlertDialog";
+import { Form } from "@/components/ui/form";
+import Layout from "@/components/Layout";
 
 import {
   UpdateUserSchema,
@@ -14,14 +22,6 @@ import {
 } from "@/utils/apis/users";
 import { useToken } from "@/utils/contexts/token";
 
-import { CustomFormField } from "@/components/CustomForm";
-import { useToast } from "@/components/ui/use-toast";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import Alert from "@/components/AlertDialog";
-import { Form } from "@/components/ui/form";
-import Layout from "@/components/Layout";
-
 const EditProfile = () => {
   const [profile, setProfile] = useState<User>();
   const [isLoading, setIsLoading] = useState(false);
@@ -29,22 +29,6 @@ const EditProfile = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const params = useParams();
-
-  async function fetchData() {
-    setIsLoading(true);
-    try {
-      const result = await getDetailUser(params.user_id!);
-      setProfile(result.data);
-    } catch (error: any) {
-      toast({
-        title: "Oops! Something went wrong.",
-        description: error.toString(),
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  }
 
   const form = useForm<UpdateUserSchema>({
     resolver: zodResolver(updateUserSchema),
@@ -68,8 +52,33 @@ const EditProfile = () => {
     },
   });
 
-  const fileRef = form.register("avatar", { required: true });
+  useEffect(() => {
+    fetchData();
+  }, [form.formState.isSubmitSuccessful]);
 
+  useEffect(() => {
+    if (form.formState.isSubmitSuccessful) {
+      form.reset();
+    }
+  }, [form.formState]);
+
+  async function fetchData() {
+    setIsLoading(true);
+    try {
+      const result = await getDetailUser(params.user_id!);
+      setProfile(result.data);
+    } catch (error: any) {
+      toast({
+        title: "Oops! Something went wrong.",
+        description: error.toString(),
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  const fileRef = form.register("avatar", { required: true });
   async function onSubmit(data: UpdateUserSchema) {
     try {
       const formData = new FormData();
@@ -107,16 +116,6 @@ const EditProfile = () => {
       });
     }
   }
-
-  useEffect(() => {
-    fetchData();
-  }, [form.formState.isSubmitSuccessful]);
-
-  useEffect(() => {
-    if (form.formState.isSubmitSuccessful) {
-      form.reset();
-    }
-  }, [form.formState]);
 
   return (
     <Layout>

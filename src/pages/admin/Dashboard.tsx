@@ -1,3 +1,4 @@
+import { Box, DollarSign, Users } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import {
@@ -12,12 +13,15 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 import Layout from "@/components/Layout";
 
-import { Box, DollarSign, Users } from "lucide-react";
 import { ResponseDashboard, getDashboard } from "@/utils/apis/admin";
 
 const Dashboard = () => {
   const [datas, setDatas] = useState<ResponseDashboard>();
   const { toast } = useToast();
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   async function fetchData() {
     try {
@@ -31,10 +35,6 @@ const Dashboard = () => {
       });
     }
   }
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   return (
     <Layout>
@@ -78,10 +78,10 @@ const Dashboard = () => {
           </p>
         </div>
       </div>
-      <div className="p-10 bg-white dark:bg-[#1265ae24] rounded-xl grow shadow-products-card overflow-auto font-poppins">
+      <div className="px-10 py-8 bg-white dark:bg-[#1265ae24] rounded-xl flex flex-col justify-between grow shadow-products-card font-poppins overflow-auto">
         <Table>
           <TableCaption>A list of recent products.</TableCaption>
-          <TableHeader>
+          <TableHeader className="sticky top-0 bg-white dark:bg-[#05152D]">
             <TableRow>
               <TableHead className="w-[50px] text-center">No.</TableHead>
               <TableHead className="w-[150px] text-center">Image</TableHead>
