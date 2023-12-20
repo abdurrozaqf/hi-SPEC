@@ -3,21 +3,31 @@ import { create } from "zustand";
 import { Product } from "./apis/products";
 
 interface WishlistState {
-  cart: Product[];
-  addProduk: (product: Product) => void;
-  deleteProduk: (product: Product) => void;
+  compares: Partial<Product>[];
+  addCompare: () => void;
+  updateCompare: (index: number, product: Product) => void;
+  deleteCompare: (index: number) => void;
 }
 
-const useCartProduct = create<WishlistState>((set) => ({
-  cart: [],
-  addProduk: (product) => set((state) => ({ cart: [...state.cart, product] })),
-  deleteProduk: (product) =>
+const useCompareStore = create<WishlistState>((set) => ({
+  compares: [{}, {}],
+  addCompare: () =>
     set((state) => {
-      const newCart = state.cart.filter(
-        (item) => item.product_id !== product.product_id
-      );
-      return { cart: newCart };
+      const temp = [...state.compares, {}];
+      return { compares: temp };
+    }),
+  updateCompare: (index, product) =>
+    set((state) => {
+      let temp = [...state.compares];
+      temp[index] = product;
+
+      return { compares: temp };
+    }),
+  deleteCompare: (index) =>
+    set((state) => {
+      const newCart = state.compares.filter((_, idx) => idx !== index);
+      return { compares: newCart };
     }),
 }));
 
-export default useCartProduct;
+export { useCompareStore };

@@ -4,7 +4,7 @@ import {
   addProduct,
   deleteProduct,
   editProduct,
-  getDetailProduk,
+  getDetailProduct,
 } from "./api";
 
 import {
@@ -19,7 +19,7 @@ import {
 export {
   getProducts,
   getCategoryProducts,
-  getDetailProduk,
+  getDetailProduct,
   addProduct,
   editProduct,
   deleteProduct,

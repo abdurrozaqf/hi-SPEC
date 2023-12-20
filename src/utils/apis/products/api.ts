@@ -1,4 +1,9 @@
-import { AddProductSchema, EditProductSchema, Product } from "./types";
+import {
+  AddProductSchema,
+  EditProductSchema,
+  Product,
+  ResponseProducts,
+} from "./types";
 import axiosWithConfig from "../axiosWithConfig";
 import { Response, Request, ResponsePagination } from "@/utils/types/api";
 
@@ -21,7 +26,7 @@ export const getProducts = async (params?: Request) => {
 
     const response = await axiosWithConfig.get(url);
 
-    return response.data as ResponsePagination;
+    return response.data as ResponsePagination<ResponseProducts[]>;
   } catch (error: any) {
     throw Error(error.response.data.message);
   }
@@ -39,7 +44,7 @@ export const getCategoryProducts = async (category: string, limit: number) => {
   }
 };
 
-export const getDetailProducts = async (product_id: number) => {
+export const getDetailProduct = async (product_id: number) => {
   try {
     const response = await axiosWithConfig.get(`/product/${product_id}`);
 
@@ -78,16 +83,6 @@ export const editProduct = async (
 export const deleteProduct = async (product_id: number) => {
   try {
     const response = await axiosWithConfig.delete(`/product/${product_id}`);
-
-    return response.data as Response;
-  } catch (error: any) {
-    throw Error(error.response.data.message);
-  }
-};
-
-export const getDetailProduk = async (product_id: number) => {
-  try {
-    const response = await axiosWithConfig.get(`/product/${product_id}`);
 
     return response.data as Response;
   } catch (error: any) {
