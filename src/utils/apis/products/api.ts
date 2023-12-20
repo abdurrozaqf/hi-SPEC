@@ -1,4 +1,4 @@
-import { AddProductSchema, EditProductSchema, Product } from "./types";
+import { AddProductSchema, EditProductSchema, ResponseProducts } from "./types";
 import axiosWithConfig from "../axiosWithConfig";
 import { Response, Request, ResponsePagination } from "@/utils/types/api";
 
@@ -21,7 +21,7 @@ export const getProducts = async (params?: Request) => {
 
     const response = await axiosWithConfig.get(url);
 
-    return response.data as ResponsePagination;
+    return response.data as ResponsePagination<ResponseProducts[]>;
   } catch (error: any) {
     throw Error(error.response.data.message);
   }
