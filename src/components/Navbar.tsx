@@ -1,9 +1,9 @@
 import { Link, useLocation } from "react-router-dom";
 import { BookHeartIcon } from "lucide-react";
 
-import { useToken } from "@/utils/contexts/token";
-
 import SearchBox from "@/components/SearchBox";
+
+import { useToken } from "@/utils/contexts/token";
 
 const Navbar = () => {
   const { pathname } = useLocation();

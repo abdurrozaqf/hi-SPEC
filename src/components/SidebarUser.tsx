@@ -1,13 +1,14 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-import { useTheme } from "@/utils/contexts/theme-provider";
-import { useToken } from "@/utils/contexts/token";
-
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import RangeBudgetBox from "@/components/RangeBudgetBox";
 import { useToast } from "@/components/ui/use-toast";
 import CategoryBox from "@/components/CategoryBox";
+import Alert from "@/components/AlertDialog";
+
+import { useTheme } from "@/utils/contexts/theme-provider";
+import { useToken } from "@/utils/contexts/token";
 
 import {
   BoxIcon,
@@ -20,11 +21,9 @@ import {
   MoonStarIcon,
   SunIcon,
 } from "lucide-react";
-import Alert from "./AlertDialog";
 
 const SidebarUser = () => {
   const { changeToken, changeUserID, user, token } = useToken();
-
   const [isOpen, setIsOpen] = useState(true);
   const { setTheme, theme } = useTheme();
   const { pathname } = useLocation();
@@ -149,8 +148,11 @@ const SidebarUser = () => {
               className="cursor-pointer shadow-md hover:shadow-[#1265AE] dark:shadow-white/50 hover:shadow-lg rounded-full"
             >
               <AvatarImage
-                src={user.user?.avatar || `https://github.com/shadcn.png`}
-                alt={user.user?.name || `@shadcn`}
+                src={
+                  user.user?.avatar ||
+                  `https://mlsn40jruh7z.i.optimole.com/w:auto/h:auto/q:mauto/f:best/https://jeffjbutler.com//wp-content/uploads/2018/01/default-user.png`
+                }
+                alt={user.user?.name || "Guest"}
                 className="object-cover"
               />
               <AvatarFallback>CN</AvatarFallback>

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
 import { ResponseProducts } from "@/utils/apis/products";
+import { formatPrice } from "@/utils/formatter";
 
 interface Props {
   data: Partial<ResponseProducts>;
@@ -25,11 +26,8 @@ const ProductCard = (props: Props) => {
           <p className="text-[#757575] dark:text-[#b5b5b5] font-semibold text-[0.625rem] text-sm tracking-tight truncate">
             {data.name || "Unknown"}
           </p>
-          <h1 className="font-bold text-lg">
-            {data.price!.toLocaleString("id-ID", {
-              style: "currency",
-              currency: "IDR",
-            }) || "Unknown"}
+          <h1 className="font-bold text-lg truncate">
+            {formatPrice(data.price!) || "Unknown"}
           </h1>
           <p className="font-medium text-end text-[0.625rem] mt-4">
             check detail

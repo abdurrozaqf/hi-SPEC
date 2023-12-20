@@ -1,4 +1,5 @@
 import { Product } from "@/utils/apis/products";
+import { formatPrice } from "@/utils/formatter";
 
 interface Props {
   data: Product;
@@ -17,7 +18,9 @@ const CardCompare = (props: Props) => {
         />
         <div className="flex flex-col text-center gap-2 pt-4 pb-8">
           <p className=" font-bold text-2xl">{data.name || "Unknown"}</p>
-          <p className=" font-bold text-3xl">{data.price || "Unknown"}</p>
+          <p className=" font-bold text-3xl">
+            {formatPrice(data.price!) || "Unknown"}
+          </p>
         </div>
         <div className=" mt-4 flex flex-col gap-8">
           <p>CPU : {data.cpu || "Unknown"}</p>

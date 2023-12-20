@@ -2,7 +2,6 @@ import { useCallback, useState, useMemo } from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
 import debounce from "lodash.debounce";
 
-import { Button } from "@/components/ui/button";
 import {
   Command,
   CommandEmpty,
@@ -15,10 +14,11 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
 
-import { cn } from "@/utils/utils";
 import { getProducts } from "@/utils/apis/products";
 import { Request } from "@/utils/types/api";
+import { cn } from "@/utils/utils";
 
 interface ComboboxDatas {
   product_id: number;

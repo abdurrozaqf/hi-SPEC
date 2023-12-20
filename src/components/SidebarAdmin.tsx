@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-import { useTheme } from "@/utils/contexts/theme-provider";
-import { useToken } from "@/utils/contexts/token";
-
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useToast } from "@/components/ui/use-toast";
 import Alert from "@/components/AlertDialog";
+
+import { useTheme } from "@/utils/contexts/theme-provider";
+import { useToken } from "@/utils/contexts/token";
 
 import {
   BoxIcon,
@@ -26,7 +26,6 @@ const SidebarAdmin = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { setTheme, theme } = useTheme();
   const navigate = useNavigate();
-
   const { toast } = useToast();
 
   const toggle = () => setIsOpen(!isOpen);

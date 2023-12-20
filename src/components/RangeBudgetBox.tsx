@@ -1,17 +1,12 @@
-import { z } from "zod";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSearchParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 import { CustomFormField } from "@/components/CustomForm";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Form } from "@/components/ui/form";
-
-interface Props {
-  isOpen: boolean;
-}
 
 const RangeSchema = z.object({
   minPrice: z
@@ -29,6 +24,10 @@ const RangeSchema = z.object({
       message: "Angka pertama tidak boleh 0",
     }),
 });
+
+interface Props {
+  isOpen: boolean;
+}
 
 const RangeBudgetBox = (props: Props) => {
   const { isOpen } = props;

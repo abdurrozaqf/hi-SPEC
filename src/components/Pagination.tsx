@@ -1,10 +1,10 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useMemo } from "react";
 
-import { generatePagesToDisplay } from "@/utils/format-pagination";
-import { Meta } from "@/utils/types/api";
-
 import { Button } from "@/components/ui/button";
+
+import { generatePagesToDisplay } from "@/utils/formatter";
+import { Meta } from "@/utils/types/api";
 
 interface Props {
   meta?: Meta;

@@ -1,9 +1,9 @@
 import {
-  Control,
-  ControllerRenderProps,
-  FieldValues,
-  FieldPath,
   Path,
+  Control,
+  FieldPath,
+  FieldValues,
+  ControllerRenderProps,
 } from "react-hook-form";
 import { ReactNode } from "react";
 
