@@ -1,26 +1,13 @@
+import { FilePlus, Laptop, PencilLine, Trash2 } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import debounce from "lodash.debounce";
 
-import {
-  ResponseProducts,
-  deleteProduct,
-  getProducts,
-} from "@/utils/apis/products";
-
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import EditProduct from "@/components/form/EditProduct";
 import AddProduct from "@/components/form/AddProduct";
 import { useToast } from "@/components/ui/use-toast";
 import DetailCard from "@/components/DetailCard";
+import Pagination from "@/components/Pagination";
 import CustomDialog from "@/components/Dialog";
 import Alert from "@/components/AlertDialog";
 import Layout from "@/components/Layout";
@@ -32,9 +19,21 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
-import { FilePlus, Laptop, PencilLine, Trash2 } from "lucide-react";
-import Pagination from "@/components/Pagination";
+import {
+  ResponseProducts,
+  deleteProduct,
+  getProducts,
+} from "@/utils/apis/products";
 import { Meta } from "@/utils/types/api";
 
 const ProductsAdmin = () => {
@@ -42,16 +41,17 @@ const ProductsAdmin = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [meta, setMeta] = useState<Meta>();
-  console.log(meta);
-
   const { toast } = useToast();
+
+  useEffect(() => {
+    fetchData();
+  }, [searchParams]);
 
   async function fetchData() {
     try {
       const query = Object.fromEntries([...searchParams]);
 
       const result = await getProducts({ ...query });
-
       setProducts(result.data);
       setMeta(result.pagination);
     } catch (error: any) {
@@ -81,6 +81,7 @@ const ProductsAdmin = () => {
   function handleSearch(value: string) {
     if (value !== "") {
       searchParams.set("name", value);
+      searchParams.delete("page");
     } else {
       searchParams.delete("name");
     }
@@ -90,8 +91,10 @@ const ProductsAdmin = () => {
   function handleCategory(value: string) {
     if (value == "default") {
       searchParams.delete("category");
+      searchParams.delete("page");
     } else {
       searchParams.set("category", value);
+      searchParams.delete("page");
     }
     setSearchParams(searchParams);
   }
@@ -111,13 +114,9 @@ const ProductsAdmin = () => {
     setSearchParams(searchParams);
   }
 
-  useEffect(() => {
-    fetchData();
-  }, [searchParams]);
-
   return (
     <Layout>
-      <div className="px-10 py-8 bg-white dark:bg-[#1265ae24] rounded-xl flex flex-col justify-between grow shadow-products-card font-poppins overflow-auto">
+      <div className="px-10 py-8 bg-white dark:bg-[#1265ae24] rounded-xl flex flex-col justify-start grow shadow-products-card font-poppins overflow-auto">
         <h1 className="text-2xl font-medium text-center">Database Products</h1>
         <div className="flex items-center justify-between mb-10">
           <div className="flex items-center space-x-6">
@@ -130,7 +129,7 @@ const ProductsAdmin = () => {
 
             <div>
               <Select onValueChange={(value) => debounceRequest2(value)}>
-                <SelectTrigger className="w-52 placeholder:italic placeholder:text-sm outline-none py-2 px-4 rounded-lg dark:bg-transparent shadow dark:shadow-white">
+                <SelectTrigger className="w-52 placeholder:italic placeholder:text-sm outline-none py-2 px-4 rounded-lg dark:bg-transparent shadow dark:shadow-white border-none">
                   <SelectValue placeholder="Select by categories" />
                 </SelectTrigger>
                 <SelectContent>
@@ -150,7 +149,7 @@ const ProductsAdmin = () => {
         </div>
         <Table>
           <TableCaption>A list of recent products.</TableCaption>
-          <TableHeader className="sticky top-0 bg-[#05152D]">
+          <TableHeader className="sticky top-0 bg-white dark:bg-[#05152D]">
             <TableRow>
               <TableHead>Image</TableHead>
               <TableHead>Name</TableHead>
@@ -162,7 +161,7 @@ const ProductsAdmin = () => {
           </TableHeader>
           <TableBody>
             {products?.map((product, index) => (
-              <TableRow key={index}>
+              <TableRow key={index} className="py-10">
                 <TableCell>
                   <img
                     src={
@@ -205,6 +204,7 @@ const ProductsAdmin = () => {
                   <Alert
                     title="Are you sure delete this Products from Database?"
                     onAction={() => handleDelete(product.product_id)}
+                    onActionTitle="Delete"
                   >
                     <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
                       <Trash2 />
@@ -218,6 +218,7 @@ const ProductsAdmin = () => {
         <div className="mt-4">
           <Pagination
             meta={meta}
+            onClickPage={(page) => handlePrevNextPage(page)}
             onClickNext={() => handlePrevNextPage(meta?.page! + 1)}
             onClickPrevious={() => handlePrevNextPage(meta?.page! - 1)}
           />

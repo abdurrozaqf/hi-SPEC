@@ -1,17 +1,17 @@
 import { useParams, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-import { getProducts } from "@/utils/apis/products";
-import { Meta } from "@/utils/types/api";
-
 import BannerTagline from "@/components/BannerTagline";
 import { useToast } from "@/components/ui/use-toast";
 import ProductCard from "@/components/ProductCard";
 import Pagination from "@/components/Pagination";
 import Layout from "@/components/Layout";
 
+import { ResponseProducts, getProducts } from "@/utils/apis/products";
+import { Meta } from "@/utils/types/api";
+
 const AllByCategories = () => {
-  const [datas, setDatas] = useState([]);
+  const [datas, setDatas] = useState<ResponseProducts[]>();
   const [meta, setMeta] = useState<Meta>();
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -40,35 +40,34 @@ const AllByCategories = () => {
     }
   }
 
-  function handlePrevNextPage(page: string | number, limit: string | number) {
+  function handlePrevNextPage(page: string | number) {
     searchParams.set("page", String(page));
-    searchParams.set("limit", String(limit));
     setSearchParams(searchParams);
   }
 
   return (
     <Layout>
-      <div className="flex flex-col gap-8 grow">
-        <div>
+      <div className="flex flex-col grow justify-between gap-6">
+        <div className="space-y-8 flex flex-col">
           <BannerTagline />
+          {datas == undefined ? (
+            <div className="flex flex-col items-center justify-center">
+              <h1 className="font-semibold text-slate-500">Laptop not found</h1>
+            </div>
+          ) : (
+            <div className="grid grid-cols-5 gap-6">
+              {datas?.map((data, index) => {
+                return <ProductCard key={index} data={data} />;
+              })}
+            </div>
+          )}
         </div>
-        {datas == undefined ? (
-          <div className="flex items-center justify-center grow">
-            <h1 className="font-semibold  text-slate-500">Laptop not found</h1>
-          </div>
-        ) : (
-          <div className="grid gap-6 grid-cols-5 grow">
-            {datas?.map((data, index) => {
-              return <ProductCard key={index} data={data} />;
-            })}
-          </div>
-        )}
         <div>
           <Pagination
             meta={meta}
-            datas={datas.length}
-            onClickNext={() => handlePrevNextPage(meta?.page! + 1, 10)}
-            onClickPrevious={() => handlePrevNextPage(meta?.page! - 1, 10)}
+            onClickPage={(page) => handlePrevNextPage(page)}
+            onClickNext={() => handlePrevNextPage(meta?.page! + 1)}
+            onClickPrevious={() => handlePrevNextPage(meta?.page! - 1)}
           />
         </div>
       </div>

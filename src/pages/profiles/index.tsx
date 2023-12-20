@@ -1,10 +1,9 @@
 import { useNavigate } from "react-router-dom";
 
-import { useToken } from "@/utils/contexts/token";
-
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/Layout";
 
+import { useToken } from "@/utils/contexts/token";
 const Profile = () => {
   const { user } = useToken();
   const navigate = useNavigate();

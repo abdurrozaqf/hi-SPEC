@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import { getCategoryProducts } from "@/utils/apis/products";
-
 import BannerTagline from "@/components/BannerTagline";
 import { useToast } from "@/components/ui/use-toast";
 import ProductCard from "@/components/ProductCard";
 import Layout from "@/components/Layout";
+
+import { getCategoryProducts } from "@/utils/apis/products";
 
 const Home = () => {
   const [multimedias, setMultimedias] = useState([]);
