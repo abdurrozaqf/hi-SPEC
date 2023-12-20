@@ -52,7 +52,7 @@ const SearchCompareBox = ({
   }, []);
 
   const getSuggestionsDebounce = useMemo(
-    () => debounce(getSuggestions, 1000),
+    () => debounce(getSuggestions, 500),
     [getSuggestions]
   );
 
@@ -67,13 +67,13 @@ const SearchCompareBox = ({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[150px] justify-between md:w-[200px] lg:w-[300px]"
+          className="w-[18rem] justify-between truncate"
         >
           {value || placeholder}
           <ChevronsUpDown className="h-4 ml-2 opacity-50 w-4 shrink-0" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="p-0 w-[150px] md:w-[200px] lg:w-[300px]">
+      <PopoverContent className="p-0 w-[18rem]">
         <Command>
           <CommandInput
             placeholder={placeholder}

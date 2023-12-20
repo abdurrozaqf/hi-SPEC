@@ -10,19 +10,21 @@ const CardCompare = (props: Props) => {
 
   return (
     <div>
-      <div className=" h-full rounded-md p-8 flex flex-col items-center justify-center">
-        <img
-          src={data.picture || "Unknown"}
-          alt={data.name || "Unknown"}
-          className=" h-[10rem]"
-        />
-        <div className="flex flex-col text-center gap-2 pt-4 pb-8">
-          <p className=" font-bold text-2xl">{data.name || "Unknown"}</p>
-          <p className=" font-bold text-3xl">
+      <div className="h-full mt-10 flex flex-col items-center justify-center w-[22rem]">
+        <div className="h-[8rem]">
+          <img
+            src={data.picture || "Unknown"}
+            alt={data.name || "Unknown"}
+            className="w-[10rem] object-cover"
+          />
+        </div>
+        <div className="flex flex-col text-center w-[22rem] mb-6">
+          <p className="font-bold text-lg truncate">{data.name || "Unknown"}</p>
+          <p className="font-bold text-lg">
             {formatPrice(data.price!) || "Unknown"}
           </p>
         </div>
-        <div className=" mt-4 flex flex-col gap-8">
+        <div className="flex flex-col gap-4">
           <p>CPU : {data.cpu || "Unknown"}</p>
           <p>RAM : {data.ram || "Unknown"}</p>
           <p>Display : {data.display || "Unknown"}</p>

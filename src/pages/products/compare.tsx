@@ -52,7 +52,7 @@ const Compare = () => {
 
   return (
     <Layout>
-      <div className="bg-white rounded-xl flex flex-col font-poppins shadow-lg p-32 grow overflow-auto dark:bg-[#1265ae24]">
+      <div className="bg-white rounded-xl flex flex-col font-poppins shadow-lg p-14 grow overflow-auto dark:bg-[#1265ae24]">
         <div className="flex mb-10 items-center">
           <button className="flex">
             <div className="mr-4">
@@ -66,22 +66,22 @@ const Compare = () => {
           {compares.map((data, index) => (
             <div
               key={index}
-              className="border rounded-md flex flex-col border-slate-400 h-[75rem] p-6 grow"
+              className="border border-slate-400 rounded-md flex flex-col w-full h-[50rem] p-6 grow"
             >
               <div className="flex justify-between items-center">
-                <div className="flex w-full">
+                <div className="flex w-full items-center">
                   <SearchCompareBox
                     placeholder="Search product by name"
                     onSelectProduct={(id) => fetchDetail(id, index)}
                   />
                 </div>
-                <X onClick={() => deleteCompare(index)} />
+                <X onClick={() => deleteCompare(index)} className="ml-2" />
               </div>
-              <div className="flex items-center justify-center grow">
+              <div className="flex items-start justify-center grow">
                 {Object.keys(data).length !== 0 ? (
                   <CardCompare key={index} data={data as Product} />
                 ) : (
-                  <p className="flex-1 text-center text-gray-400 items-center">
+                  <p className="h-full flex justify-center items-center text-center  text-gray-400 ">
                     Search Product
                   </p>
                 )}
