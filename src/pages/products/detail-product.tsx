@@ -63,7 +63,7 @@ const DetailProduct = () => {
   }) {
     try {
       const response = await buyProducts(data);
-      window.open(`${response.data.url}`);
+      window.location.replace(`${response.data.url}`);
     } catch (error: any) {
       toast({
         title: "Oops, someting went wrong.",

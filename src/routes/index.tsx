@@ -14,7 +14,7 @@ import ProductsAdmin from "@/pages/admin/products-admin";
 import UsersAdmin from "@/pages/admin/users-admin";
 import TransactionsAdmin from "@/pages/admin/transactions-admin";
 import NotFound from "@/pages/not-found";
-import Dashboard from "@/pages/admin/index";
+import Dashboard from "@/pages/admin/dashboard";
 
 export default function Router() {
   const router = createBrowserRouter([

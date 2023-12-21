@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 
-import { getDetailProduct } from "@/utils/apis/products";
 import { useToast } from "@/components/ui/use-toast";
+
+import { getDetailProduct } from "@/utils/apis/products";
 import { formatPrice } from "@/utils/formatter";
 
 interface Props {

@@ -1,12 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import Marquee from "react-fast-marquee";
 
-import RegisterForm from "@/components/form/register-form";
-import LoginForm from "@/components/form/login-form";
+import RegisterForm from "@/components/form/RegisterForm";
+import LoginForm from "@/components/form/LoginForm";
 import { Button } from "@/components/ui/button";
 import CustomDialog from "@/components/Dialog";
 
 import LinesSponsor from "@/assets/lines-sponsor.svg";
+import HumanLogin from "@/assets/Home-page-human.png";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -30,7 +31,7 @@ const Login = () => {
             </CustomDialog>
 
             <div className="mx-auto my-4 flex w-full items-center justify-evenly before:mr-4 before:block before:h-px before:flex-grow before:bg-white after:ml-4 after:block after:h-px after:flex-grow after:bg-white">
-              <p className=" bg-white rounded-full px-6 py-1 leading-none">
+              <p className=" bg-white rounded-full px-6 py-1 leading-none text-black">
                 or
               </p>
             </div>
@@ -58,7 +59,7 @@ const Login = () => {
 
         <div className="h-full lg:flex items-end -mb-2 hidden absolute lg:relative">
           <img
-            src="src/assets/Home-page-human.png"
+            src={HumanLogin}
             alt="human"
             className="h-[560px] xl:h-[650px] w-auto"
           />

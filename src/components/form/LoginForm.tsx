@@ -1,5 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { Loader2 } from "lucide-react";
 
 import { LoginSchema, loginSchema, LoginAccount } from "@/utils/apis/auth";
 import { useToken } from "@/utils/contexts/token";
@@ -9,8 +10,6 @@ import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Form } from "@/components/ui/form";
-
-import { Loader2 } from "lucide-react";
 
 const LoginForm = () => {
   const { toast } = useToast();

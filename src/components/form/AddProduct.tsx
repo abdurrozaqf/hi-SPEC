@@ -1,10 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { Loader2 } from "lucide-react";
 import { useEffect } from "react";
 
 import {
-  AddProductSchema,
   addProduct,
+  AddProductSchema,
   addProductSchema,
 } from "@/utils/apis/products";
 
@@ -20,8 +21,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
-import { Loader2 } from "lucide-react";
 
 const AddProduct = () => {
   const { toast } = useToast();

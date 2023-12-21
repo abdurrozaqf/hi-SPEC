@@ -144,7 +144,9 @@ const TransactionsAdmin = () => {
                 <TableHeader className="sticky top-0 bg-white dark:bg-[#05152D]">
                   <TableRow>
                     <TableHead className="w-[50px] text-center">No.</TableHead>
-                    <TableHead>Image Product</TableHead>
+                    <TableHead className="w-[150px] text-center">
+                      Image Product
+                    </TableHead>
                     <TableHead>Name Product</TableHead>
                     <TableHead>Total Price</TableHead>
                     <TableHead>Date</TableHead>

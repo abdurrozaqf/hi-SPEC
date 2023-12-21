@@ -32,11 +32,11 @@ const Navbar = () => {
             <div
               className={
                 token
-                  ? `p-2 lg:p-3 bg-white rounded-xl shadow-md visible`
+                  ? `p-2 lg:p-3 rounded-xl shadow-md visible bg-[#E4ECF1] dark:bg-[#1265AE] hover:bg-[#1265AE] hover:dark:bg-[#E4ECF1] text-black dark:text-white hover:text-white hover:dark:text-black`
                   : `invisible`
               }
             >
-              <BookHeartIcon color="black" size={25} />
+              <BookHeartIcon size={25} />
             </div>
           </Link>
         )}
