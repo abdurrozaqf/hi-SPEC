@@ -11,11 +11,11 @@ const Navbar = () => {
 
   return (
     <header className="bg-gradient-to-r from-[#1265AE] to-[#48B774]">
-      <nav className="flex items-center justify-between px-[7.5rem] py-4 bg-[url('src/assets/icons-navbar.svg')] bg-cover bg-no-repeat bg-center">
+      <nav className="flex items-center justify-between px-4 lg:px-[7.5rem] py-4 background-navbar">
         <Link to="/">
           <h1 className="font-inter text-white">
-            <span className="text-4xl font-bold">hi'</span>
-            <span className="text-4xl font-black">SPEC</span>
+            <span className="text-2xl md:text-4xl font-bold">hi'</span>
+            <span className="text-2xl md:text-4xl font-black">SPEC</span>
           </h1>
         </Link>
         {pathname === "/products" ? (
@@ -28,11 +28,11 @@ const Navbar = () => {
           <SearchBox />
         ) : undefined}
         {user.user?.name !== "admin" && (
-          <Link to={token ? `/wishlist` : `/`}>
+          <Link to={token ? `/wishlist/${user.user?.user_id}` : `/`}>
             <div
               className={
                 token
-                  ? `p-3 bg-white rounded-xl shadow-md visible`
+                  ? `p-2 lg:p-3 bg-white rounded-xl shadow-md visible`
                   : `invisible`
               }
             >

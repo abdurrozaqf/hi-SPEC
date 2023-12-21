@@ -119,29 +119,27 @@ const ProductsAdmin = () => {
 
   return (
     <Layout>
-      <div className="px-10 py-8 bg-white dark:bg-[#1265ae24] rounded-xl flex flex-col justify-start grow shadow-products-card font-poppins overflow-auto">
+      <div className="px-3 md:px-10 py-8 bg-white dark:bg-[#1265ae24] rounded-xl flex flex-col justify-start grow shadow-products-card font-poppins overflow-auto">
         <h1 className="text-2xl font-medium text-center">Database Products</h1>
-        <div className="flex items-center justify-between mb-10">
-          <div className="flex items-center space-x-6">
+        <div className="flex flex-col gap-4 md:gap-0 md:flex-row items-center justify-between mb-10">
+          <div className="flex flex-col gap-4 md:gap-0 md:flex-row md:items-center space-x-0 md:space-x-6">
             <input
               type="search"
               onChange={(e) => debounceRequest1(e.target.value)}
               placeholder="Search by name product"
               className="w-fit placeholder:italic placeholder:text-sm outline-none py-2 px-4 rounded-lg dark:bg-transparent shadow dark:shadow-white"
             />
-            <div>
-              <Select onValueChange={(value) => debounceRequest2(value)}>
-                <SelectTrigger className="w-52 placeholder:italic placeholder:text-sm outline-none py-2 px-4 rounded-lg dark:bg-transparent shadow dark:shadow-white border-none">
-                  <SelectValue placeholder="Select by categories" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="default">Default</SelectItem>
-                  <SelectItem value="Office">Office</SelectItem>
-                  <SelectItem value="Multimedia">Multimedia</SelectItem>
-                  <SelectItem value="Gaming">Gaming</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+            <Select onValueChange={(value) => debounceRequest2(value)}>
+              <SelectTrigger className="w-52 placeholder:italic placeholder:text-sm outline-none py-2 px-4 rounded-lg dark:bg-transparent shadow dark:shadow-white border-none">
+                <SelectValue placeholder="Select by categories" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="default">Default</SelectItem>
+                <SelectItem value="Office">Office</SelectItem>
+                <SelectItem value="Multimedia">Multimedia</SelectItem>
+                <SelectItem value="Gaming">Gaming</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
           <CustomDialog title="Add Products" description={<AddProduct />}>
             <div className="p-3 bg-White shadow dark:shadow-white flex items-center justify-center rounded-xl">

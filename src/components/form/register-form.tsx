@@ -49,7 +49,7 @@ const RegisterForm = () => {
       <h1>Register your account now to get full access</h1>
       <Form {...form}>
         <form
-          className="flex flex-col w-full mx-auto gap-3 mt-10"
+          className="flex flex-col w-full mx-auto gap-4 mt-10 text-start"
           onSubmit={form.handleSubmit(onSubmitRegister)}
         >
           <CustomFormField control={form.control} name="name" label="Full Name">

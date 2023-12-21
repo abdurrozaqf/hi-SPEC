@@ -71,3 +71,24 @@ input::-webkit-inner-spin-button {
 ::-webkit-scrollbar * {
   background: transparent;
 }
+
+.background-login {
+  background-image: url("src/assets/login-page.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.background-navbar {
+  background-image: url("src/assets/icons-navbar.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.background-tagline {
+  background-image: url("src/assets/banner-tagline.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}

@@ -22,7 +22,7 @@ const Pagination = (props: Props) => {
   );
 
   return (
-    <div className="flex justify-center items-center gap-8">
+    <div className="flex justify-center items-center gap-2 md:gap-8">
       <Button size="icon" disabled={meta?.page === 1} onClick={onClickPrevious}>
         <ChevronLeft className="h-4 w-4" />
       </Button>

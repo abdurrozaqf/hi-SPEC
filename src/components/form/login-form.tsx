@@ -47,7 +47,7 @@ const LoginForm = () => {
       <h1>Login to your account using email</h1>
       <Form {...form}>
         <form
-          className="flex flex-col w-full mx-auto gap-3 mt-10"
+          className="flex flex-col w-full mx-auto gap-4 mt-10 text-start"
           onSubmit={form.handleSubmit(onSubmitLogin)}
         >
           <CustomFormField control={form.control} name="email" label="Email">

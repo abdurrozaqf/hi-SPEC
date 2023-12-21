@@ -9,7 +9,7 @@
 - Searcg product by name, category, and range your own budget
 - You can compare if you want another laptop
 - Add wihlist for your collection laptop you want
-- Edit profile and delete profile avaiable
+- Edit profile and delete profile available
 
 ## Tech
 

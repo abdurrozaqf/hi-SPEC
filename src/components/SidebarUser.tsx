@@ -24,7 +24,7 @@ import {
 
 const SidebarUser = () => {
   const { changeToken, changeUserID, user, token } = useToken();
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const { setTheme, theme } = useTheme();
   const { pathname } = useLocation();
   const navigate = useNavigate();
@@ -51,8 +51,8 @@ const SidebarUser = () => {
       <div
         className={
           isOpen
-            ? `h-full px-12 py-6 border-r relative flex flex-col justify-between shadow-md transition-all duration-300`
-            : `h-full px-6 py-6 border-r relative flex flex-col justify-start shadow-md transition-all duration-300`
+            ? `h-full px-3 lg:px-12 py-3 lg:py-6 border-r relative flex flex-col justify-between shadow-md transition-all duration-300`
+            : `h-full p-3 lg:p-6 border-r relative flex flex-col justify-start shadow-md transition-all duration-300`
         }
       >
         {/* BUTTON SIDEBAR */}

@@ -54,7 +54,7 @@ export default function Router() {
           element: <EditProfile />,
         },
         {
-          path: "/wishlist",
+          path: "/wishlist/:user_id",
           element: <WishList />,
         },
         {

@@ -43,7 +43,7 @@ const SearchCompareBox = ({
       return;
     }
 
-    const result = await getProducts({ query } as Request);
+    const result = await getProducts({ name: query } as Request);
     const newDatas =
       result.data?.map((data) => {
         return { name: data.name, product_id: data.product_id };

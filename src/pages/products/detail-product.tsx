@@ -75,7 +75,7 @@ const DetailProduct = () => {
 
   return (
     <Layout>
-      <div className="flex flex-col lg:flex-row gap-10 justify-center lg:gap-6 grow bg-white dark:bg-[#1265ae24] rounded-lg px-10 py-6 shadow">
+      <div className="flex flex-col lg:flex-row gap-10 justify-center lg:gap-6 grow bg-white dark:bg-[#1265ae24] rounded-lg px-0 lg:px-10 py-4 lg:py-6 shadow">
         {isLoading ? (
           <div className="flex items-center justify-center h-full">
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -97,15 +97,15 @@ const DetailProduct = () => {
                 <img
                   src={product?.picture}
                   alt={product?.name}
-                  className="w-96"
+                  className="w-52 lg:w-96"
                 />
               </div>
             </div>
             <div className="flex flex-col justify-center px-6 grow">
-              <h3 className="text-[#1E1E1E] dark:text-white font-semibold text-lg mt-4 mb-1">
+              <h3 className="text-[#1E1E1E] dark:text-white font-semibold text-xl mt-4 mb-1 truncate">
                 {product?.name}
               </h3>
-              <h1 className="text-[#1E1E1E] dark:text-white font-bold text-3xl mb-2">
+              <h1 className="text-[#1E1E1E] dark:text-white font-bold text-xl lg:text-3xl mb-2">
                 {formatPrice(product?.price!)}
               </h1>
               <hr className="bg-[#757575]" />
@@ -129,19 +129,17 @@ const DetailProduct = () => {
               <p>HDMI: {product?.hdmi}</p>
               <p>Weight: {product?.weight}</p>
             </div>
-            <div className="flex flex-col justify-center items-center px-6 lg:px-0">
+            <div className="flex flex-col justify-center items-center px-6">
               {token && (
-                <div className="border border-solid border-[#D9D9D9] p-6 rounded-lg">
+                <div className="border-none md:border md:border-solid border-[#D9D9D9] p-6 rounded-lg">
                   <h2 className="font-bold mb-4">Purchase amount</h2>
                   <div className="flex border border-solid border-[#D9D9D9] rounded-md justify-center px-2 py-1">
-                    {/* <p className="text-[#D9D9D9]">-</p> */}
                     <p className="font-semibold">1</p>
-                    {/* <p className="text-[#48B774]">+</p> */}
                   </div>
 
                   <div className="flex items-center justify-between my-4">
                     <p>Sub total:</p>
-                    <h1 className="font-bold text-xl">
+                    <h1 className="font-bold text-base md:text-xl">
                       {formatPrice(product?.price!)}
                     </h1>
                   </div>
@@ -179,14 +177,14 @@ const DetailProduct = () => {
                       <p className="font-bold text-xs">Wishlist</p>
                       <img
                         src={IconWishlist}
-                        alt="wishlist icon"
-                        className="w-6 h-6"
+                        alt="icon-love"
+                        className="w-6 h-6 "
                       />
                     </div>
                   </div>
                 </div>
               )}
-              <div className="mt-6">
+              <div className="w-0 lg:w-auto mt-6">
                 <img src={BannerSponsorDetailProduct} alt="iklan" />
               </div>
             </div>

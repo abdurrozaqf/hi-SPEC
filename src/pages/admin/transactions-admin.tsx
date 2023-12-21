@@ -120,7 +120,7 @@ const TransactionsAdmin = () => {
 
   return (
     <Layout>
-      <div className="px-10 py-8 bg-white dark:bg-[#1265ae24] rounded-xl flex flex-col justify-start grow shadow-products-card font-poppins overflow-auto">
+      <div className="px-3 md:px-10 py-8 bg-white dark:bg-[#1265ae24] rounded-xl flex flex-col justify-start grow shadow-products-card font-poppins overflow-auto">
         <h1 className="text-2xl font-medium text-center mb-10">
           Database Transactions
         </h1>
@@ -162,7 +162,6 @@ const TransactionsAdmin = () => {
                           <img
                             src={data.product?.picture}
                             alt={data.product?.name}
-                            className="object-cover h-24"
                           />
                         </TableCell>
                         <TableCell>

@@ -81,7 +81,7 @@ const Home = () => {
         </div>
       ) : (
         <>
-          <div className="flex flex-col gap-8 font-poppins mt-10">
+          <div className="flex flex-col gap-8 font-poppins mt-0 lg:mt-10">
             <div className="flex flex-col gap-3">
               <div className="flex items-center justify-between w-full">
                 <h1 className="font-semibold">Recomended for Office</h1>
@@ -90,7 +90,7 @@ const Home = () => {
                 </Link>
               </div>
 
-              <div className="grid grid-cols-5 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
                 {offices.map((office, index) => (
                   <ProductCard key={index} data={office} />
                 ))}
@@ -103,7 +103,7 @@ const Home = () => {
                   <p className="hover:text-slate-500">see all</p>
                 </Link>
               </div>
-              <div className="grid grid-cols-5 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
                 {multimedias.map((multimedia, index) => (
                   <ProductCard key={index} data={multimedia} />
                 ))}
@@ -116,7 +116,7 @@ const Home = () => {
                   <p className="hover:text-slate-500">see all</p>
                 </Link>
               </div>
-              <div className="grid grid-cols-5 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
                 {gamings.map((gaming, index) => (
                   <ProductCard key={index} data={gaming} />
                 ))}

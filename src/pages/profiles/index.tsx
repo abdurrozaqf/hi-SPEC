@@ -10,19 +10,21 @@ const Profile = () => {
 
   return (
     <Layout>
-      <div className="grow bg-white shadow-lg rounded-xl p-32 font-poppins dark:bg-transparent overflow-auto">
-        <h1 className=" mb-16 text-4xl font-bold">Profile</h1>
-        <div className="flex justify-between items-center mb-12">
-          <div className="flex items-center">
+      <div className="grow bg-white shadow-lg rounded-xl p-4 md:p-8 lg:p-24 font-poppins dark:bg-transparent overflow-auto">
+        <h1 className=" mb-16 text-3xl lg:text-4xl font-bold">Profile</h1>
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12">
+          <div className="flex items-center mb-10 md:mb-0">
             <img
               src={
                 user.user?.avatar ||
                 "https://mlsn40jruh7z.i.optimole.com/w:auto/h:auto/q:mauto/f:best/https://jeffjbutler.com//wp-content/uploads/2018/01/default-user.png"
               }
               alt={user.user?.name || "Guest"}
-              className="object-cover rounded-full w-36 h-36 shadow-md border"
+              className="object-cover rounded-full w-14 lg:w-36 h-14 lg:h-36 shadow-md border"
             />
-            <p className=" pl-8 text-3xl font-bold">{user.user?.name}</p>
+            <p className="ml-4 md:ml-8 text-xl md:text-3xl font-bold truncate">
+              {user.user?.name}
+            </p>
           </div>
           <Button
             type="button"

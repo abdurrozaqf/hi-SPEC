@@ -73,14 +73,16 @@ const UsersAdmin = () => {
 
   return (
     <Layout>
-      <div className="px-10 py-8 bg-white dark:bg-[#1265ae24] rounded-xl flex flex-col grow shadow-products-card font-poppins overflow-auto">
-        <h1 className="text-2xl font-medium text-center">Database Users</h1>
-        <div className="flex mb-10">
+      <div className="px-3 md:px-10 py-8 bg-white dark:bg-[#1265ae24] rounded-xl flex flex-col grow shadow-products-card font-poppins overflow-auto">
+        <h1 className="text-2xl font-medium text-center mb-6 md:mb-0">
+          Database Users
+        </h1>
+        <div className="flex mb-6 md:mb-10">
           <input
             type="search"
             onChange={(e) => debounceRequest(e.target.value)}
             placeholder="Search by name user"
-            className="w-1/4 placeholder:italic placeholder:text-sm outline-none py-2 px-4 rounded-lg dark:bg-transparent shadow dark:shadow-white"
+            className="w-fit placeholder:italic placeholder:text-sm outline-none py-2 px-4 rounded-lg dark:bg-transparent shadow dark:shadow-white"
           />
         </div>
         <div className="flex justify-center grow overflow-auto">
@@ -112,7 +114,7 @@ const UsersAdmin = () => {
                           "https://mlsn40jruh7z.i.optimole.com/w:auto/h:auto/q:mauto/f:best/https://jeffjbutler.com//wp-content/uploads/2018/01/default-user.png"
                         }
                         alt={user.name}
-                        className="object-cover bg-center rounded-full w-14 h-14"
+                        className="object-cover bg-center rounded-full w-10 h-10 lg:w-14 lg:h-14"
                       />
                     </TableCell>
                     <TableCell>{user.name}</TableCell>

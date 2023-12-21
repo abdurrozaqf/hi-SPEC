@@ -69,7 +69,7 @@ const AllByCategories = () => {
                   </h1>
                 </div>
               ) : (
-                <div className="grid grid-cols-5 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
                   {datas?.map((data, index) => {
                     return <ProductCard key={index} data={data} />;
                   })}

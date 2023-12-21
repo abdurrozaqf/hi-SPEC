@@ -2,9 +2,9 @@ import HumanBannerTagline from "@/assets/human-banner-tagline.svg";
 
 const BannerTagline = () => {
   return (
-    <div className="w-full bg-[url('src/assets/banner-tagline.svg')] bg-cover bg-no-repeat bg-center rounded-3xl flex items-center justify-center mt-6">
+    <div className="w-0 lg:w-full background-tagline rounded-3xl flex items-center justify-center mt-0 lg:mt-6">
       <div className="relative">
-        <h1 className="font-poppins font-medium text-white text-4xl p-6 relative">
+        <h1 className="font-poppins font-medium text-white text-[0px] lg:text-4xl p-0 lg:p-6 relative">
           It’s very important to understand <br />
           your own needs
         </h1>
