@@ -29,7 +29,7 @@ const Navbar = () => {
           <SearchBox />
         ) : undefined}
 
-        {user.user?.name !== "admin" && (
+        {user.user?.role !== "admin" && (
           <div className=" flex items-center gap-6">
             <Link to={token ? `/wishlist` : `/`}>
               <div

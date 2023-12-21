@@ -184,7 +184,7 @@ const ProductsAdmin = () => {
                     <TableCell>{product.category}</TableCell>
                     <TableCell>
                       <CustomDialog
-                        title="Detail Laptop"
+                        title="Detail product"
                         description={
                           <DetailCard product_id={product.product_id} />
                         }

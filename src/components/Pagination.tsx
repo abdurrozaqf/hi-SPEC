@@ -23,16 +23,21 @@ const Pagination = (props: Props) => {
 
   return (
     <div className="flex justify-center items-center gap-2 md:gap-8">
-      <Button size="icon" disabled={meta?.page === 1} onClick={onClickPrevious}>
-        <ChevronLeft className="h-4 w-4" />
+      <Button
+        size="icon"
+        disabled={meta?.page === 1}
+        onClick={onClickPrevious}
+        className="hover:bg-[#1265AE] shadow-md text-white"
+      >
+        <ChevronLeft className="h-6 w-6" />
       </Button>
 
       {meta &&
         pagesToDisplay.map((page, index) => {
           return (
             <Button
-              variant="outline"
               size="icon"
+              variant="outline"
               key={`${page}-${index}`}
               disabled={meta?.page === page}
               onClick={() => onClickPage(page)}
@@ -46,8 +51,9 @@ const Pagination = (props: Props) => {
         size="icon"
         disabled={meta?.page! === meta?.total_page || meta?.total_page === 0}
         onClick={onClickNext}
+        className="hover:bg-[#1265AE] shadow-md text-white"
       >
-        <ChevronRight className="h-4 w-4" />
+        <ChevronRight className="h-6 w-6" />
       </Button>
     </div>
   );

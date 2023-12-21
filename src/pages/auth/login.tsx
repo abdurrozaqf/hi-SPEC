@@ -6,7 +6,7 @@ import LoginForm from "@/components/form/LoginForm";
 import { Button } from "@/components/ui/button";
 import CustomDialog from "@/components/Dialog";
 
-import LinesSponsor from "@/assets/lines-sponsor.svg";
+import LinesSponsor from "@/assets/lines-sponsor.png";
 import HumanLogin from "@/assets/Home-page-human.png";
 
 const Login = () => {

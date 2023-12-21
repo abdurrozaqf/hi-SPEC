@@ -29,6 +29,6 @@ export const formatPrice = (price: number | undefined): string => {
       currency: "IDR",
     });
   } else {
-    return "Undefined Price";
+    return "";
   }
 };

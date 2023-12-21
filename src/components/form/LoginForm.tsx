@@ -73,17 +73,20 @@ const LoginForm = () => {
             )}
           </CustomFormField>
           <Button
-            className="mt-4"
             type="submit"
+            className="hover:bg-[#1265AE] mt-8"
             disabled={form.formState.isSubmitting}
             aria-disabled={form.formState.isSubmitting}
           >
             {form.formState.isSubmitting ? (
               <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please wait
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                <p>Please wait</p>
               </>
             ) : (
-              "Login"
+              <div className="flex cursor-pointer">
+                <p className="font-medium tracking-wide text-white">Login</p>
+              </div>
             )}
           </Button>
         </form>

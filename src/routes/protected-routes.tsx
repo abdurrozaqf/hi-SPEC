@@ -41,15 +41,15 @@ const ProtectedRoutes = () => {
     if (token) return <Navigate to="/" />;
   }
 
+  if (roleUserProtected.includes(pathname)) {
+    if (user.user?.role === "admin") return <Navigate to="/dashboard" />;
+  }
+
   if (tokenProtected.includes(pathname)) {
     if (!token) return <Navigate to="/login" />;
 
     if (roleAdminProtected.includes(pathname)) {
       if (user.user?.role === "user") return <Navigate to="/" />;
-    }
-
-    if (roleUserProtected.includes(pathname)) {
-      if (user.user?.role === "admin") return <Navigate to="/dashboard" />;
     }
   }
 

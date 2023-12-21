@@ -29,7 +29,7 @@ const Alert = (props: Props) => {
     <div>
       <AlertDialog>
         <AlertDialogTrigger>{children}</AlertDialogTrigger>
-        <AlertDialogContent className="dark:bg-black/30">
+        <AlertDialogContent className="dark:bg-black/40">
           <AlertDialogHeader>
             <AlertDialogTitle>{title}</AlertDialogTitle>
             <AlertDialogDescription>{description}</AlertDialogDescription>
