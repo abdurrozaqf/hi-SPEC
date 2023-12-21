@@ -10,7 +10,7 @@ const ProtectedRoutes = () => {
 
   const tokenProtected = [
     "/profile",
-    "/edit-profile",
+    "/profile-edit",
     "/wishlist",
     "/dashboard",
     "/products-admin",

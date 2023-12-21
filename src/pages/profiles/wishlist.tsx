@@ -1,4 +1,3 @@
-import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import BannerSponsorWishlist from "@/components/BannerSponsorWishlist";
@@ -8,10 +7,17 @@ import Layout from "@/components/Layout";
 
 import { MyWishlist, deleteWishlist, getDetailUser } from "@/utils/apis/users";
 
+const getDatafromLS = () => {
+  const data = localStorage.getItem("userID");
+  if (data) {
+    return JSON.parse(data);
+  }
+};
+
 const WishList = () => {
   const [wishlists, setWishlists] = useState<MyWishlist[]>();
+  const dataUserId = getDatafromLS();
   const { toast } = useToast();
-  const params = useParams();
 
   useEffect(() => {
     fetchData();
@@ -19,7 +25,7 @@ const WishList = () => {
 
   async function fetchData() {
     try {
-      const result = await getDetailUser(params.user_id!);
+      const result = await getDetailUser(dataUserId as string);
 
       setWishlists(result.data.my_favorite);
     } catch (error: any) {

@@ -50,11 +50,11 @@ export default function Router() {
           element: <Profile />,
         },
         {
-          path: "/edit-profile/:user_id",
+          path: "/profile-edit",
           element: <EditProfile />,
         },
         {
-          path: "/wishlist/:user_id",
+          path: "/wishlist",
           element: <WishList />,
         },
         {

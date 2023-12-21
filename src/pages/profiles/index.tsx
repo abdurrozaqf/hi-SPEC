@@ -29,7 +29,7 @@ const Profile = () => {
           <Button
             type="button"
             className="w-fit h-fit hover:bg-blue-800"
-            onClick={() => navigate(`/edit-profile/${user.user?.user_id}`)}
+            onClick={() => navigate(`/profile-edit`)}
           >
             <p className="font-medium text-base">Edit Profile</p>
           </Button>

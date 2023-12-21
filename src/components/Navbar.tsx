@@ -28,7 +28,7 @@ const Navbar = () => {
           <SearchBox />
         ) : undefined}
         {user.user?.name !== "admin" && (
-          <Link to={token ? `/wishlist/${user.user?.user_id}` : `/`}>
+          <Link to={token ? `/wishlist` : `/`}>
             <div
               className={
                 token

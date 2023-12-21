@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CameraIcon, Loader2, X } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -22,12 +22,19 @@ import {
 } from "@/utils/apis/users";
 import { useToken } from "@/utils/contexts/token";
 
+const getDatafromLS = () => {
+  const data = localStorage.getItem("userID");
+  if (data) {
+    return JSON.parse(data);
+  }
+};
+
 const EditProfile = () => {
   const [profile, setProfile] = useState<User>();
   const { changeToken, user } = useToken();
+  const dataUserId = getDatafromLS();
   const navigate = useNavigate();
   const { toast } = useToast();
-  const params = useParams();
 
   const form = useForm<UpdateUserSchema>({
     resolver: zodResolver(updateUserSchema),
@@ -63,7 +70,7 @@ const EditProfile = () => {
 
   async function fetchData() {
     try {
-      const result = await getDetailUser(params.user_id!);
+      const result = await getDetailUser(dataUserId as string);
       setProfile(result.data);
     } catch (error: any) {
       toast({
@@ -99,7 +106,7 @@ const EditProfile = () => {
 
   async function handleDeleteProfile() {
     try {
-      const result = await deleteUser(+params.user_id!);
+      const result = await deleteUser(dataUserId);
       toast({ description: result.message });
       changeToken();
 
