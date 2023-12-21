@@ -12,6 +12,7 @@ const ProtectedRoutes = () => {
     "/profile",
     "/profile-edit",
     "/wishlist",
+    "/transaction",
     "/dashboard",
     "/products-admin",
     "/users-admin",
@@ -32,6 +33,7 @@ const ProtectedRoutes = () => {
     "/compare",
     "/categories",
     "/wishlist",
+    "/transaction",
     "/detail-product",
   ];
 
