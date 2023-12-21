@@ -1,4 +1,4 @@
-![Logo]<img src="https://github.com/hi-specs/BE-hi-SPEC/assets/50069221/1924bbf3-791d-463a-89ec-0705f6f9960b">
+<img src="https://github.com/hi-specs/BE-hi-SPEC/assets/50069221/1924bbf3-791d-463a-89ec-0705f6f9960b">
 
 # 🚀 hi'SPEC
 
