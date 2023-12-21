@@ -22,7 +22,7 @@ const SearchBox = () => {
 
   return (
     <div className="bg-white rounded-full shadow-md p-2 w-1/2 ">
-      <div className="flex gap-4 items-center">
+      <div className="flex gap-4 items-center pr-4">
         <SearchCode color="black" />
         <input
           type="search"

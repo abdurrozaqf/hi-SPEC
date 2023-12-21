@@ -32,13 +32,13 @@ const EditProfile = () => {
   const form = useForm<UpdateUserSchema>({
     resolver: zodResolver(updateUserSchema),
     defaultValues: {
-      name: profile?.user.name! ?? "",
-      email: profile?.user.email! ?? "",
-      address: profile?.user.address! ?? "",
-      phone_number: profile?.user.phone_number! ?? "",
+      name: profile?.user.name ?? "",
+      email: profile?.user.email ?? "",
+      address: profile?.user.address ?? "",
+      phone_number: profile?.user.phone_number ?? "",
       password: "",
       newpassword: "",
-      avatar: profile?.user.avatar! ?? "",
+      avatar: profile?.user.avatar ?? "",
     },
     values: {
       name: profile?.user.name!,

@@ -1,12 +1,14 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { Loader2 } from "lucide-react";
 
 import {
   EditProductSchema,
   Product,
   editProduct,
   editProductSchema,
+  getDetailProduct,
 } from "@/utils/apis/products";
 
 import { CustomFormField } from "@/components/CustomForm";
@@ -22,9 +24,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { Loader2 } from "lucide-react";
-import axios from "axios";
-
 interface Props {
   product_id: number;
 }
@@ -34,22 +33,6 @@ const EditProduct = (props: Props) => {
 
   const [datas, setDatas] = useState<Product>();
   const { toast } = useToast();
-
-  async function fetchData() {
-    try {
-      const result = await axios.get(
-        `http://3.104.106.44:8000/product/${product_id}`
-      );
-
-      setDatas(result.data.data);
-    } catch (error: any) {
-      toast({
-        title: "Oops! Something went wrong.",
-        description: error.toString(),
-        variant: "destructive",
-      });
-    }
-  }
 
   const form = useForm<EditProductSchema>({
     resolver: zodResolver(editProductSchema),
@@ -83,6 +66,29 @@ const EditProduct = (props: Props) => {
     },
   });
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (form.formState.isSubmitSuccessful) {
+      form.reset();
+    }
+  }, [form.formState]);
+
+  async function fetchData() {
+    try {
+      const result = await getDetailProduct(product_id);
+      setDatas(result.data);
+    } catch (error: any) {
+      toast({
+        title: "Oops! Something went wrong.",
+        description: error.toString(),
+        variant: "destructive",
+      });
+    }
+  }
+
   const fileRef = form.register("picture", { required: true });
   async function onSubmit(data: EditProductSchema) {
     try {
@@ -111,16 +117,6 @@ const EditProduct = (props: Props) => {
       });
     }
   }
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    if (form.formState.isSubmitSuccessful) {
-      form.reset();
-    }
-  }, [form.formState]);
 
   return (
     <div className="pl-2 pr-6 h-[35rem] overflow-auto">

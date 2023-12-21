@@ -22,7 +22,6 @@ const WishList = () => {
       const result = await getDetailUser(user.user?.user_id.toString()!);
 
       setWishlists(result.data.my_favorite);
-      console.log(result.data);
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",

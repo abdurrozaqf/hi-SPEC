@@ -11,7 +11,7 @@ const CardCompare = (props: Props) => {
   return (
     <div>
       <div className="h-full mt-10 flex flex-col items-center justify-center w-[22rem]">
-        <div className="h-[8rem]">
+        <div className="h-[8rem] flex justify-center items-center">
           <img
             src={data.picture || "Unknown"}
             alt={data.name || "Unknown"}

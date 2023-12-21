@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { ArrowLeft, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
@@ -15,7 +16,7 @@ const Compare = () => {
   const { compares, addCompare, updateCompare, deleteCompare } =
     useCompareStore((state) => state);
   const [datas, setDatas] = useState<ResponseProducts[]>();
-
+  const navigate = useNavigate();
   const { toast } = useToast();
 
   useEffect(() => {
@@ -25,9 +26,7 @@ const Compare = () => {
   const fetchDataProduct = async () => {
     try {
       const result = await getProducts();
-      const datas = result.data;
-
-      setDatas(datas);
+      setDatas(result.data);
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -53,13 +52,14 @@ const Compare = () => {
   return (
     <Layout>
       <div className="bg-white rounded-xl flex flex-col font-poppins shadow-lg p-14 grow overflow-auto dark:bg-[#1265ae24]">
-        <div className="flex mb-10 items-center">
-          <button className="flex">
-            <div className="mr-4">
-              <ArrowLeft />
-            </div>
-            <div>Back</div>
-          </button>
+        <div className="flex items-center mb-10">
+          <div
+            onClick={() => navigate(-1)}
+            className="flex items-center gap-4 cursor-pointer"
+          >
+            <ArrowLeft />
+            <p>Back</p>
+          </div>
           <h1 className="font-bold text-center text-4xl grow">Compare</h1>
         </div>
         <div className="grid gap-4 grid-cols-3 place-items-center">

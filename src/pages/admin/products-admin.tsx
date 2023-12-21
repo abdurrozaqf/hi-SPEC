@@ -1,4 +1,4 @@
-import { FilePlus, Laptop, PencilLine, Trash2 } from "lucide-react";
+import { FilePlus, Laptop, Loader2, PencilLine, Trash2 } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import debounce from "lodash.debounce";
@@ -40,7 +40,7 @@ import { formatPrice } from "@/utils/formatter";
 const ProductsAdmin = () => {
   const [products, setProducts] = useState<ResponseProducts[]>();
   const [searchParams, setSearchParams] = useSearchParams();
-
+  const [isLoading, setIsLoading] = useState(false);
   const [meta, setMeta] = useState<Meta>();
   const { toast } = useToast();
 
@@ -49,6 +49,7 @@ const ProductsAdmin = () => {
   }, [searchParams]);
 
   async function fetchData() {
+    setIsLoading(true);
     try {
       const query = Object.fromEntries([...searchParams]);
       const result = await getProducts({ ...query });
@@ -61,6 +62,8 @@ const ProductsAdmin = () => {
         description: error.toString(),
         variant: "destructive",
       });
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -146,69 +149,80 @@ const ProductsAdmin = () => {
             </div>
           </CustomDialog>
         </div>
-        <Table>
-          <TableCaption>A list of recent products.</TableCaption>
-          <TableHeader className="sticky top-0 bg-white dark:bg-[#05152D]">
-            <TableRow>
-              <TableHead>Image</TableHead>
-              <TableHead>Name</TableHead>
-              <TableHead>Price</TableHead>
-              <TableHead>Category</TableHead>
-              <TableHead>Detail</TableHead>
-              <TableHead className="text-center">Action</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {products?.map((product, index) => (
-              <TableRow key={index} className="py-10">
-                <TableCell>
-                  <img
-                    src={
-                      product.picture ||
-                      "https://www.iconpacks.net/icons/2/free-laptop-icon-1928-thumb.png"
-                    }
-                    alt={product.name}
-                    className="object-cover w-14 gap-14 bg-center"
-                  />
-                </TableCell>
-                <TableCell>{product.name}</TableCell>
-                <TableCell>{formatPrice(product.price!)}</TableCell>
-                <TableCell>{product.category}</TableCell>
-                <TableCell>
-                  <CustomDialog
-                    title="Detail Laptop"
-                    description={<DetailCard product_id={product.product_id} />}
-                  >
-                    <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
-                      <Laptop />
-                    </div>
-                  </CustomDialog>
-                </TableCell>
-                <TableCell className="flex justify-center items-center h-32 gap-4 z-50">
-                  <CustomDialog
-                    title="Edit Products"
-                    description={
-                      <EditProduct product_id={product.product_id} />
-                    }
-                  >
-                    <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
-                      <PencilLine />
-                    </div>
-                  </CustomDialog>
-                  <Alert
-                    title="Are you sure delete this Products from Database?"
-                    onAction={() => handleDelete(product.product_id)}
-                    onActionTitle="Delete"
-                  >
-                    <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
-                      <Trash2 />
-                    </div>
-                  </Alert>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+        <div className="flex justify-center grow overflow-auto">
+          {isLoading ? (
+            <div className="flex items-center h-full">
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              <p>Loading</p>
+            </div>
+          ) : (
+            <Table>
+              <TableCaption>A list of recent products.</TableCaption>
+              <TableHeader className="sticky top-0 bg-white dark:bg-[#05152D]">
+                <TableRow>
+                  <TableHead>Image</TableHead>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Price</TableHead>
+                  <TableHead>Category</TableHead>
+                  <TableHead>Detail</TableHead>
+                  <TableHead className="text-center">Action</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {products?.map((product, index) => (
+                  <TableRow key={index} className="py-10">
+                    <TableCell>
+                      <img
+                        src={
+                          product.picture ||
+                          "https://www.iconpacks.net/icons/2/free-laptop-icon-1928-thumb.png"
+                        }
+                        alt={product.name}
+                        className="object-cover w-14 gap-14 bg-center"
+                      />
+                    </TableCell>
+                    <TableCell>{product.name}</TableCell>
+                    <TableCell>{formatPrice(product.price!)}</TableCell>
+                    <TableCell>{product.category}</TableCell>
+                    <TableCell>
+                      <CustomDialog
+                        title="Detail Laptop"
+                        description={
+                          <DetailCard product_id={product.product_id} />
+                        }
+                      >
+                        <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
+                          <Laptop />
+                        </div>
+                      </CustomDialog>
+                    </TableCell>
+                    <TableCell className="flex justify-center items-center h-32 gap-4 z-50">
+                      <CustomDialog
+                        title="Edit Products"
+                        description={
+                          <EditProduct product_id={product.product_id} />
+                        }
+                      >
+                        <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
+                          <PencilLine />
+                        </div>
+                      </CustomDialog>
+                      <Alert
+                        title="Are you sure delete this Products from Database?"
+                        onAction={() => handleDelete(product.product_id)}
+                        onActionTitle="Delete"
+                      >
+                        <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
+                          <Trash2 />
+                        </div>
+                      </Alert>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          )}
+        </div>
         <div className="mt-4">
           <Pagination
             meta={meta}

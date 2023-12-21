@@ -1,6 +1,6 @@
 import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-// import debounce from "lodash.debounce";
+import { Loader2 } from "lucide-react";
 import { format } from "date-fns";
 
 import { useToast } from "@/components/ui/use-toast";
@@ -30,6 +30,7 @@ const TransactionsAdmin = () => {
   const [transactions, setTransactions] = useState<Transactions[]>();
   const [searchParams, setSearchParams] = useSearchParams();
   const [products, setProducts] = useState<Product[]>();
+  const [isLoading, setIsLoading] = useState(false);
   const [meta, setMeta] = useState<Meta>();
 
   const { toast } = useToast();
@@ -40,6 +41,7 @@ const TransactionsAdmin = () => {
   }, [searchParams]);
 
   async function fetchData() {
+    setIsLoading(true);
     try {
       const query = Object.fromEntries([...searchParams]);
       const result = await getTransactions({ ...query });
@@ -52,10 +54,13 @@ const TransactionsAdmin = () => {
         description: error.toString(),
         variant: "destructive",
       });
+    } finally {
+      setIsLoading(false);
     }
   }
 
   const fetchDataProduct = async () => {
+    setIsLoading(true);
     try {
       const Response = await getTransactions();
       const dataResponse = Response.data;
@@ -73,6 +78,8 @@ const TransactionsAdmin = () => {
         description: error.toString(),
         variant: "destructive",
       });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -106,20 +113,6 @@ const TransactionsAdmin = () => {
       }
     }) || [];
 
-  // function handleSearch(value: string) {
-  //   if (value !== "") {
-  //     searchParams.set("name", value);
-  //   } else {
-  //     searchParams.delete("name");
-  //   }
-  //   setSearchParams(searchParams);
-  // }
-
-  // const debounceRequest = debounce(
-  //   (search: string) => handleSearch(search),
-  //   500
-  // );
-
   function handlePrevNextPage(page: string | number) {
     searchParams.set("page", String(page));
     setSearchParams(searchParams);
@@ -128,17 +121,10 @@ const TransactionsAdmin = () => {
   return (
     <Layout>
       <div className="px-10 py-8 bg-white dark:bg-[#1265ae24] rounded-xl flex flex-col justify-start grow shadow-products-card font-poppins overflow-auto">
-        <h1 className="text-2xl font-medium text-center">
+        <h1 className="text-2xl font-medium text-center mb-10">
           Database Transactions
         </h1>
-        <div className="flex mb-10">
-          {/* <input
-            type="search"
-            placeholder="Search..."
-            onChange={(e) => debounceRequest(e.target.value)}
-            className="w-1/4 placeholder:italic placeholder:text-sm outline-none py-2 px-4 rounded-lg dark:bg-transparent shadow dark:shadow-white"
-          /> */}
-        </div>
+
         {transactions === null ? (
           <div className="flex grow justify-center items-center">
             <p className="text-sm text-slate-500 font-light tracking-wide">
@@ -146,45 +132,54 @@ const TransactionsAdmin = () => {
             </p>
           </div>
         ) : (
-          <Table>
-            <TableCaption>A list of user recent invoices.</TableCaption>
-            <TableHeader className="sticky top-0 bg-white dark:bg-[#05152D]">
-              <TableRow>
-                <TableHead className="w-[50px] text-center">No.</TableHead>
-                <TableHead>Image Product</TableHead>
-                <TableHead>Name Product</TableHead>
-                <TableHead>Total Price</TableHead>
-                <TableHead>Date</TableHead>
-                <TableHead>Status</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              <>
-                {mergedData?.map((data, index) => (
-                  <TableRow key={index}>
-                    <TableCell className="font-medium text-center">
-                      {index + 1}
-                    </TableCell>
-                    <TableCell>
-                      <img
-                        src={data.product?.picture}
-                        alt={data.product?.name}
-                        className="object-cover h-24"
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <p className="truncate">{data.product?.name}</p>
-                    </TableCell>
-                    <TableCell>{formatPrice(data.total_price!)}</TableCell>
-                    <TableCell>
-                      {format(new Date(data.timestamp), "iiii, dd MMMM Y")}
-                    </TableCell>
-                    <TableCell>{data.status}</TableCell>
+          <div className="flex justify-center grow overflow-auto">
+            {isLoading ? (
+              <div className="flex items-center h-full">
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                <p>Loading</p>
+              </div>
+            ) : (
+              <Table>
+                <TableCaption>A list of user recent invoices.</TableCaption>
+                <TableHeader className="sticky top-0 bg-white dark:bg-[#05152D]">
+                  <TableRow>
+                    <TableHead className="w-[50px] text-center">No.</TableHead>
+                    <TableHead>Image Product</TableHead>
+                    <TableHead>Name Product</TableHead>
+                    <TableHead>Total Price</TableHead>
+                    <TableHead>Date</TableHead>
+                    <TableHead>Status</TableHead>
                   </TableRow>
-                ))}
-              </>
-            </TableBody>
-          </Table>
+                </TableHeader>
+                <TableBody>
+                  <>
+                    {mergedData?.map((data, index) => (
+                      <TableRow key={index}>
+                        <TableCell className="font-medium text-center">
+                          {index + 1}
+                        </TableCell>
+                        <TableCell>
+                          <img
+                            src={data.product?.picture}
+                            alt={data.product?.name}
+                            className="object-cover h-24"
+                          />
+                        </TableCell>
+                        <TableCell>
+                          <p className="truncate">{data.product?.name}</p>
+                        </TableCell>
+                        <TableCell>{formatPrice(data.total_price!)}</TableCell>
+                        <TableCell>
+                          {format(new Date(data.timestamp), "iiii, dd MMMM Y")}
+                        </TableCell>
+                        <TableCell>{data.status}</TableCell>
+                      </TableRow>
+                    ))}
+                  </>
+                </TableBody>
+              </Table>
+            )}
+          </div>
         )}
         <div className="mt-4">
           <Pagination
