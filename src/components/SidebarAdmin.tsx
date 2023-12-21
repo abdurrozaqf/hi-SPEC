@@ -21,7 +21,7 @@ import { useTheme } from "@/utils/contexts/theme-provider";
 import { useToken } from "@/utils/contexts/token";
 
 const SidebarAdmin = () => {
-  const { changeToken, changeUserID, user, token } = useToken();
+  const { changeToken, user, token } = useToken();
   const [isOpen, setIsOpen] = useState(false);
   const { setTheme, theme } = useTheme();
   const navigate = useNavigate();
@@ -36,7 +36,6 @@ const SidebarAdmin = () => {
 
   function handleLogout() {
     changeToken();
-    changeUserID();
     toast({
       description: "Logout Successfully",
     });

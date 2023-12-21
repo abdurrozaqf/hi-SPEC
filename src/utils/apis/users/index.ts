@@ -2,9 +2,10 @@ import {
   getUser,
   updateUser,
   deleteUser,
-  getDetailUser,
+  // getDetailUser,
   addWishlist,
   deleteWishlist,
+  getProfile,
 } from "./api";
 import {
   User,
@@ -16,7 +17,8 @@ import {
 
 export {
   getUser,
-  getDetailUser,
+  getProfile,
+  // getDetailUser,
   updateUser,
   deleteUser,
   addWishlist,

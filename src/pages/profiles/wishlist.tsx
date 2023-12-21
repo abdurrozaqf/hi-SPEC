@@ -5,18 +5,10 @@ import ProductCardWishlist from "@/components/ProductCardWishlist";
 import { useToast } from "@/components/ui/use-toast";
 import Layout from "@/components/Layout";
 
-import { MyWishlist, deleteWishlist, getDetailUser } from "@/utils/apis/users";
-
-const getDatafromLS = () => {
-  const data = localStorage.getItem("userID");
-  if (data) {
-    return JSON.parse(data);
-  }
-};
+import { MyWishlist, deleteWishlist, getProfile } from "@/utils/apis/users";
 
 const WishList = () => {
   const [wishlists, setWishlists] = useState<MyWishlist[]>();
-  const dataUserId = getDatafromLS();
   const { toast } = useToast();
 
   useEffect(() => {
@@ -25,7 +17,7 @@ const WishList = () => {
 
   async function fetchData() {
     try {
-      const result = await getDetailUser(dataUserId as string);
+      const result = await getProfile();
 
       setWishlists(result.data.my_favorite);
     } catch (error: any) {

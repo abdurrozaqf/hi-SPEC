@@ -27,9 +27,19 @@ export const getUser = async (params?: Request) => {
   }
 };
 
-export const getDetailUser = async (user_id: string) => {
+// export const getDetailUser = async (user_id: number) => {
+//   try {
+//     const response = await axiosWithConfig.get(`/user/${user_id}`);
+
+//     return response.data as Response<User>;
+//   } catch (error: any) {
+//     throw Error(error.response.data.message);
+//   }
+// };
+
+export const getProfile = async () => {
   try {
-    const response = await axiosWithConfig.get(`/user/${user_id}`);
+    const response = await axiosWithConfig.get(`/user`);
 
     return response.data as Response<User>;
   } catch (error: any) {
@@ -59,7 +69,7 @@ export const deleteUser = async (user_id: number) => {
 
 export const addWishlist = async (product_id: number) => {
   try {
-    const response = await axiosWithConfig.post(`/user/fav/${product_id}`);
+    const response = await axiosWithConfig.post(`/user/fav/add/${product_id}`);
 
     return response.data as Response;
   } catch (error: any) {

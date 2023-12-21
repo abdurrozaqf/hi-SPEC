@@ -14,7 +14,7 @@ import { Form } from "@/components/ui/form";
 const LoginForm = () => {
   const { toast } = useToast();
 
-  const { changeToken, changeUserID } = useToken();
+  const { changeToken } = useToken();
 
   const form = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
@@ -28,7 +28,6 @@ const LoginForm = () => {
     try {
       const result = await LoginAccount(data);
       toast({ description: result.message });
-      changeUserID(result.data.user_id);
       changeToken(result.data.token);
     } catch (error: any) {
       toast({

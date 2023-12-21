@@ -16,7 +16,7 @@ export const LoginAccount = async (body: LoginSchema) => {
   try {
     const response = await axiosWithConfig.post(`/login`, body);
 
-    return response.data as Response<{ token: string; user_id: string }>;
+    return response.data as Response<{ token: string }>;
   } catch (error: any) {
     throw Error(error.response.data.message);
   }

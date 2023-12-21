@@ -44,19 +44,6 @@ const DetailProduct = () => {
     }
   }
 
-  async function handleWishlist(product_id: number) {
-    try {
-      const result = await addWishlist(product_id);
-      toast({ description: result.message });
-    } catch (error: any) {
-      toast({
-        title: "Oops! Something went wrong.",
-        description: error.toString(),
-        variant: "destructive",
-      });
-    }
-  }
-
   async function handleBuyProduct(data: {
     product_id: number;
     total_price: number;
@@ -67,6 +54,19 @@ const DetailProduct = () => {
     } catch (error: any) {
       toast({
         title: "Oops, someting went wrong.",
+        description: error.toString(),
+        variant: "destructive",
+      });
+    }
+  }
+
+  async function handleWishlist(product_id: number) {
+    try {
+      const result = await addWishlist(product_id);
+      toast({ description: result.message });
+    } catch (error: any) {
+      toast({
+        title: "Oops! Something went wrong.",
         description: error.toString(),
         variant: "destructive",
       });

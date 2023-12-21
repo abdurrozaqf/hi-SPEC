@@ -13,26 +13,18 @@ import { Form } from "@/components/ui/form";
 import Layout from "@/components/Layout";
 
 import {
-  UpdateUserSchema,
   deleteUser,
-  getDetailUser,
-  User,
+  getProfile,
   updateUser,
+  UpdateUserSchema,
   updateUserSchema,
+  User,
 } from "@/utils/apis/users";
 import { useToken } from "@/utils/contexts/token";
 
-const getDatafromLS = () => {
-  const data = localStorage.getItem("userID");
-  if (data) {
-    return JSON.parse(data);
-  }
-};
-
 const EditProfile = () => {
   const [profile, setProfile] = useState<User>();
-  const { changeToken, user } = useToken();
-  const dataUserId = getDatafromLS();
+  const { changeToken } = useToken();
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -70,7 +62,7 @@ const EditProfile = () => {
 
   async function fetchData() {
     try {
-      const result = await getDetailUser(dataUserId as string);
+      const result = await getProfile();
       setProfile(result.data);
     } catch (error: any) {
       toast({
@@ -93,7 +85,10 @@ const EditProfile = () => {
       formData.append("password", data.password);
       formData.append("avatar", data.avatar[0]);
 
-      const result = await updateUser(user.user?.user_id!, formData as any);
+      const result = await updateUser(
+        profile?.user.user_id as number,
+        formData as any
+      );
       toast({ description: result.message });
     } catch (error: any) {
       toast({
@@ -106,7 +101,7 @@ const EditProfile = () => {
 
   async function handleDeleteProfile() {
     try {
-      const result = await deleteUser(dataUserId);
+      const result = await deleteUser(profile?.user.user_id as number);
       toast({ description: result.message });
       changeToken();
 
@@ -134,10 +129,10 @@ const EditProfile = () => {
                 <div className="flex items-center relative md:mb-0">
                   <img
                     src={
-                      user.user?.avatar ||
+                      profile?.user.avatar ||
                       "https://mlsn40jruh7z.i.optimole.com/w:auto/h:auto/q:mauto/f:best/https://jeffjbutler.com//wp-content/uploads/2018/01/default-user.png"
                     }
-                    alt={user.user?.name || "Guest"}
+                    alt={profile?.user.name || "Guest"}
                     className="object-cover rounded-full w-14 lg:w-36 h-14 lg:h-36 relative"
                   />
                   <label
@@ -151,7 +146,7 @@ const EditProfile = () => {
                   </label>
                 </div>
                 <p className="ml-4 md:ml-8 text-xl md:text-3xl font-bold truncate">
-                  {user.user?.name}
+                  {profile?.user.name}
                 </p>
               </div>
               <Button
@@ -185,7 +180,7 @@ const EditProfile = () => {
               {(field) => (
                 <Input
                   {...field}
-                  placeholder="John Doe"
+                  placeholder={profile?.user.name}
                   type="text"
                   disabled={form.formState.isSubmitting}
                   aria-disabled={form.formState.isSubmitting}
@@ -196,7 +191,7 @@ const EditProfile = () => {
               {(field) => (
                 <Input
                   {...field}
-                  placeholder="johndoe@gmail.com"
+                  placeholder={profile?.user.email}
                   type="email"
                   disabled={form.formState.isSubmitting}
                   aria-disabled={form.formState.isSubmitting}

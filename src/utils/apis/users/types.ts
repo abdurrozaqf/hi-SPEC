@@ -44,6 +44,7 @@ export type User = {
     avatar: string;
     phone_number: string;
     address: string;
+    role: string;
   };
   my_favorite: {
     favorite_id: number;
@@ -62,6 +63,7 @@ export type AllUser = {
   phone_number: string;
   avatar: string;
   time: Date;
+  role: string;
 };
 
 export type MyWishlist = {

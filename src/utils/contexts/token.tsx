@@ -11,24 +11,22 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 
 import axiosWithConfig, { setAxiosConfig } from "@/utils/apis/axiosWithConfig";
-import { User, getDetailUser } from "@/utils/apis/users";
+import { User, getProfile } from "@/utils/apis/users";
 
 interface Context {
   token: string;
   user: Partial<User>;
   changeToken: (token?: string) => void;
-  changeUserID: (userID?: string) => void;
 }
 
 interface Props {
   children: ReactNode;
 }
 
-const contextValue = {
+const contextValue: Context = {
   token: "",
   user: {},
   changeToken: () => {},
-  changeUserID: () => {},
 };
 
 const TokenContext = createContext<Context>(contextValue);
@@ -37,7 +35,6 @@ export function TokenProvider({ children }: Readonly<Props>) {
   const { toast } = useToast();
 
   const [token, setToken] = useState(localStorage.getItem("token") ?? "");
-  const [userID, setUserID] = useState(localStorage.getItem("userID") ?? "");
   const [user, setUser] = useState<Partial<User>>({});
 
   useEffect(() => {
@@ -50,7 +47,6 @@ export function TokenProvider({ children }: Readonly<Props>) {
     (error) => {
       if (error.response.status === 401) {
         changeToken();
-        changeUserID();
       }
 
       return Promise.reject(error);
@@ -59,7 +55,7 @@ export function TokenProvider({ children }: Readonly<Props>) {
 
   const fetchProfile = useCallback(async () => {
     try {
-      const result = await getDetailUser(userID);
+      const result = await getProfile();
       setUser(result.data);
     } catch (error: any) {
       toast({
@@ -78,36 +74,19 @@ export function TokenProvider({ children }: Readonly<Props>) {
         localStorage.setItem("token", newToken);
       } else {
         localStorage.removeItem("token");
-
         setUser({});
       }
     },
     [token]
   );
 
-  const changeUserID = useCallback(
-    (userID?: string) => {
-      const newUserID = userID ?? "";
-      setUserID(newUserID);
-      if (userID) {
-        localStorage.setItem("userID", newUserID);
-      } else {
-        localStorage.removeItem("userID");
-        setUser({});
-      }
-    },
-    [userID]
-  );
-
   const tokenContextValue = useMemo(
     () => ({
       token,
       user,
-      userID,
       changeToken,
-      changeUserID,
     }),
-    [token, user, userID, changeToken, changeUserID]
+    [token, user, changeToken]
   );
 
   return (
