@@ -1,5 +1,4 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import { LoginSchema, loginSchema, LoginAccount } from "@/utils/apis/auth";
@@ -14,10 +13,9 @@ import { Form } from "@/components/ui/form";
 import { Loader2 } from "lucide-react";
 
 const LoginForm = () => {
-  const navigate = useNavigate();
   const { toast } = useToast();
 
-  const { changeToken, changeUserID, user } = useToken();
+  const { changeToken, changeUserID } = useToken();
 
   const form = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
