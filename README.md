@@ -6,16 +6,16 @@
 
 ## Features
 
-<!--
-- Posting with image, edit posting, and delete posting
-- Comment, edit comment, and delete comment
-- Edit profile and delete profile -->
+- Searcg product by name, category, and range your own budget
+- You can compare if you want another laptop
+- Add wihlist for your collection laptop you want
+- Edit profile and delete profile available
 
 ## Tech
 
 hi'SPEC uses a number of open source projects to work properly:
 
-- [React] - HTML enhanced for web apps!
+- [React] - HTML enhanced for web apps!s
 - [Visual Studio Code] - Awesome web-based text editor
 - [Tailwind] - Great UI boilerplate for modern web apps
 - [Shadcn] - Library kit UI for beautiful style
