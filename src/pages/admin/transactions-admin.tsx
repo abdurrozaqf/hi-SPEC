@@ -141,7 +141,7 @@ const TransactionsAdmin = () => {
             ) : (
               <Table>
                 <TableCaption>A list of user recent invoices.</TableCaption>
-                <TableHeader className="sticky top-0 bg-white dark:bg-[#05152D]">
+                <TableHeader className="sticky top-0 bg-white dark:bg-[#05152D] drop-shadow">
                   <TableRow>
                     <TableHead className="w-[50px] text-center">No.</TableHead>
                     <TableHead className="w-[150px] text-center">
@@ -173,7 +173,19 @@ const TransactionsAdmin = () => {
                         <TableCell>
                           {format(new Date(data.timestamp), "iiii, dd MMM Y")}
                         </TableCell>
-                        <TableCell>{data.status}</TableCell>
+                        <TableCell
+                          className={
+                            data.status === "Pending"
+                              ? "text-yellow-600 font-medium text-lg"
+                              : data.status === "Canceled"
+                              ? "text-red-600 font-medium text-lg"
+                              : data.status === "Success"
+                              ? "text-green-600 font-medium text-lg"
+                              : "text-black font-medium text-lg"
+                          }
+                        >
+                          {data.status}
+                        </TableCell>
                       </TableRow>
                     ))}
                   </>

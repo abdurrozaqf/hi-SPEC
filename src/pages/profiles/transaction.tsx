@@ -19,7 +19,7 @@ import { formatPrice } from "@/utils/formatter";
 import { format } from "date-fns";
 import Alert from "@/components/AlertDialog";
 import DetailTransaction from "@/components/DetailTransaction";
-import { LaptopIcon } from "lucide-react";
+import { BookCheckIcon, LaptopIcon } from "lucide-react";
 import { getNota } from "@/utils/apis/admin";
 
 const datas = [
@@ -114,17 +114,18 @@ const Transaction = () => {
   return (
     <Layout>
       <BannerSponsorWishlist />
-      <div className="flex flex-col grow bg-white mt-8 px-8 py-6 rounded-lg shadow-products-card font-poppins overflow-auto">
+      <div className="flex flex-col grow bg-white dark:bg-[#1265ae24] mt-0 lg:mt-6 px-4 py-4 lg:px-8 lg:py-6 rounded-lg shadow-products-card font-poppins overflow-auto">
         <h1 className="text-center mb-10 text-xl font-bold">
           History Transactions
         </h1>
         <Table>
           <TableCaption>A list of your recent transactions.</TableCaption>
-          <TableHeader>
+          <TableHeader className="sticky top-0 bg-white dark:bg-[#05152D] drop-shadow">
             <TableRow>
               <TableHead className="w-[50px] text-center">No</TableHead>
-              <TableHead className="w-[150px]">Image Peoduct</TableHead>
+              <TableHead className="w-[150px]">Image Product</TableHead>
               <TableHead>Name Product</TableHead>
+              <TableHead>Nota</TableHead>
               <TableHead>Total Price</TableHead>
               <TableHead>Date Transaction</TableHead>
               <TableHead>Status</TableHead>
@@ -134,16 +135,29 @@ const Transaction = () => {
           <TableBody>
             {datas.map((data, index) => (
               <TableRow>
-                <TableCell>{index + 1}</TableCell>
+                <TableCell className="text-center">{index + 1}</TableCell>
                 <TableCell>
                   <img src={data.product.picture} alt={data.product.name} />
                 </TableCell>
                 <TableCell>{data.product.name}</TableCell>
+                <TableCell>{data.nota}</TableCell>
                 <TableCell>{formatPrice(data.total_price!)}</TableCell>
                 <TableCell>
                   {format(new Date(data.timestamp), "iiii, dd MMM Y")}
                 </TableCell>
-                <TableCell>{data.status}</TableCell>
+                <TableCell
+                  className={
+                    data.status === "Pending"
+                      ? "text-yellow-600 font-medium text-lg"
+                      : data.status === "Canceled"
+                      ? "text-red-600 font-medium text-lg"
+                      : data.status === "Success"
+                      ? "text-green-600 font-medium text-lg"
+                      : "text-black font-medium text-lg"
+                  }
+                >
+                  {data.status}
+                </TableCell>
                 <TableCell>
                   <Alert
                     title={`Detail Transaction ${data.nota}`}
@@ -155,7 +169,9 @@ const Transaction = () => {
                     onAction={() => handleNota(data.transaction_id)}
                     onActionTitle="Download Nota"
                   >
-                    <LaptopIcon />
+                    <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
+                      <BookCheckIcon />
+                    </div>
                   </Alert>
                 </TableCell>
               </TableRow>

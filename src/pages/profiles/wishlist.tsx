@@ -46,9 +46,9 @@ const WishList = () => {
 
   return (
     <Layout>
-      <div className="flex flex-col gap-8 grow">
+      <div className="flex flex-col gap-0 lg:gap-8 grow">
         <BannerSponsorWishlist />
-        <div className="grid gap-14 grid-cols-5 grow">
+        <div className="grid gap-6 grid-cols-1 md:grid-cols-3 lg:grid-cols-5 grow">
           {wishlists?.map((wishlist, index) => (
             <ProductCardWishlist
               key={index}

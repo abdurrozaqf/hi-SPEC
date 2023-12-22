@@ -110,7 +110,7 @@ const UsersAdmin = () => {
           ) : (
             <Table>
               <TableCaption>A list of your recent Users.</TableCaption>
-              <TableHeader className="sticky top-0 bg-white dark:bg-[#05152D]">
+              <TableHeader className="sticky top-0 bg-white dark:bg-[#05152D] drop-shadow">
                 <TableRow>
                   <TableHead className="w-[50px] text-center">No</TableHead>
                   <TableHead>Image</TableHead>

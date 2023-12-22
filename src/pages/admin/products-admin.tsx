@@ -156,7 +156,7 @@ const ProductsAdmin = () => {
           ) : (
             <Table>
               <TableCaption>A list of recent products.</TableCaption>
-              <TableHeader className="sticky top-0 bg-white dark:bg-[#05152D]">
+              <TableHeader className="sticky top-0 bg-white dark:bg-[#05152D] drop-shadow">
                 <TableRow>
                   <TableHead className="w-[50px] text-center">No</TableHead>
                   <TableHead className="w-[150px] text-center">Image</TableHead>

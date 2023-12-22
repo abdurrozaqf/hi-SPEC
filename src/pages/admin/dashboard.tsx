@@ -95,7 +95,7 @@ const Dashboard = () => {
           <div className="w-0 md:w-auto px-0 md:px-10 py-0 md:py-8 bg-white dark:bg-[#1265ae24] rounded-xl flex flex-col justify-between grow shadow-products-card font-poppins overflow-auto">
             <Table>
               <TableCaption>A list of recent products.</TableCaption>
-              <TableHeader className="sticky top-0 bg-white dark:bg-[#05152D]">
+              <TableHeader className="sticky top-0 bg-white dark:bg-[#05152D] drop-shadow">
                 <TableRow>
                   <TableHead className="w-[50px] text-center">No.</TableHead>
                   <TableHead className="w-[150px] text-center">Image</TableHead>
