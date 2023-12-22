@@ -47,15 +47,15 @@ const SidebarAdmin = () => {
       <div
         className={
           isOpen
-            ? `h-full px-3 lg:px-12 py-3 lg:py-6 border-r relative flex flex-col justify-between shadow-md transition-all duration-300`
-            : `h-full p-3 lg:p-6 border-r  relative flex flex-col justify-start shadow-md transition-all duration-300`
+            ? `h-full px-4 lg:px-12 py-3 lg:py-6 border-r relative flex flex-col justify-between shadow-md transition-all duration-300`
+            : `h-full p-3 lg:p-6 border-r relative flex flex-col justify-start shadow-md transition-all duration-300`
         }
       >
         {/* BUTTON SIDEBAR */}
         <div
           className={
             isOpen
-              ? `p-2 bg-[#E4ECF1] dark:bg-[#1265AE] hover:bg-[#1265AE] hover:dark:bg-[#E4ECF1] hover:text-white hover:dark:text-black w-fit h-fit rounded-lg shadow-md cursor-pointer absolute right-4`
+              ? `p-2 bg-[#E4ECF1] dark:bg-[#1265AE] hover:bg-[#1265AE] hover:dark:bg-[#E4ECF1] hover:text-white hover:dark:text-black w-fit h-fit rounded-lg shadow-md cursor-pointer absolute right-2 lg:right-4 z-50`
               : `p-2 bg-[#E4ECF1] dark:bg-[#1265AE] hover:bg-[#1265AE] hover:dark:bg-[#E4ECF1] hover:text-white hover:dark:text-black w-fit h-fit rounded-lg shadow-md cursor-pointer mb-10`
           }
           onClick={toggle}

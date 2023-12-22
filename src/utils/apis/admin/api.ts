@@ -12,6 +12,18 @@ export const getDashboard = async () => {
   }
 };
 
+export const getNota = async (transaction_id: number) => {
+  try {
+    const response = await axiosWithConfig.get(
+      `/transaction/download/${transaction_id}`
+    );
+
+    return response.data as Response;
+  } catch (error: any) {
+    throw Error(error.response.data.message);
+  }
+};
+
 export const buyProducts = async (body: {
   product_id: number;
   total_price: number;

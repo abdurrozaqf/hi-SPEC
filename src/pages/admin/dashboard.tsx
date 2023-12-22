@@ -106,7 +106,7 @@ const Dashboard = () => {
               </TableHeader>
               <TableBody>
                 {datas?.product.map((data, index) => (
-                  <TableRow key={index}>
+                  <TableRow key={data.id}>
                     <TableCell className="font-medium text-center">
                       {index + 1}
                     </TableCell>

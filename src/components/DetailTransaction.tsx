@@ -7,13 +7,13 @@ import { Product, getDetailProduct } from "@/utils/apis/products";
 import { formatPrice } from "@/utils/formatter";
 
 interface Props {
-  product_id: number;
+  transaction_id: number;
 }
 
-const DetailCard = (props: Props) => {
+const DetailTransaction = (props: Props) => {
   const [datas, setDatas] = useState<Product>();
   const [isLoading, setIsLoading] = useState(false);
-  const { product_id } = props;
+  const { transaction_id } = props;
   const { toast } = useToast();
 
   useEffect(() => {
@@ -23,7 +23,7 @@ const DetailCard = (props: Props) => {
   async function fetchData() {
     setIsLoading(true);
     try {
-      const result = await getDetailProduct(product_id);
+      const result = await getDetailProduct(transaction_id);
       setDatas(result.data);
     } catch (error: any) {
       toast({
@@ -67,4 +67,4 @@ const DetailCard = (props: Props) => {
   );
 };
 
-export default DetailCard;
+export default DetailTransaction;

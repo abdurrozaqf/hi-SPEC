@@ -158,7 +158,8 @@ const ProductsAdmin = () => {
               <TableCaption>A list of recent products.</TableCaption>
               <TableHeader className="sticky top-0 bg-white dark:bg-[#05152D]">
                 <TableRow>
-                  <TableHead>Image</TableHead>
+                  <TableHead className="w-[50px] text-center">No</TableHead>
+                  <TableHead className="w-[150px] text-center">Image</TableHead>
                   <TableHead>Name</TableHead>
                   <TableHead>Price</TableHead>
                   <TableHead>Category</TableHead>
@@ -168,7 +169,10 @@ const ProductsAdmin = () => {
               </TableHeader>
               <TableBody>
                 {products?.map((product, index) => (
-                  <TableRow key={index} className="py-10">
+                  <TableRow key={product.product_id} className="py-10">
+                    <TableCell className="text-center">
+                      {(meta?.page! - 1) * meta?.limit! + index + 1}
+                    </TableCell>
                     <TableCell>
                       <img
                         src={
@@ -176,7 +180,6 @@ const ProductsAdmin = () => {
                           "https://www.iconpacks.net/icons/2/free-laptop-icon-1928-thumb.png"
                         }
                         alt={product.name}
-                        className="object-cover w-14 gap-14 bg-center"
                       />
                     </TableCell>
                     <TableCell>{product.name}</TableCell>

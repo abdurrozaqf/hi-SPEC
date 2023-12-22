@@ -148,6 +148,7 @@ const TransactionsAdmin = () => {
                       Image Product
                     </TableHead>
                     <TableHead>Name Product</TableHead>
+                    <TableHead>Nota</TableHead>
                     <TableHead>Total Price</TableHead>
                     <TableHead>Date</TableHead>
                     <TableHead>Status</TableHead>
@@ -156,9 +157,9 @@ const TransactionsAdmin = () => {
                 <TableBody>
                   <>
                     {mergedData?.map((data, index) => (
-                      <TableRow key={index}>
-                        <TableCell className="font-medium text-center">
-                          {index + 1}
+                      <TableRow key={data.transaction_id}>
+                        <TableCell className="text-center">
+                          {(meta?.page! - 1) * meta?.limit! + index + 1}
                         </TableCell>
                         <TableCell>
                           <img
@@ -166,12 +167,11 @@ const TransactionsAdmin = () => {
                             alt={data.product?.name}
                           />
                         </TableCell>
-                        <TableCell>
-                          <p className="truncate">{data.product?.name}</p>
-                        </TableCell>
+                        <TableCell>{data.product?.name}</TableCell>
+                        <TableCell>{data.nota}</TableCell>
                         <TableCell>{formatPrice(data.total_price!)}</TableCell>
                         <TableCell>
-                          {format(new Date(data.timestamp), "iiii, dd MMMM Y")}
+                          {format(new Date(data.timestamp), "iiii, dd MMM Y")}
                         </TableCell>
                         <TableCell>{data.status}</TableCell>
                       </TableRow>
