@@ -13,6 +13,8 @@ import {
   updateUserSchema,
   AllUser,
   MyWishlist,
+  UpdateUsersAdminSchema,
+  updateUsersAdminSchema,
 } from "./types";
 
 export {
@@ -24,5 +26,12 @@ export {
   addWishlist,
   deleteWishlist,
   updateUserSchema,
+  updateUsersAdminSchema,
 };
-export type { User, AllUser, UpdateUserSchema, MyWishlist };
+export type {
+  User,
+  AllUser,
+  UpdateUserSchema,
+  MyWishlist,
+  UpdateUsersAdminSchema,
+};
