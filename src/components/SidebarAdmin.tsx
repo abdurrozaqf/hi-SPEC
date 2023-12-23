@@ -95,11 +95,11 @@ const SidebarAdmin = () => {
           <div className="flex items-center gap-2">
             <div
               className={
-                pathname === "/products-admin"
+                pathname === "/admin/products"
                   ? `p-2 dark:bg-[#E4ECF1] bg-[#1265AE] text-white dark:text-black w-fit h-fit rounded-lg shadow-md cursor-pointer`
                   : `p-2 bg-[#E4ECF1] dark:bg-[#1265AE] hover:bg-[#1265AE] hover:dark:bg-[#E4ECF1] hover:text-white hover:dark:text-black w-fit h-fit rounded-lg shadow-md cursor-pointer`
               }
-              onClick={() => navigate("/products-admin")}
+              onClick={() => navigate("/admin/products")}
             >
               <BoxIcon />
             </div>
@@ -109,7 +109,7 @@ const SidebarAdmin = () => {
                   ? `w-32 font-medium translate-x-0 opacity-100 transition-all cursor-pointer hover:bg-[#E4ECF1] dark:hover:bg-white rounded-md p-2 dark:hover:text-black`
                   : `-translate-x-28 opacity-0 transition-all absolute`
               }
-              onClick={() => navigate("/products-admin")}
+              onClick={() => navigate("/admin/products")}
             >
               Products
             </p>
@@ -117,11 +117,11 @@ const SidebarAdmin = () => {
           <div className="flex items-center gap-2 cursor-pointer">
             <div
               className={
-                pathname === "/users-admin"
+                pathname === "/admin/users"
                   ? `p-2 dark:bg-[#E4ECF1] bg-[#1265AE] text-white dark:text-black w-fit h-fit rounded-lg shadow-md cursor-pointer`
                   : `p-2 bg-[#E4ECF1] dark:bg-[#1265AE] hover:bg-[#1265AE] hover:dark:bg-[#E4ECF1] hover:text-white hover:dark:text-black w-fit h-fit rounded-lg shadow-md cursor-pointer`
               }
-              onClick={() => navigate("/users-admin")}
+              onClick={() => navigate("/admin/users")}
             >
               <Users />
             </div>
@@ -131,7 +131,7 @@ const SidebarAdmin = () => {
                   ? `w-32 font-medium translate-x-0 opacity-100 transition-all cursor-pointer hover:bg-[#E4ECF1] dark:hover:bg-white rounded-md p-2 dark:hover:text-black`
                   : `-translate-x-28 opacity-0 transition-all absolute`
               }
-              onClick={() => navigate("/users-admin")}
+              onClick={() => navigate("/admin/users")}
             >
               Users
             </p>
@@ -139,11 +139,11 @@ const SidebarAdmin = () => {
           <div className="flex items-center gap-2 cursor-pointer">
             <div
               className={
-                pathname === "/transactions-admin"
+                pathname === "/admin/transactions"
                   ? `p-2 dark:bg-[#E4ECF1] bg-[#1265AE] text-white dark:text-black w-fit h-fit rounded-lg shadow-md cursor-pointer`
                   : `p-2 bg-[#E4ECF1] dark:bg-[#1265AE] hover:bg-[#1265AE] hover:dark:bg-[#E4ECF1] hover:text-white hover:dark:text-black w-fit h-fit rounded-lg shadow-md cursor-pointer`
               }
-              onClick={() => navigate("/transactions-admin")}
+              onClick={() => navigate("/admin/transactions")}
             >
               <DollarSign />
             </div>
@@ -153,7 +153,7 @@ const SidebarAdmin = () => {
                   ? `w-32 font-medium translate-x-0 opacity-100 transition-all cursor-pointer hover:bg-[#E4ECF1] dark:hover:bg-white rounded-md p-2 dark:hover:text-black`
                   : `-translate-x-28 opacity-0 transition-all absolute`
               }
-              onClick={() => navigate("/transactions-admin")}
+              onClick={() => navigate("/admin/transactions")}
             >
               Transactions
             </p>

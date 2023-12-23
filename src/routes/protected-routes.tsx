@@ -10,30 +10,29 @@ const ProtectedRoutes = () => {
 
   const tokenProtected = [
     "/profile",
-    "/profile-edit",
+    "/profile/edit",
     "/wishlist",
     "/transaction",
     "/dashboard",
-    "/products-admin",
-    "/users-admin",
-    "/transactions-admin",
+    "/admin/products",
+    "/admin/users",
+    "/admin/transactions",
   ];
 
   const roleAdminProtected = [
     "/dashboard",
-    "/products-admin",
-    "/users-admin",
-    "/transactions-admin",
+    "/admin/users",
+    "/admin/products",
+    "/admin/transactions",
   ];
 
   const roleUserProtected = [
     "/",
-    "/products",
-    "/categories",
     "/compare",
-    "/categories",
+    "/products",
     "/wishlist",
     "/transaction",
+    "/categories/:category",
   ];
 
   if (authProtected.includes(pathname)) {

@@ -67,15 +67,15 @@ export default function Router() {
           element: <Dashboard />,
         },
         {
-          path: "/products-admin",
+          path: "/admin/products",
           element: <ProductsAdmin />,
         },
         {
-          path: "/users-admin",
+          path: "/admin/users",
           element: <UsersAdmin />,
         },
         {
-          path: "/transactions-admin",
+          path: "/admin/transactions",
           element: <TransactionsAdmin />,
         },
         {
