@@ -79,7 +79,7 @@ const Transaction = () => {
               <TableHeader className="sticky top-0 bg-white dark:bg-[#05152D] drop-shadow w-full">
                 <TableRow>
                   <TableHead className="w-[50px] text-center">No</TableHead>
-                  <TableHead className="w-[100px]">Image Product</TableHead>
+                  <TableHead className="w-[100px] text-center">Image</TableHead>
                   <TableHead>Name Product</TableHead>
                   <TableHead>Nota</TableHead>
                   <TableHead>Total Price</TableHead>
@@ -119,9 +119,11 @@ const Transaction = () => {
                         title={`Download nota ${data.nota}`}
                         description={
                           <p>
-                            Download your invoice product:
+                            <span>Download your invoice product:</span>
                             <br />
-                            {data.product_name}
+                            <span className="font-medium">
+                              {data.product_name}
+                            </span>
                           </p>
                         }
                         onAction={() => handleNota(data.transaction_id)}
