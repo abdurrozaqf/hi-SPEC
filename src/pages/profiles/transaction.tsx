@@ -50,7 +50,9 @@ const Transaction = () => {
   async function handleNota(transaction_id: number) {
     try {
       const result = await getNota(transaction_id);
-      window.open(`${result.data}`, "_blank");
+      window.open(`${result.url}`, "_blank");
+      console.log("url download nota", result.url);
+
       toast({ description: result.message });
     } catch (error: any) {
       toast({
@@ -91,7 +93,7 @@ const Transaction = () => {
               </TableHeader>
               <TableBody>
                 {transactions?.map((data, index) => (
-                  <TableRow>
+                  <TableRow key={index}>
                     <TableCell className="text-center">{index + 1}</TableCell>
                     <TableCell>
                       <img src={data.product_picture} alt={data.product_name} />

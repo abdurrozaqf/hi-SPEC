@@ -5,10 +5,10 @@ import { ResponseTransactions, Transactions } from "./types";
 export const getNota = async (transaction_id: number) => {
   try {
     const response = await axiosWithConfig.get(
-      `/transaction/download/${transaction_id}`
+      `/transaction/${transaction_id}/download`
     );
 
-    return response.data as Response;
+    return response.data;
   } catch (error: any) {
     throw Error(error.response.data.message);
   }
