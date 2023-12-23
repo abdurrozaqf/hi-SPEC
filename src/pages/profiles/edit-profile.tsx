@@ -128,9 +128,18 @@ const EditProfile = () => {
           </div>
         ) : (
           <>
-            <h1 className=" mb-16 text-3xl lg:text-4xl font-bold">
-              Edit Profile
-            </h1>
+            <div className="h-fit flex items-center justify-between mb-16">
+              <h1 className="text-2xl md:text-4xl lg:text-4xl font-bold">
+                Edit Profile
+              </h1>
+              <Button
+                type="button"
+                className="w-fit h-fit hover:bg-blue-800 block md:hidden"
+                onClick={() => navigate(-1)}
+              >
+                <X size={14} />
+              </Button>
+            </div>
             <Form {...form}>
               <form
                 className=" flex flex-col gap-6 relative"
@@ -146,12 +155,9 @@ const EditProfile = () => {
                       />
                       <label
                         htmlFor="input-image"
-                        className="absolute bottom-0 right-0 cursor-pointer"
+                        className="absolute bottom-0 right-0 cursor-pointer hidden lg:block"
                       >
-                        <CameraIcon
-                          size={40}
-                          className="p-1 rounded-full bg-white dark:bg-black"
-                        />
+                        <CameraIcon className="w-6 lg:w-10 h-6 lg:h-10 p-1 rounded-full bg-white dark:bg-black" />
                       </label>
                     </div>
                     <p className="ml-4 md:ml-8 text-xl md:text-3xl font-bold truncate">
@@ -160,27 +166,13 @@ const EditProfile = () => {
                   </div>
                   <Button
                     type="button"
-                    className="w-fit h-fit hover:bg-blue-800 mt-6 md:mt-0"
+                    className="w-fit h-fit hover:bg-blue-800 mt-6 md:mt-0 hidden md:block"
                     onClick={() => navigate(-1)}
                   >
                     <X />
                   </Button>
                 </div>
-                <div className="hidden absolute top-0">
-                  <CustomFormField control={form.control} name="avatar">
-                    {() => (
-                      <Input
-                        {...fileRef}
-                        type="file"
-                        id="input-image"
-                        accept="image/jpg, image/jpeg, image/png"
-                        className="cursor-pointer"
-                        disabled={form.formState.isSubmitting}
-                        aria-disabled={form.formState.isSubmitting}
-                      />
-                    )}
-                  </CustomFormField>
-                </div>
+
                 <CustomFormField
                   control={form.control}
                   name="name"
@@ -196,6 +188,25 @@ const EditProfile = () => {
                     />
                   )}
                 </CustomFormField>
+                <div className="block lg:hidden">
+                  <CustomFormField
+                    control={form.control}
+                    name="avatar"
+                    label="Profile picture"
+                  >
+                    {() => (
+                      <Input
+                        {...fileRef}
+                        type="file"
+                        id="input-image"
+                        accept="image/jpg, image/jpeg, image/png"
+                        className="cursor-pointer"
+                        disabled={form.formState.isSubmitting}
+                        aria-disabled={form.formState.isSubmitting}
+                      />
+                    )}
+                  </CustomFormField>
+                </div>
                 <CustomFormField
                   control={form.control}
                   name="email"
@@ -271,36 +282,37 @@ const EditProfile = () => {
                     />
                   )}
                 </CustomFormField>
-                <Button
-                  type="submit"
-                  disabled={form.formState.isSubmitting}
-                  aria-disabled={form.formState.isSubmitting}
-                  className=" bg-[#1FBB5C] shadow-md"
-                >
-                  {form.formState.isSubmitting ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please
-                      wait
-                    </>
-                  ) : (
-                    "Submit"
-                  )}
-                </Button>
-                <p className="text-center">or</p>
-                <Button
-                  type="button"
-                  variant={"destructive"}
-                  className="border hover:text-black shadow-md"
-                >
+                <div className="flex flex-col md:flex-row md:justify-between gap-2 items-center w-full">
+                  <Button
+                    type="submit"
+                    disabled={form.formState.isSubmitting}
+                    aria-disabled={form.formState.isSubmitting}
+                    className=" bg-[#1FBB5C] text-white shadow-md px-10 w-full md:w-fit"
+                  >
+                    {form.formState.isSubmitting ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please
+                        wait
+                      </>
+                    ) : (
+                      "Submit"
+                    )}
+                  </Button>
                   <Alert
                     title="Are you absolutely sure?"
                     description="This action cannot be undone. This will permanently delete your account and remove your data from our servers."
                     onAction={handleDeleteProfile}
                     onActionTitle="Continue"
                   >
-                    <p>Delete Account</p>
+                    <Button
+                      type="button"
+                      variant={"destructive"}
+                      className="border hover:bg-red-700 shadow-md w-full"
+                    >
+                      <p className="w-full">Delete Account</p>
+                    </Button>
                   </Alert>
-                </Button>
+                </div>
               </form>
             </Form>
           </>
