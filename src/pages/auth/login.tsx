@@ -11,6 +11,7 @@ import HumanLogin from "@/assets/home-page-human.png";
 
 const Login = () => {
   const navigate = useNavigate();
+
   return (
     <div className="w-full h-screen font-poppins background-login flex flex-col">
       <div className="flex flex-col lg:flex-row items-center justify-center lg:justify-around grow p-4 lg:p-0">

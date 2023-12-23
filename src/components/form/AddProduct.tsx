@@ -3,12 +3,6 @@ import { useForm } from "react-hook-form";
 import { Loader2 } from "lucide-react";
 import { useEffect } from "react";
 
-import {
-  addProduct,
-  AddProductSchema,
-  addProductSchema,
-} from "@/utils/apis/products";
-
 import { CustomFormField } from "@/components/CustomForm";
 import { Form, FormControl } from "@/components/ui/form";
 import { useToast } from "@/components/ui/use-toast";
@@ -21,6 +15,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+
+import {
+  addProduct,
+  AddProductSchema,
+  addProductSchema,
+} from "@/utils/apis/products";
 
 const AddProduct = () => {
   const { toast } = useToast();

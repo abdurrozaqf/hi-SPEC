@@ -10,15 +10,13 @@ import Pagination from "@/components/Pagination";
 import CustomDialog from "@/components/Dialog";
 import Alert from "@/components/AlertDialog";
 import Layout from "@/components/Layout";
-
 import {
   Select,
+  SelectTrigger,
   SelectContent,
   SelectItem,
-  SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
 import {
   Table,
   TableBody,
@@ -34,8 +32,8 @@ import {
   deleteProduct,
   getProducts,
 } from "@/utils/apis/products";
-import { Meta } from "@/utils/types/api";
 import { formatPrice } from "@/utils/formatter";
+import { Meta } from "@/utils/types/api";
 
 const ProductsAdmin = () => {
   const [products, setProducts] = useState<ResponseProducts[]>();
@@ -53,7 +51,6 @@ const ProductsAdmin = () => {
     try {
       const query = Object.fromEntries([...searchParams]);
       const result = await getProducts({ ...query });
-
       setProducts(result.data);
       setMeta(result.pagination);
     } catch (error: any) {

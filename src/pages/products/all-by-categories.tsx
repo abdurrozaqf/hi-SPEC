@@ -16,6 +16,8 @@ const AllByCategories = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
   const [meta, setMeta] = useState<Meta>();
+  const { toast } = useToast();
+  const params = useParams();
 
   useEffect(() => {
     searchParams.set("category", params.category!);
@@ -23,15 +25,11 @@ const AllByCategories = () => {
     fetchData();
   }, [searchParams]);
 
-  const { toast } = useToast();
-  const params = useParams();
-
   async function fetchData() {
     setIsLoading(true);
     try {
       const query = Object.fromEntries([...searchParams]);
       const result = await getProducts({ ...query });
-
       setDatas(result.data);
       setMeta(result.pagination);
     } catch (error: any) {

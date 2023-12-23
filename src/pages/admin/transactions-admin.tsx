@@ -28,8 +28,6 @@ const TransactionsAdmin = () => {
   const [meta, setMeta] = useState<Meta>();
   const { toast } = useToast();
 
-  console.log(transactions);
-
   useEffect(() => {
     fetchData();
   }, [searchParams]);

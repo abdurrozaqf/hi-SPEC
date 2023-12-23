@@ -11,7 +11,6 @@ import Pagination from "@/components/Pagination";
 import CustomDialog from "@/components/Dialog";
 import Alert from "@/components/AlertDialog";
 import Layout from "@/components/Layout";
-
 import {
   Table,
   TableBody,
@@ -31,7 +30,6 @@ const UsersAdmin = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [meta, setMeta] = useState<Meta>();
   const { toast } = useToast();
-  console.log(users);
 
   useEffect(() => {
     fetchData();

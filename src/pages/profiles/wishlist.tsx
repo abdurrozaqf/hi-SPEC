@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Loader2 } from "lucide-react";
 
 import BannerSponsorWishlist from "@/components/BannerSponsorWishlist";
 import ProductCardWishlist from "@/components/ProductCardWishlist";
@@ -6,7 +7,6 @@ import { useToast } from "@/components/ui/use-toast";
 import Layout from "@/components/Layout";
 
 import { MyWishlists, deleteWishlist, getProfile } from "@/utils/apis/users";
-import { Loader2 } from "lucide-react";
 
 const WishList = () => {
   const [wishlists, setWishlists] = useState<MyWishlists[]>();
@@ -35,7 +35,6 @@ const WishList = () => {
   async function handleDeleteWishlist(favorite_id: number) {
     try {
       const result = await deleteWishlist(favorite_id);
-
       toast({ description: result.message });
       fetchData();
     } catch (error: any) {

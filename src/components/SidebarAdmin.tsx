@@ -1,15 +1,15 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import {
-  BoxIcon,
   ChevronFirstIcon,
-  ChevronLastIcon,
-  DollarSign,
   LayoutDashboard,
-  LogInIcon,
-  LogOutIcon,
+  ChevronLastIcon,
   MoonStarIcon,
+  LogOutIcon,
+  DollarSign,
+  LogInIcon,
   SunIcon,
+  BoxIcon,
   Users,
 } from "lucide-react";
 
@@ -24,9 +24,9 @@ const SidebarAdmin = () => {
   const { changeToken, user, token } = useToken();
   const [isOpen, setIsOpen] = useState(false);
   const { setTheme, theme } = useTheme();
+  const { pathname } = useLocation();
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { pathname } = useLocation();
 
   const toggle = () => setIsOpen(!isOpen);
 
@@ -44,7 +44,6 @@ const SidebarAdmin = () => {
 
   return (
     <div className="font-poppins">
-      {/* SIDEBAR */}
       <div
         className={
           isOpen
@@ -52,7 +51,6 @@ const SidebarAdmin = () => {
             : `h-full p-3 lg:p-6 border-r relative flex flex-col justify-start shadow-md transition-all duration-300`
         }
       >
-        {/* BUTTON SIDEBAR */}
         <div
           className={
             isOpen
@@ -63,8 +61,6 @@ const SidebarAdmin = () => {
         >
           {isOpen ? <ChevronFirstIcon /> : <ChevronLastIcon />}
         </div>
-
-        {/* BUTTON MENU */}
         <div
           className={
             isOpen ? `flex flex-col gap-4` : `flex flex-col gap-4 grow`
@@ -159,8 +155,6 @@ const SidebarAdmin = () => {
             </p>
           </div>
         </div>
-
-        {/* ADMIN */}
         <div className="flex flex-col gap-4">
           <div className="flex gap-2 items-center">
             <Avatar

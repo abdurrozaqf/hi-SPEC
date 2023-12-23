@@ -3,14 +3,6 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Loader2 } from "lucide-react";
 
-import {
-  EditProductSchema,
-  Product,
-  editProduct,
-  editProductSchema,
-  getDetailProduct,
-} from "@/utils/apis/products";
-
 import { CustomFormField } from "@/components/CustomForm";
 import { Form, FormControl } from "@/components/ui/form";
 import { useToast } from "@/components/ui/use-toast";
@@ -23,6 +15,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+
+import {
+  EditProductSchema,
+  Product,
+  editProduct,
+  editProductSchema,
+  getDetailProduct,
+} from "@/utils/apis/products";
 
 interface Props {
   product_id: number;
@@ -69,7 +69,7 @@ const EditProduct = (props: Props) => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [form.formState.isSubmitSuccessful]);
 
   useEffect(() => {
     if (form.formState.isSubmitSuccessful) {

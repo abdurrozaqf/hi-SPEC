@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { format } from "date-fns";
 
 import BannerSponsorWishlist from "@/components/BannerSponsorWishlist";
-// import DetailTransaction from "@/components/DetailTransaction";
 import { useToast } from "@/components/ui/use-toast";
 import Alert from "@/components/AlertDialog";
 import Layout from "@/components/Layout";
@@ -51,8 +50,6 @@ const Transaction = () => {
     try {
       const result = await getNota(transaction_id);
       window.open(`${result.url}`, "_blank");
-      console.log("url download nota", result.url);
-
       toast({ description: result.message });
     } catch (error: any) {
       toast({
@@ -120,7 +117,13 @@ const Transaction = () => {
                     <TableCell>
                       <Alert
                         title={`Download nota ${data.nota}`}
-                        description={`Download your invoice product: ${data.product_name}`}
+                        description={
+                          <p>
+                            Download your invoice product:
+                            <br />
+                            {data.product_name}
+                          </p>
+                        }
                         onAction={() => handleNota(data.transaction_id)}
                         onActionTitle="Download"
                       >

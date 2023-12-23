@@ -1,6 +1,10 @@
 import { Box, DollarSign, Loader2, Users } from "lucide-react";
+import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
+import { useToast } from "@/components/ui/use-toast";
+import Pagination from "@/components/Pagination";
+import Layout from "@/components/Layout";
 import {
   Table,
   TableBody,
@@ -10,13 +14,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useToast } from "@/components/ui/use-toast";
-import Layout from "@/components/Layout";
 
 import { ResponseDashboard, getDashboard } from "@/utils/apis/admin";
 import { formatPrice } from "@/utils/formatter";
-import Pagination from "@/components/Pagination";
-import { useSearchParams } from "react-router-dom";
 import { Meta } from "@/utils/types/api";
 
 const Dashboard = () => {
@@ -123,13 +123,7 @@ const Dashboard = () => {
                       {index + 1}
                     </TableCell>
                     <TableCell>
-                      <img
-                        src={
-                          data.picture ||
-                          "https://www.iconpacks.net/icons/2/free-laptop-icon-1928-thumb.png"
-                        }
-                        alt={data.name || "unknown"}
-                      />
+                      <img src={data.picture} alt={data.name} />
                     </TableCell>
                     <TableCell>{data.name}</TableCell>
                     <TableCell>{formatPrice(data.price!)}</TableCell>

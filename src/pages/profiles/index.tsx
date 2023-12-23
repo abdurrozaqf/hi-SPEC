@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import Layout from "@/components/Layout";
 
 import { useToken } from "@/utils/contexts/token";
+
 const Profile = () => {
   const navigate = useNavigate();
   const { user } = useToken();
@@ -15,11 +16,8 @@ const Profile = () => {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12">
           <div className="flex items-center mb-10 md:mb-0">
             <img
-              src={
-                user.avatar ||
-                "https://mlsn40jruh7z.i.optimole.com/w:auto/h:auto/q:mauto/f:best/https://jeffjbutler.com//wp-content/uploads/2018/01/default-user.png"
-              }
-              alt={user.name || "Guest"}
+              src={user.avatar}
+              alt={user.name}
               className="object-cover rounded-full w-14 lg:w-36 h-14 lg:h-36 shadow-md border"
             />
             <p className="ml-4 md:ml-8 text-xl md:text-3xl font-bold truncate">

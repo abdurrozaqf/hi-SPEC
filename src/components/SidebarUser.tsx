@@ -1,14 +1,14 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import {
-  BoxIcon,
+  GitCompareArrowsIcon,
   ChevronFirstIcon,
   ChevronLastIcon,
-  GitCompareArrowsIcon,
-  HomeIcon,
-  LogInIcon,
-  LogOutIcon,
   MoonStarIcon,
+  LogOutIcon,
+  LogInIcon,
+  HomeIcon,
+  BoxIcon,
   SunIcon,
 } from "lucide-react";
 
@@ -45,7 +45,6 @@ const SidebarUser = () => {
 
   return (
     <div className="font-poppins">
-      {/* SIDEBAR */}
       <div
         className={
           isOpen
@@ -53,7 +52,6 @@ const SidebarUser = () => {
             : `h-full p-3 lg:p-6 border-r relative flex flex-col justify-start shadow-md transition-all duration-300`
         }
       >
-        {/* BUTTON SIDEBAR */}
         <div
           className={
             isOpen
@@ -64,8 +62,6 @@ const SidebarUser = () => {
         >
           {isOpen ? <ChevronFirstIcon /> : <ChevronLastIcon />}
         </div>
-
-        {/* BUTTON MENU */}
         <div
           className={
             isOpen ? `flex flex-col gap-4` : `flex flex-col gap-4 grow`
@@ -139,18 +135,13 @@ const SidebarUser = () => {
           </div>
         </div>
 
-        {/* FILTER */}
         {pathname === "/products" && (
           <>
-            {/* CATEGORIES */}
             <CategoryBox isOpen={isOpen} />
-
-            {/* RANGE ON BUDGET */}
             <RangeBudgetBox isOpen={isOpen} />
           </>
         )}
 
-        {/* USER */}
         <div className="flex flex-col gap-4">
           <div className="flex gap-2 items-center">
             <Avatar
