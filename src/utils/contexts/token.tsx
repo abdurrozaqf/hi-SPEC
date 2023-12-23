@@ -11,11 +11,11 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 
 import axiosWithConfig, { setAxiosConfig } from "@/utils/apis/axiosWithConfig";
-import { User, getProfile } from "@/utils/apis/users";
+import { Profile, getProfile } from "@/utils/apis/users";
 
 interface Context {
   token: string;
-  user: Partial<User>;
+  user: Partial<Profile>;
   changeToken: (token?: string) => void;
 }
 
@@ -35,7 +35,7 @@ export function TokenProvider({ children }: Readonly<Props>) {
   const { toast } = useToast();
 
   const [token, setToken] = useState(localStorage.getItem("token") ?? "");
-  const [user, setUser] = useState<Partial<User>>({});
+  const [user, setUser] = useState<Partial<Profile>>({});
 
   useEffect(() => {
     setAxiosConfig(token);
@@ -56,7 +56,7 @@ export function TokenProvider({ children }: Readonly<Props>) {
   const fetchProfile = useCallback(async () => {
     try {
       const result = await getProfile();
-      setUser(result.data);
+      setUser(result.data.user);
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",

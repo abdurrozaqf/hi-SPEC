@@ -1,4 +1,4 @@
-import { LoginAccount, RegisterAccount } from "./api";
+import { loginAccount, registerAccount } from "./api";
 import {
   LoginSchema,
   RegisterSchema,
@@ -6,5 +6,5 @@ import {
   registerSchema,
 } from "./types";
 
-export { RegisterAccount, LoginAccount, loginSchema, registerSchema };
+export { registerAccount, loginAccount, loginSchema, registerSchema };
 export type { LoginSchema, RegisterSchema };

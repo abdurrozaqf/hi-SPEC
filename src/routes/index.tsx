@@ -51,7 +51,7 @@ export default function Router() {
           element: <Profile />,
         },
         {
-          path: "/profile-edit",
+          path: "/profile/edit",
           element: <EditProfile />,
         },
         {

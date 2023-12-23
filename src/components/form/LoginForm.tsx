@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Loader2 } from "lucide-react";
 
-import { LoginSchema, loginSchema, LoginAccount } from "@/utils/apis/auth";
+import { LoginSchema, loginSchema, loginAccount } from "@/utils/apis/auth";
 import { useToken } from "@/utils/contexts/token";
 
 import { CustomFormField } from "@/components/CustomForm";
@@ -26,7 +26,7 @@ const LoginForm = () => {
 
   async function onSubmitLogin(data: LoginSchema) {
     try {
-      const result = await LoginAccount(data);
+      const result = await loginAccount(data);
       toast({ description: result.message });
       changeToken(result.data.token);
     } catch (error: any) {

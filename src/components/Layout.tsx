@@ -19,7 +19,7 @@ const Layout = (props: Readonly<Props>) => {
     <div className="w-full h-screen flex flex-col font-inter transition-all overflow-auto">
       <Navbar />
       <div className="flex grow overflow-auto">
-        {user.user?.role === "admin" ? <SidebarAdmin /> : <SidebarUser />}
+        {user.role === "admin" ? <SidebarAdmin /> : <SidebarUser />}
 
         <div className="flex flex-1 flex-col p-6 bg-[#E4ECF1] dark:bg-transparent overflow-auto">
           {children}

@@ -3,9 +3,9 @@ import { useForm } from "react-hook-form";
 import { Loader2 } from "lucide-react";
 
 import {
-  RegisterAccount,
   RegisterSchema,
   registerSchema,
+  registerAccount,
 } from "@/utils/apis/auth";
 
 import { CustomFormField } from "@/components/CustomForm";
@@ -31,7 +31,7 @@ const RegisterForm = () => {
 
   async function onSubmitRegister(data: RegisterSchema) {
     try {
-      const result = await RegisterAccount(data);
+      const result = await registerAccount(data);
 
       toast({ description: result.message });
     } catch (error: any) {
@@ -151,7 +151,7 @@ const RegisterForm = () => {
               </>
             ) : (
               <div className="flex cursor-pointer">
-                <p className="font-medium tracking-wide text-white">Login</p>
+                <p className="font-medium tracking-wide text-white">Register</p>
               </div>
             )}
           </Button>

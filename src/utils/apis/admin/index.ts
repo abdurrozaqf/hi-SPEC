@@ -1,5 +1,5 @@
 import { buyProducts, getDashboard, getNota, getTransactions } from "./api";
-import { ResponseDashboard, Transactions } from "./types";
+import { ResponseDashboard, ResponseTransactions, Transactions } from "./types";
 
 export { getDashboard, getNota, getTransactions, buyProducts };
-export type { Transactions, ResponseDashboard };
+export type { Transactions, ResponseDashboard, ResponseTransactions };

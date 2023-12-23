@@ -73,14 +73,14 @@ input::-webkit-inner-spin-button {
 }
 
 .background-login {
-  background-image: url("src/assets/login-page.svg");
+  background-image: url("src/assets/login-page.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 }
 
 .background-navbar {
-  background-image: url("src/assets/icons-navbar.svg");
+  background-image: url("src/assets/icons-navbar.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

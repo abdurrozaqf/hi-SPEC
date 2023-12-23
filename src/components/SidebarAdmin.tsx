@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import {
   BoxIcon,
@@ -26,6 +26,7 @@ const SidebarAdmin = () => {
   const { setTheme, theme } = useTheme();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { pathname } = useLocation();
 
   const toggle = () => setIsOpen(!isOpen);
 
@@ -71,7 +72,11 @@ const SidebarAdmin = () => {
         >
           <div className="flex items-center gap-2">
             <div
-              className="p-2 bg-[#E4ECF1] dark:bg-[#1265AE] hover:bg-[#1265AE] hover:dark:bg-[#E4ECF1] hover:text-white hover:dark:text-black w-fit h-fit rounded-lg shadow-md cursor-pointer"
+              className={
+                pathname === "/dashboard"
+                  ? `p-2 dark:bg-[#E4ECF1] bg-[#1265AE] text-white dark:text-black w-fit h-fit rounded-lg shadow-md cursor-pointer`
+                  : `p-2 bg-[#E4ECF1] dark:bg-[#1265AE] hover:bg-[#1265AE] hover:dark:bg-[#E4ECF1] hover:text-white hover:dark:text-black w-fit h-fit rounded-lg shadow-md cursor-pointer`
+              }
               onClick={() => navigate("/dashboard")}
             >
               <LayoutDashboard />
@@ -89,7 +94,11 @@ const SidebarAdmin = () => {
           </div>
           <div className="flex items-center gap-2">
             <div
-              className="p-2 bg-[#E4ECF1] dark:bg-[#1265AE] hover:bg-[#1265AE] hover:dark:bg-[#E4ECF1] hover:text-white hover:dark:text-black w-fit h-fit rounded-lg shadow-md cursor-pointer"
+              className={
+                pathname === "/products-admin"
+                  ? `p-2 dark:bg-[#E4ECF1] bg-[#1265AE] text-white dark:text-black w-fit h-fit rounded-lg shadow-md cursor-pointer`
+                  : `p-2 bg-[#E4ECF1] dark:bg-[#1265AE] hover:bg-[#1265AE] hover:dark:bg-[#E4ECF1] hover:text-white hover:dark:text-black w-fit h-fit rounded-lg shadow-md cursor-pointer`
+              }
               onClick={() => navigate("/products-admin")}
             >
               <BoxIcon />
@@ -107,7 +116,11 @@ const SidebarAdmin = () => {
           </div>
           <div className="flex items-center gap-2 cursor-pointer">
             <div
-              className="p-2 bg-[#E4ECF1] dark:bg-[#1265AE] hover:bg-[#1265AE] hover:dark:bg-[#E4ECF1] hover:text-white hover:dark:text-black w-fit h-fit rounded-lg shadow-md cursor-pointer"
+              className={
+                pathname === "/users-admin"
+                  ? `p-2 dark:bg-[#E4ECF1] bg-[#1265AE] text-white dark:text-black w-fit h-fit rounded-lg shadow-md cursor-pointer`
+                  : `p-2 bg-[#E4ECF1] dark:bg-[#1265AE] hover:bg-[#1265AE] hover:dark:bg-[#E4ECF1] hover:text-white hover:dark:text-black w-fit h-fit rounded-lg shadow-md cursor-pointer`
+              }
               onClick={() => navigate("/users-admin")}
             >
               <Users />
@@ -125,7 +138,11 @@ const SidebarAdmin = () => {
           </div>
           <div className="flex items-center gap-2 cursor-pointer">
             <div
-              className="p-2 bg-[#E4ECF1] dark:bg-[#1265AE] hover:bg-[#1265AE] hover:dark:bg-[#E4ECF1] hover:text-white hover:dark:text-black w-fit h-fit rounded-lg shadow-md cursor-pointer"
+              className={
+                pathname === "/transactions-admin"
+                  ? `p-2 dark:bg-[#E4ECF1] bg-[#1265AE] text-white dark:text-black w-fit h-fit rounded-lg shadow-md cursor-pointer`
+                  : `p-2 bg-[#E4ECF1] dark:bg-[#1265AE] hover:bg-[#1265AE] hover:dark:bg-[#E4ECF1] hover:text-white hover:dark:text-black w-fit h-fit rounded-lg shadow-md cursor-pointer`
+              }
               onClick={() => navigate("/transactions-admin")}
             >
               <DollarSign />
@@ -151,11 +168,8 @@ const SidebarAdmin = () => {
               className="cursor-pointer shadow-md hover:shadow-[#1265AE] dark:shadow-white/50 hover:shadow-lg rounded-full"
             >
               <AvatarImage
-                src={
-                  user.user?.avatar ||
-                  "https://mlsn40jruh7z.i.optimole.com/w:auto/h:auto/q:mauto/f:best/https://jeffjbutler.com//wp-content/uploads/2018/01/default-user.png"
-                }
-                alt={user.user?.name || "Guest"}
+                src={user?.avatar}
+                alt={user?.name || "Guest"}
                 className="object-cover"
               />
               <AvatarFallback>CN</AvatarFallback>
@@ -168,9 +182,9 @@ const SidebarAdmin = () => {
                   : `w-0 opacity-50 -translate-x-28 transition-all absolute flex flex-col text-[0]`
               }
             >
-              <span>{user.user?.name || "Guest"}</span>
+              <span>{user?.name || "Guest"}</span>
               <span className={isOpen ? "text-xs" : `text-[0]`}>
-                {user.user?.email || " guest@mail.com"}
+                {user?.email || " guest@mail.com"}
               </span>
             </p>
           </div>

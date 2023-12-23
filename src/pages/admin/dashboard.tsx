@@ -15,21 +15,28 @@ import Layout from "@/components/Layout";
 
 import { ResponseDashboard, getDashboard } from "@/utils/apis/admin";
 import { formatPrice } from "@/utils/formatter";
+import Pagination from "@/components/Pagination";
+import { useSearchParams } from "react-router-dom";
+import { Meta } from "@/utils/types/api";
 
 const Dashboard = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [datas, setDatas] = useState<ResponseDashboard>();
   const [isLoading, setIsLoading] = useState(false);
+  const [meta, setMeta] = useState<Meta>();
   const { toast } = useToast();
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [searchParams]);
 
   async function fetchData() {
     setIsLoading(true);
     try {
-      const result = await getDashboard();
+      const query = Object.fromEntries([...searchParams]);
+      const result = await getDashboard({ ...query });
       setDatas(result.data);
+      setMeta(result.pagination);
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -39,6 +46,11 @@ const Dashboard = () => {
     } finally {
       setIsLoading(false);
     }
+  }
+
+  function handlePrevNextPage(page: string | number) {
+    searchParams.set("page", String(page));
+    setSearchParams(searchParams);
   }
 
   return (
@@ -126,6 +138,14 @@ const Dashboard = () => {
                 ))}
               </TableBody>
             </Table>
+            <div className="mt-4">
+              <Pagination
+                meta={meta}
+                onClickPage={(page) => handlePrevNextPage(page)}
+                onClickNext={() => handlePrevNextPage(meta?.page! + 1)}
+                onClickPrevious={() => handlePrevNextPage(meta?.page! - 1)}
+              />
+            </div>
           </div>
         </>
       )}

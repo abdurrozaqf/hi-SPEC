@@ -10,14 +10,14 @@ import { Input } from "@/components/ui/input";
 import { Form } from "@/components/ui/form";
 
 import {
-  AllUser,
-  updateUser,
+  ResponseUsers,
+  updateProfile,
   updateUsersAdminSchema,
   UpdateUsersAdminSchema,
 } from "@/utils/apis/users";
 
 interface Props {
-  datas: AllUser;
+  datas: ResponseUsers;
 }
 
 const EditProfileUsers = (props: Props) => {
@@ -61,7 +61,10 @@ const EditProfileUsers = (props: Props) => {
       formData.append("newpassword", data.newpassword);
       formData.append("avatar", data.avatar[0]);
 
-      const result = await updateUser(datas.user_id as number, formData as any);
+      const result = await updateProfile(
+        datas.user_id as number,
+        formData as any
+      );
       toast({ description: result.message });
     } catch (error: any) {
       toast({

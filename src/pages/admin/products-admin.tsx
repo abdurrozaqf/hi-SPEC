@@ -1,12 +1,11 @@
 import { FilePlus, Laptop, Loader2, PencilLine, Trash2 } from "lucide-react";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import debounce from "lodash.debounce";
 
 import EditProduct from "@/components/form/EditProduct";
 import AddProduct from "@/components/form/AddProduct";
 import { useToast } from "@/components/ui/use-toast";
-import DetailCard from "@/components/DetailCard";
 import Pagination from "@/components/Pagination";
 import CustomDialog from "@/components/Dialog";
 import Alert from "@/components/AlertDialog";
@@ -19,6 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+
 import {
   Table,
   TableBody,
@@ -173,7 +173,7 @@ const ProductsAdmin = () => {
                     <TableCell className="text-center">
                       {(meta?.page! - 1) * meta?.limit! + index + 1}
                     </TableCell>
-                    <TableCell>
+                    <TableCell className="flex items-center justify-center">
                       <img
                         src={
                           product.picture ||
@@ -186,37 +186,34 @@ const ProductsAdmin = () => {
                     <TableCell>{formatPrice(product.price!)}</TableCell>
                     <TableCell>{product.category}</TableCell>
                     <TableCell>
-                      <CustomDialog
-                        title="Detail product"
-                        description={
-                          <DetailCard product_id={product.product_id} />
-                        }
-                      >
+                      <Link to={`/detail-product/${product.product_id}`}>
                         <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
                           <Laptop />
                         </div>
-                      </CustomDialog>
+                      </Link>
                     </TableCell>
-                    <TableCell className="flex justify-center items-center h-32 gap-4 z-50">
-                      <CustomDialog
-                        title="Edit Products"
-                        description={
-                          <EditProduct product_id={product.product_id} />
-                        }
-                      >
-                        <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
-                          <PencilLine />
-                        </div>
-                      </CustomDialog>
-                      <Alert
-                        title="Are you sure delete this Products from Database?"
-                        onAction={() => handleDelete(product.product_id)}
-                        onActionTitle="Delete"
-                      >
-                        <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
-                          <Trash2 />
-                        </div>
-                      </Alert>
+                    <TableCell>
+                      <div className="flex items-center justify-center gap-4">
+                        <CustomDialog
+                          title="Edit Products"
+                          description={
+                            <EditProduct product_id={product.product_id} />
+                          }
+                        >
+                          <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
+                            <PencilLine />
+                          </div>
+                        </CustomDialog>
+                        <Alert
+                          title="Are you sure delete this Products from Database?"
+                          onAction={() => handleDelete(product.product_id)}
+                          onActionTitle="Delete"
+                        >
+                          <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
+                            <Trash2 />
+                          </div>
+                        </Alert>
+                      </div>
                     </TableCell>
                   </TableRow>
                 ))}

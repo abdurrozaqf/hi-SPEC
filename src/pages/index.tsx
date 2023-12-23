@@ -22,7 +22,6 @@ const Home = () => {
     fetchDataGaming();
   }, []);
 
-  // Fetch Api
   async function fetchDataOffice() {
     setIsLoading(true);
     try {

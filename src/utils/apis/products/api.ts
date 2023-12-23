@@ -1,11 +1,11 @@
+import { Response, Request, ResponsePagination } from "@/utils/types/api";
+import axiosWithConfig from "@/utils/apis/axiosWithConfig";
 import {
-  AddProductSchema,
-  EditProductSchema,
   Product,
   ResponseProducts,
+  AddProductSchema,
+  EditProductSchema,
 } from "./types";
-import axiosWithConfig from "@/utils/apis/axiosWithConfig";
-import { Response, Request, ResponsePagination } from "@/utils/types/api";
 
 export const getProducts = async (params?: Request) => {
   try {

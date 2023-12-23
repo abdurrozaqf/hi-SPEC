@@ -1,6 +1,6 @@
-import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CameraIcon, Loader2, X } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -13,37 +13,37 @@ import { Form } from "@/components/ui/form";
 import Layout from "@/components/Layout";
 
 import {
-  deleteUser,
+  Profile,
   getProfile,
-  updateUser,
-  UpdateUserSchema,
-  updateUserSchema,
-  User,
+  updateProfile,
+  deleteProfile,
+  UpdateProfileSchema,
+  updateProfileSchema,
 } from "@/utils/apis/users";
 import { useToken } from "@/utils/contexts/token";
 
 const EditProfile = () => {
-  const [profile, setProfile] = useState<User>();
+  const [profile, setProfile] = useState<Profile>();
   const { changeToken } = useToken();
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  const form = useForm<UpdateUserSchema>({
-    resolver: zodResolver(updateUserSchema),
+  const form = useForm<UpdateProfileSchema>({
+    resolver: zodResolver(updateProfileSchema),
     defaultValues: {
-      name: profile?.user.name ?? "",
-      email: profile?.user.email ?? "",
-      address: profile?.user.address ?? "",
-      phone_number: profile?.user.phone_number ?? "",
+      name: profile?.name ?? "",
+      email: profile?.email ?? "",
+      address: profile?.address ?? "",
+      phone_number: profile?.phone_number ?? "",
       password: "",
       newpassword: "",
-      avatar: profile?.user.avatar ?? "",
+      avatar: profile?.avatar ?? "",
     },
     values: {
-      name: profile?.user.name!,
-      email: profile?.user.email!,
-      address: profile?.user.address!,
-      phone_number: profile?.user.phone_number!,
+      name: profile?.name!,
+      email: profile?.email!,
+      address: profile?.address!,
+      phone_number: profile?.phone_number!,
       password: "",
       newpassword: "",
       avatar: "",
@@ -63,7 +63,7 @@ const EditProfile = () => {
   async function fetchData() {
     try {
       const result = await getProfile();
-      setProfile(result.data);
+      setProfile(result.data.user);
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -74,7 +74,7 @@ const EditProfile = () => {
   }
 
   const fileRef = form.register("avatar", { required: false });
-  async function onSubmit(data: UpdateUserSchema) {
+  async function onSubmit(data: UpdateProfileSchema) {
     try {
       const formData = new FormData();
       formData.append("name", data.name);
@@ -85,8 +85,8 @@ const EditProfile = () => {
       formData.append("password", data.password);
       formData.append("avatar", data.avatar[0]);
 
-      const result = await updateUser(
-        profile?.user.user_id as number,
+      const result = await updateProfile(
+        profile?.user_id as number,
         formData as any
       );
       toast({ description: result.message });
@@ -101,7 +101,7 @@ const EditProfile = () => {
 
   async function handleDeleteProfile() {
     try {
-      const result = await deleteUser(profile?.user.user_id as number);
+      const result = await deleteProfile(profile?.user_id as number);
       toast({ description: result.message });
       changeToken();
 
@@ -129,10 +129,10 @@ const EditProfile = () => {
                 <div className="flex items-center relative md:mb-0">
                   <img
                     src={
-                      profile?.user.avatar ||
+                      profile?.avatar ||
                       "https://mlsn40jruh7z.i.optimole.com/w:auto/h:auto/q:mauto/f:best/https://jeffjbutler.com//wp-content/uploads/2018/01/default-user.png"
                     }
-                    alt={profile?.user.name || "Guest"}
+                    alt={profile?.name || "Guest"}
                     className="object-cover rounded-full w-14 lg:w-36 h-14 lg:h-36 relative"
                   />
                   <label
@@ -146,7 +146,7 @@ const EditProfile = () => {
                   </label>
                 </div>
                 <p className="ml-4 md:ml-8 text-xl md:text-3xl font-bold truncate">
-                  {profile?.user.name}
+                  {profile?.name}
                 </p>
               </div>
               <Button
@@ -180,7 +180,7 @@ const EditProfile = () => {
               {(field) => (
                 <Input
                   {...field}
-                  placeholder={profile?.user.name}
+                  placeholder="John Doe"
                   type="text"
                   disabled={form.formState.isSubmitting}
                   aria-disabled={form.formState.isSubmitting}
@@ -191,7 +191,7 @@ const EditProfile = () => {
               {(field) => (
                 <Input
                   {...field}
-                  placeholder={profile?.user.email}
+                  placeholder="johndoe@mail.com"
                   type="email"
                   disabled={form.formState.isSubmitting}
                   aria-disabled={form.formState.isSubmitting}
@@ -282,6 +282,7 @@ const EditProfile = () => {
                 title="Are you absolutely sure?"
                 description="This action cannot be undone. This will permanently delete your account and remove your data from our servers."
                 onAction={handleDeleteProfile}
+                onActionTitle="Continue"
               >
                 <p>Delete Account</p>
               </Alert>

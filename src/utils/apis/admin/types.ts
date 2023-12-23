@@ -1,11 +1,12 @@
 export type Transactions = {
-  transaction_id: number;
+  user_picture: string;
+  user_name: string;
+  name_product: string;
+  picture_product: string;
   nota: string;
-  product_id: number;
   total_price: number;
-  status: string;
   timestamp: Date;
-  token: string;
+  status: string;
   url: string;
 };
 
@@ -20,4 +21,14 @@ export type ResponseDashboard = {
     price: number;
     picture: string;
   }[];
+};
+
+export type ResponseTransactions = {
+  transactions: Transactions[];
+  message: string;
+  pagination: {
+    limit: number;
+    page: number;
+    total_page: number;
+  };
 };

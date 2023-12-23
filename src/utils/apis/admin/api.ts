@@ -1,16 +1,6 @@
 import { Request, Response, ResponsePagination } from "@/utils/types/api";
 import axiosWithConfig from "@/utils/apis/axiosWithConfig";
-import { Transactions } from "./types";
-
-export const getDashboard = async () => {
-  try {
-    const response = await axiosWithConfig.get(`/dashboard`);
-
-    return response.data as Response;
-  } catch (error: any) {
-    throw Error(error.response.data.message);
-  }
-};
+import { ResponseTransactions, Transactions } from "./types";
 
 export const getNota = async (transaction_id: number) => {
   try {
@@ -37,6 +27,30 @@ export const buyProducts = async (body: {
   }
 };
 
+export const getDashboard = async (params?: Request) => {
+  try {
+    let query = "";
+
+    if (params) {
+      const queryParams: string[] = [];
+
+      let key: keyof typeof params;
+      for (key in params) {
+        queryParams.push(`${key}=${params[key]}`);
+      }
+
+      query = queryParams.join("&");
+    }
+
+    const url = query ? `/dashboard?${query}` : `/dashboard`;
+    const response = await axiosWithConfig.get(url);
+
+    return response.data as ResponsePagination;
+  } catch (error: any) {
+    throw Error(error.response.data.message);
+  }
+};
+
 export const getTransactions = async (params?: Request) => {
   try {
     let query = "";
@@ -56,7 +70,7 @@ export const getTransactions = async (params?: Request) => {
 
     const response = await axiosWithConfig.get(url);
 
-    return response.data as ResponsePagination;
+    return response.data as ResponseTransactions;
   } catch (error: any) {
     throw Error(error.response.data.message);
   }

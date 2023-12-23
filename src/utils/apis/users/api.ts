@@ -1,8 +1,8 @@
 import { Request, Response, ResponsePagination } from "@/utils/types/api";
 import axiosWithConfig from "@/utils/apis/axiosWithConfig";
-import { User, UpdateUserSchema } from "./types";
+import { User, UpdateProfileSchema } from "./types";
 
-export const getUser = async (params?: Request) => {
+export const getUsers = async (params?: Request) => {
   try {
     let query = "";
 
@@ -27,16 +27,6 @@ export const getUser = async (params?: Request) => {
   }
 };
 
-// export const getDetailUser = async (user_id: number) => {
-//   try {
-//     const response = await axiosWithConfig.get(`/user/${user_id}`);
-
-//     return response.data as Response<User>;
-//   } catch (error: any) {
-//     throw Error(error.response.data.message);
-//   }
-// };
-
 export const getProfile = async () => {
   try {
     const response = await axiosWithConfig.get(`/user`);
@@ -47,7 +37,10 @@ export const getProfile = async () => {
   }
 };
 
-export const updateUser = async (user_id: number, body: UpdateUserSchema) => {
+export const updateProfile = async (
+  user_id: number,
+  body: UpdateProfileSchema
+) => {
   try {
     const response = await axiosWithConfig.patch(`/user/${user_id}`, body);
 
@@ -57,7 +50,7 @@ export const updateUser = async (user_id: number, body: UpdateUserSchema) => {
   }
 };
 
-export const deleteUser = async (user_id: number) => {
+export const deleteProfile = async (user_id: number) => {
   try {
     const response = await axiosWithConfig.delete(`/user/${user_id}`);
 
@@ -80,6 +73,16 @@ export const addWishlist = async (product_id: number) => {
 export const deleteWishlist = async (favorite_id: number) => {
   try {
     const response = await axiosWithConfig.delete(`/user/fav/${favorite_id}`);
+
+    return response.data as Response;
+  } catch (error: any) {
+    throw Error(error.response.data.message);
+  }
+};
+
+export const getTransactionUser = async (user_id: number) => {
+  try {
+    const response = await axiosWithConfig.get(`/transaction/user/${user_id}`);
 
     return response.data as Response;
   } catch (error: any) {
