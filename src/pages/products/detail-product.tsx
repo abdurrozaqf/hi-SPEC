@@ -75,7 +75,7 @@ const DetailProduct = () => {
 
   return (
     <Layout>
-      <div className="flex flex-col lg:flex-row gap-10 justify-center lg:gap-6 grow bg-white dark:bg-[#1265ae24] rounded-lg px-0 lg:px-10 py-4 lg:py-6 shadow">
+      <div className="flex flex-col xl:flex-row gap-10 justify-center lg:gap-6 grow bg-white dark:bg-[#1265ae24] rounded-lg px-0 lg:px-10 py-4 lg:py-6 shadow">
         {isLoading ? (
           <div className="flex items-center justify-center h-full">
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -93,6 +93,7 @@ const DetailProduct = () => {
                 </div>
                 <div>Back</div>
               </Button>
+              <hr className="my-4 visible xl:invisible" />
               <div className="flex items-center justify-center grow">
                 <img
                   src={product?.picture}
@@ -129,7 +130,7 @@ const DetailProduct = () => {
               <p>HDMI: {product?.hdmi}</p>
               <p>Weight: {product?.weight}</p>
             </div>
-            <div className="flex flex-col justify-center items-center px-6">
+            <div className="flex flex-row xl:flex-col justify-center lg:justify-around xl:justify-center items-center px-0 xl:px-6">
               {token && user?.role === "user" && (
                 <div className="border-none md:border md:border-solid border-[#D9D9D9] p-6 rounded-lg">
                   <h2 className="font-bold mb-4">Purchase amount</h2>

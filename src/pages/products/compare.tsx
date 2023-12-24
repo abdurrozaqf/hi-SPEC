@@ -46,20 +46,23 @@ const Compare = () => {
             </div>
             <h1 className="font-bold text-center text-4xl grow">Compare</h1>
           </div>
-          <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-items-center">
+          <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 place-items-center">
             {compares.map((data, index) => (
               <div
                 key={index}
                 className="border border-slate-400 rounded-md flex flex-col w-full h-[53rem] p-6 grow"
               >
-                <div className="flex justify-between items-center">
+                <div className="flex justify-between items-center mb-8">
                   <div className="flex w-full items-center">
                     <SearchCompareBox
                       placeholder="Search product by name"
                       onSelectProduct={(id) => fetchDetail(id, index)}
                     />
                   </div>
-                  <X onClick={() => deleteCompare(index)} className="ml-2" />
+                  <X
+                    onClick={() => deleteCompare(index)}
+                    className="ml-2 cursor-pointer dark:hover:bg-black/20 rounded-lg"
+                  />
                 </div>
                 <div className="flex items-start justify-center grow">
                   {Object.keys(data).length !== 0 ? (

@@ -62,18 +62,21 @@ const SearchCompareBox = ({
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
+      <PopoverTrigger
+        asChild
+        className="w-full max-w-[190px] md:max-w-[230px] lg:max-w-[280px] xl:max-w-[400px]"
+      >
         <Button
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[18rem] justify-between truncate"
+          className="flex justify-between bg-white dark:bg-black/25"
         >
-          {value || placeholder}
+          <p className="truncate">{value || placeholder}</p>
           <ChevronsUpDown className="h-4 ml-2 opacity-50 w-4 shrink-0" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="p-0 w-[18rem]">
+      <PopoverContent className="p-0 w-full max-w-[190px] md:max-w-[230px] lg:max-w-[280px] xl:max-w-[400px]">
         <Command>
           <CommandInput
             placeholder={placeholder}
