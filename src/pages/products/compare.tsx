@@ -33,7 +33,7 @@ const Compare = () => {
 
   return (
     <Layout>
-      <div className="flex flex-col gap-4 grow">
+      <div className="flex flex-col grow">
         <BannerSponsorCompare />
         <div className="bg-white rounded-xl flex flex-col font-poppins shadow-lg px-4 py-6 lg:p-14 grow overflow-auto dark:bg-[#1265ae24]">
           <div className="flex flex-col md:flex-row items-center mb-10">

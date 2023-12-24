@@ -21,7 +21,7 @@ const Layout = (props: Readonly<Props>) => {
       <div className="flex grow overflow-auto">
         {user.role === "admin" ? <SidebarAdmin /> : <SidebarUser />}
 
-        <div className="flex flex-1 flex-col p-6 bg-[#E4ECF1] dark:bg-transparent overflow-auto">
+        <div className="flex flex-1 flex-col p-3 lg:p-6 bg-[#E4ECF1] dark:bg-transparent overflow-auto">
           {children}
         </div>
       </div>
