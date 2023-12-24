@@ -1,5 +1,4 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
 import {
   GitCompareArrowsIcon,
   ChevronFirstIcon,
@@ -22,16 +21,17 @@ import { useTheme } from "@/utils/contexts/theme-provider";
 import { useToken } from "@/utils/contexts/token";
 
 import DefaultAvatar from "/images/default-avatar.png";
+import { useSidebar } from "@/utils/contexts/sidebar";
 
 const SidebarUser = () => {
   const { changeToken, user, token } = useToken();
-  const [isOpen, setIsOpen] = useState(false);
+  const { sidebar, changeSidebar } = useSidebar();
   const { setTheme, theme } = useTheme();
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  const toggle = () => setIsOpen(!isOpen);
+  const toggle = () => changeSidebar(sidebar === "true" ? "false" : "true");
 
   function handleTheme() {
     const newTheme = theme === "light" ? "dark" : "light";
@@ -49,24 +49,26 @@ const SidebarUser = () => {
     <div className="font-poppins">
       <div
         className={
-          isOpen
+          sidebar === "true"
             ? `h-full px-3 lg:px-12 py-3 lg:py-6 border-r relative flex flex-col justify-between shadow-md transition-all duration-300`
             : `h-full p-3 lg:p-6 border-r relative flex flex-col justify-start shadow-md transition-all duration-300`
         }
       >
         <div
           className={
-            isOpen
+            sidebar === "true"
               ? `p-2 bg-[#E4ECF1] dark:bg-[#1265AE] hover:bg-[#1265AE] hover:dark:bg-[#E4ECF1] hover:text-white hover:dark:text-black w-fit h-fit rounded-lg shadow-md cursor-pointer absolute right-4`
               : `p-2 bg-[#E4ECF1] dark:bg-[#1265AE] hover:bg-[#1265AE] hover:dark:bg-[#E4ECF1] hover:text-white hover:dark:text-black w-fit h-fit rounded-lg shadow-md cursor-pointer mb-10`
           }
           onClick={toggle}
         >
-          {isOpen ? <ChevronFirstIcon /> : <ChevronLastIcon />}
+          {sidebar === "true" ? <ChevronFirstIcon /> : <ChevronLastIcon />}
         </div>
         <div
           className={
-            isOpen ? `flex flex-col gap-4` : `flex flex-col gap-4 grow`
+            sidebar === "true"
+              ? `flex flex-col gap-4`
+              : `flex flex-col gap-4 grow`
           }
         >
           <div className="flex items-center gap-2">
@@ -82,7 +84,7 @@ const SidebarUser = () => {
             </div>
             <p
               className={
-                isOpen
+                sidebar === "true"
                   ? `w-32 mr-10 font-medium translate-x-0 opacity-100 transition-all cursor-pointer hover:bg-[#E4ECF1] dark:hover:bg-white rounded-md p-2 dark:hover:text-black`
                   : `-translate-x-28 opacity-0 transition-all absolute`
               }
@@ -104,7 +106,7 @@ const SidebarUser = () => {
             </div>
             <p
               className={
-                isOpen
+                sidebar === "true"
                   ? `w-32 mr-10 font-medium translate-x-0 opacity-100 transition-all cursor-pointer hover:bg-[#E4ECF1] dark:hover:bg-white rounded-md p-2 dark:hover:text-black`
                   : `-translate-x-28 opacity-0 transition-all absolute`
               }
@@ -127,7 +129,7 @@ const SidebarUser = () => {
             <p
               onClick={() => navigate("/compare")}
               className={
-                isOpen
+                sidebar === "true"
                   ? `w-32 mr-10 font-medium translate-x-0 opacity-100 transition-all cursor-pointer hover:bg-[#E4ECF1] dark:hover:bg-white rounded-md p-2 dark:hover:text-black`
                   : `-translate-x-28 opacity-0 transition-all absolute`
               }
@@ -139,8 +141,8 @@ const SidebarUser = () => {
 
         {pathname === "/products" && (
           <>
-            <CategoryBox isOpen={isOpen} />
-            <RangeBudgetBox isOpen={isOpen} />
+            <CategoryBox isOpen={sidebar} />
+            <RangeBudgetBox isOpen={sidebar} />
           </>
         )}
 
@@ -160,13 +162,13 @@ const SidebarUser = () => {
             <p
               onClick={() => navigate("/profile")}
               className={
-                isOpen
+                sidebar === "true"
                   ? `font-medium w-full opacity-100 translate-x-0 transition-all rounded-md p-2 hover:bg-[#E4ECF1]  hover:dark:bg-[#E4ECF1] dark:hover:text-black flex flex-col cursor-pointer`
                   : `w-0 opacity-50 -translate-x-28 transition-all absolute flex flex-col text-[0]`
               }
             >
               <span>{user.name || "Guest"}</span>
-              <span className={isOpen ? "text-xs" : `text-[0]`}>
+              <span className={sidebar === "true" ? "text-xs" : `text-[0]`}>
                 {user.email || " guest@mail.com"}
               </span>
             </p>
@@ -180,7 +182,7 @@ const SidebarUser = () => {
             </div>
             <p
               className={
-                isOpen
+                sidebar === "true"
                   ? `font-medium w-full opacity-100 translate-x-0 transition-all hover:bg-[#E4ECF1] dark:hover:bg-white rounded-md p-2 dark:hover:text-black`
                   : `w-0 opacity-0 -translate-x-28 transition-all absolute`
               }
@@ -201,7 +203,7 @@ const SidebarUser = () => {
 
                 <p
                   className={
-                    isOpen
+                    sidebar === "true"
                       ? `font-medium w-full opacity-100 translate-x-0 transition-all hover:bg-[#E4ECF1] dark:hover:bg-white rounded-md p-2 dark:hover:text-black`
                       : `w-0 opacity-0 -translate-x-28 transition-all absolute`
                   }
@@ -220,7 +222,7 @@ const SidebarUser = () => {
               </div>
               <p
                 className={
-                  isOpen
+                  sidebar === "true"
                     ? `font-medium w-full opacity-100 translate-x-0 transition-all hover:bg-[#E4ECF1] dark:hover:bg-white rounded-md p-2 dark:hover:text-black`
                     : `w-0 opacity-0 -translate-x-28 transition-all absolute`
                 }

@@ -26,7 +26,7 @@ const RangeSchema = z.object({
 });
 
 interface Props {
-  isOpen: boolean;
+  isOpen: string;
 }
 
 const RangeBudgetBox = (props: Props) => {
@@ -57,7 +57,7 @@ const RangeBudgetBox = (props: Props) => {
   return (
     <div
       className={
-        isOpen
+        isOpen === "true"
           ? `translate-x-0 w-fit flex flex-col opacity-100 transition-all`
           : `-translate-x-28 w-0 opacity-50 transition-all hidden`
       }

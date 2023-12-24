@@ -1,7 +1,7 @@
 import { useSearchParams } from "react-router-dom";
 
 interface Props {
-  isOpen: boolean;
+  isOpen: string;
 }
 
 const CategoryBox = (props: Props) => {
@@ -24,7 +24,7 @@ const CategoryBox = (props: Props) => {
   return (
     <div
       className={
-        isOpen
+        isOpen === "true"
           ? `translate-x-0 w-fit flex flex-col gap-4 opacity-100 transition-all`
           : `-translate-x-36 w-0 opacity-50 transition-all hidden`
       }
