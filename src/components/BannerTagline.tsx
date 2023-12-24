@@ -1,4 +1,4 @@
-import HumanBannerTagline from "@/assets/human-banner-tagline.svg";
+import HumanBannerTagline from "/images/human-banner-tagline.svg";
 
 const BannerTagline = () => {
   return (

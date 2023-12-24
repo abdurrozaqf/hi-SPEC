@@ -73,21 +73,21 @@ input::-webkit-inner-spin-button {
 }
 
 .background-login {
-  background-image: url("src/assets/login-page.png");
+  background-image: url("/images/login-page.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 }
 
 .background-navbar {
-  background-image: url("src/assets/icons-navbar.png");
+  background-image: url("/images/icons-navbar.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 }
 
 .background-tagline {
-  background-image: url("src/assets/banner-tagline.svg");
+  background-image: url("/images/banner-tagline.svg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

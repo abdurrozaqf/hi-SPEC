@@ -21,6 +21,8 @@ import Alert from "@/components/AlertDialog";
 import { useTheme } from "@/utils/contexts/theme-provider";
 import { useToken } from "@/utils/contexts/token";
 
+import DefaultAvatar from "/images/default-avatar.png";
+
 const SidebarUser = () => {
   const { changeToken, user, token } = useToken();
   const [isOpen, setIsOpen] = useState(false);
@@ -149,9 +151,9 @@ const SidebarUser = () => {
               className="cursor-pointer shadow-md hover:shadow-[#1265AE] dark:shadow-white/50 hover:shadow-lg rounded-full"
             >
               <AvatarImage
-                src={user.avatar}
+                src={user.avatar || DefaultAvatar}
                 alt={user.name || "Guest"}
-                className="object-cover"
+                className="object-cover "
               />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>

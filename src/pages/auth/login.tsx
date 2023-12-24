@@ -6,8 +6,8 @@ import LoginForm from "@/components/form/LoginForm";
 import { Button } from "@/components/ui/button";
 import CustomDialog from "@/components/Dialog";
 
-import LinesSponsor from "@/assets/lines-sponsor.png";
-import HumanLogin from "@/assets/home-page-human.png";
+import LinesSponsor from "/images/lines-sponsor.png";
+import HumanLogin from "/images/home-page-human.png";
 
 const Login = () => {
   const navigate = useNavigate();

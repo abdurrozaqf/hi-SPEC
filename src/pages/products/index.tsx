@@ -12,8 +12,8 @@ import { ResponseProducts, getProducts } from "@/utils/apis/products";
 import { Meta } from "@/utils/types/api";
 
 const Products = () => {
-  const [datas, setDatas] = useState<ResponseProducts[]>();
   const [searchParams, setSearchParams] = useSearchParams();
+  const [datas, setDatas] = useState<ResponseProducts[]>();
   const [isLoading, setIsLoading] = useState(false);
   const [meta, setMeta] = useState<Meta>();
   const { toast } = useToast();

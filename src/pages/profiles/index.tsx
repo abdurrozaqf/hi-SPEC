@@ -5,6 +5,8 @@ import Layout from "@/components/Layout";
 
 import { useToken } from "@/utils/contexts/token";
 
+import DefaultAvatar from "/images/default-avatar.png";
+
 const Profile = () => {
   const navigate = useNavigate();
   const { user } = useToken();
@@ -16,7 +18,7 @@ const Profile = () => {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12">
           <div className="flex items-center mb-10 md:mb-0">
             <img
-              src={user.avatar}
+              src={user.avatar || DefaultAvatar}
               alt={user.name}
               className="object-cover rounded-full w-14 lg:w-36 h-14 lg:h-36 shadow-md border"
             />

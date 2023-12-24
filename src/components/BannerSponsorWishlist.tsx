@@ -1,6 +1,6 @@
-import Image1 from "@/assets/tagline-wishlist-1.svg";
-import Image2 from "@/assets/tagline-wishlist-2.svg";
-import Image3 from "@/assets/tagline-wishlist-3.svg";
+import Image1 from "/images/tagline-wishlist-1.svg";
+import Image2 from "/images/tagline-wishlist-2.svg";
+import Image3 from "/images/tagline-wishlist-3.svg";
 
 const BannerSponsorWishlist = () => {
   return (

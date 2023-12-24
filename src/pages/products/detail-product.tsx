@@ -13,8 +13,8 @@ import { addWishlist } from "@/utils/apis/users";
 import { buyProducts } from "@/utils/apis/admin";
 import { formatPrice } from "@/utils/formatter";
 
-import BannerSponsorDetailProduct from "@/assets/iklan.png";
-import IconWishlist from "@/assets/wishlist-icon.png";
+import BannerSponsorDetailProduct from "/images/iklan.png";
+import IconWishlist from "/images/wishlist-icon.png";
 
 const DetailProduct = () => {
   const [product, setProduct] = useState<Product>();

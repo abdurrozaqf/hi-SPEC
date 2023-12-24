@@ -22,6 +22,8 @@ import {
 } from "@/utils/apis/users";
 import { useToken } from "@/utils/contexts/token";
 
+import DefaultAvatar from "/images/default-avatar.png";
+
 const EditProfile = () => {
   const [profile, setProfile] = useState<Profile>();
   const [isLoading, setIsLoading] = useState(false);
@@ -149,7 +151,7 @@ const EditProfile = () => {
                   <div className="flex items-center">
                     <div className="flex items-center relative md:mb-0">
                       <img
-                        src={profile?.avatar}
+                        src={profile?.avatar || DefaultAvatar}
                         alt={profile?.name}
                         className="object-cover rounded-full w-14 lg:w-36 h-14 lg:h-36 relative"
                       />

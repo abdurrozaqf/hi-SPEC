@@ -135,7 +135,7 @@ const UsersAdmin = () => {
                           <AvatarImage
                             src={user.avatar}
                             alt={user.name}
-                            className="object-cover "
+                            className="object-cover"
                           />
                           <AvatarFallback>CN</AvatarFallback>
                         </Avatar>
