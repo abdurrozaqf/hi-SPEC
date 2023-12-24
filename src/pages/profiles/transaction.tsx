@@ -50,7 +50,11 @@ const Transaction = () => {
     try {
       const result = await getNota(transaction_id);
       window.open(`${result.url}`, "_blank");
-      toast({ description: result.message });
+      toast({
+        description:
+          "Download invoice successful, please check your email for details.",
+        variant: "default",
+      });
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
