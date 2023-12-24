@@ -11,7 +11,7 @@ const Navbar = () => {
 
   return (
     <header className="bg-gradient-to-r from-[#1265AE] to-[#48B774]">
-      <nav className="flex items-center justify-between px-4 lg:px-[7.5rem] py-4 background-navbar">
+      <nav className="flex items-center justify-between px-2 md:px-8 lg:px-14 xl:px-32 py-4 background-navbar">
         <Link to="/">
           <h1 className="font-inter text-white">
             <span className="text-2xl md:text-4xl font-bold">hi'</span>
@@ -29,8 +29,8 @@ const Navbar = () => {
           <SearchBox />
         ) : undefined}
 
-        {token && user.role !== "admin" && (
-          <div className=" flex items-center gap-6">
+        {token && user.role !== "admin" ? (
+          <div className=" flex items-center gap-1 md:gap-2 lg:gap-4 xl:gap-6">
             <Link to="/wishlist">
               <div className="p-2 lg:p-3 rounded-xl shadow-md visible bg-[#E4ECF1] dark:bg-[#1265AE] hover:bg-[#1265AE] hover:dark:bg-[#E4ECF1] text-black dark:text-white hover:text-white hover:dark:text-black">
                 <BookHeartIcon size={25} />
@@ -42,6 +42,8 @@ const Navbar = () => {
               </div>
             </Link>
           </div>
+        ) : (
+          <div></div>
         )}
       </nav>
     </header>
