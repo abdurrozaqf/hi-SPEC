@@ -2,11 +2,11 @@ import { Link } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
 
-import { MyWishlist } from "@/utils/apis/users";
+import { MyWishlists } from "@/utils/apis/users";
 import { formatPrice } from "@/utils/formatter";
 
 interface Props {
-  data: MyWishlist;
+  data: MyWishlists;
   onDeleteWishlist: (id: number) => void;
 }
 

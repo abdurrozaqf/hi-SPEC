@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Loader2 } from "lucide-react";
 
-import { LoginSchema, loginSchema, LoginAccount } from "@/utils/apis/auth";
+import { LoginSchema, loginSchema, loginAccount } from "@/utils/apis/auth";
 import { useToken } from "@/utils/contexts/token";
 
 import { CustomFormField } from "@/components/CustomForm";
@@ -14,7 +14,7 @@ import { Form } from "@/components/ui/form";
 const LoginForm = () => {
   const { toast } = useToast();
 
-  const { changeToken, changeUserID } = useToken();
+  const { changeToken } = useToken();
 
   const form = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
@@ -26,9 +26,8 @@ const LoginForm = () => {
 
   async function onSubmitLogin(data: LoginSchema) {
     try {
-      const result = await LoginAccount(data);
+      const result = await loginAccount(data);
       toast({ description: result.message });
-      changeUserID(result.data.user_id);
       changeToken(result.data.token);
     } catch (error: any) {
       toast({
@@ -74,17 +73,20 @@ const LoginForm = () => {
             )}
           </CustomFormField>
           <Button
-            className="mt-4"
             type="submit"
+            className="hover:bg-[#1265AE] mt-8"
             disabled={form.formState.isSubmitting}
             aria-disabled={form.formState.isSubmitting}
           >
             {form.formState.isSubmitting ? (
               <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please wait
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                <p>Please wait</p>
               </>
             ) : (
-              "Login"
+              <div className="flex cursor-pointer">
+                <p className="font-medium tracking-wide text-white">Login</p>
+              </div>
             )}
           </Button>
         </form>

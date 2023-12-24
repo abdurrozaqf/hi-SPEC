@@ -1,13 +1,16 @@
+import { Loader2, PencilLine, Trash2 } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Loader2 } from "lucide-react";
 import debounce from "lodash.debounce";
 import { format } from "date-fns";
 
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import EditProfileUsers from "@/components/form/EditProfileUsers";
 import { useToast } from "@/components/ui/use-toast";
 import Pagination from "@/components/Pagination";
+import CustomDialog from "@/components/Dialog";
+import Alert from "@/components/AlertDialog";
 import Layout from "@/components/Layout";
-
 import {
   Table,
   TableBody,
@@ -18,13 +21,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { AllUser, getUser } from "@/utils/apis/users";
+import { ResponseUsers, deleteProfile, getUsers } from "@/utils/apis/users";
 import { Meta } from "@/utils/types/api";
 
 const UsersAdmin = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const [users, setUsers] = useState<ResponseUsers[]>();
   const [isLoading, setIsLoading] = useState(false);
-  const [users, setUsers] = useState<AllUser[]>();
   const [meta, setMeta] = useState<Meta>();
   const { toast } = useToast();
 
@@ -36,7 +39,7 @@ const UsersAdmin = () => {
     setIsLoading(true);
     try {
       const query = Object.fromEntries([...searchParams]);
-      const result = await getUser({ ...query });
+      const result = await getUsers({ ...query });
 
       setUsers(result.data);
       setMeta(result.pagination);
@@ -48,6 +51,19 @@ const UsersAdmin = () => {
       });
     } finally {
       setIsLoading(false);
+    }
+  }
+
+  async function handleDeleteUsers(user_id: number) {
+    try {
+      const result = await deleteProfile(user_id);
+      toast({ description: result.message });
+    } catch (error: any) {
+      toast({
+        title: "Oops! Something went wrong.",
+        description: error.toString(),
+        variant: "destructive",
+      });
     }
   }
 
@@ -94,38 +110,66 @@ const UsersAdmin = () => {
           ) : (
             <Table>
               <TableCaption>A list of your recent Users.</TableCaption>
-              <TableHeader className="sticky top-0 bg-white dark:bg-[#05152D]">
+              <TableHeader className="sticky top-0 bg-white dark:bg-[#05152D] drop-shadow z-10">
                 <TableRow>
+                  <TableHead className="w-[50px] text-center">No</TableHead>
                   <TableHead>Image</TableHead>
                   <TableHead>Name</TableHead>
                   <TableHead>Email</TableHead>
                   <TableHead>Address</TableHead>
                   <TableHead>Phone Number</TableHead>
                   <TableHead>Create at</TableHead>
+                  <TableHead className="text-center">Action</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {users?.map((user, index) => (
-                  <TableRow key={index}>
-                    <TableCell>
-                      <img
-                        src={
-                          user.avatar ||
-                          "https://mlsn40jruh7z.i.optimole.com/w:auto/h:auto/q:mauto/f:best/https://jeffjbutler.com//wp-content/uploads/2018/01/default-user.png"
-                        }
-                        alt={user.name}
-                        className="object-cover bg-center rounded-full w-10 h-10 lg:w-14 lg:h-14"
-                      />
-                    </TableCell>
-                    <TableCell>{user.name}</TableCell>
-                    <TableCell>{user.email}</TableCell>
-                    <TableCell>{user.address}</TableCell>
-                    <TableCell>{user.phone_number}</TableCell>
-                    <TableCell>
-                      {format(new Date(user.time), "iiii, dd MMMM Y")}
-                    </TableCell>
-                  </TableRow>
-                ))}
+                {users
+                  ?.filter((user) => user.role !== "admin")
+                  .map((user, index) => (
+                    <TableRow key={user.user_id}>
+                      <TableCell className="text-center">
+                        {(meta?.page! - 1) * meta?.limit! + index + 1}
+                      </TableCell>
+                      <TableCell>
+                        <Avatar className="shadow-products-card">
+                          <AvatarImage
+                            src={user.avatar}
+                            alt={user.name}
+                            className="object-cover "
+                          />
+                          <AvatarFallback>CN</AvatarFallback>
+                        </Avatar>
+                      </TableCell>
+                      <TableCell>{user.name}</TableCell>
+                      <TableCell>{user.email}</TableCell>
+                      <TableCell>{user.address}</TableCell>
+                      <TableCell>{user.phone_number}</TableCell>
+                      <TableCell>
+                        {format(new Date(user.time), "iiii, dd MMM Y")}
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex justify-center items-center gap-4">
+                          <CustomDialog
+                            title={`Edit Profile ${user.name}`}
+                            description={<EditProfileUsers datas={user} />}
+                          >
+                            <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
+                              <PencilLine />
+                            </div>
+                          </CustomDialog>
+                          <Alert
+                            title="Are you sure delete this Products from Database?"
+                            onAction={() => handleDeleteUsers(user.user_id)}
+                            onActionTitle="Delete"
+                          >
+                            <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
+                              <Trash2 />
+                            </div>
+                          </Alert>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
               </TableBody>
             </Table>
           )}

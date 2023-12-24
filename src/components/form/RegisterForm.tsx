@@ -3,9 +3,9 @@ import { useForm } from "react-hook-form";
 import { Loader2 } from "lucide-react";
 
 import {
-  RegisterAccount,
   RegisterSchema,
   registerSchema,
+  registerAccount,
 } from "@/utils/apis/auth";
 
 import { CustomFormField } from "@/components/CustomForm";
@@ -31,7 +31,7 @@ const RegisterForm = () => {
 
   async function onSubmitRegister(data: RegisterSchema) {
     try {
-      const result = await RegisterAccount(data);
+      const result = await registerAccount(data);
 
       toast({ description: result.message });
     } catch (error: any) {
@@ -139,17 +139,20 @@ const RegisterForm = () => {
             )}
           </CustomFormField>
           <Button
-            className="mt-4"
             type="submit"
+            className="hover:bg-[#1265AE] mt-4"
             disabled={form.formState.isSubmitting}
             aria-disabled={form.formState.isSubmitting}
           >
             {form.formState.isSubmitting ? (
               <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please wait
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                <p>Please wait</p>
               </>
             ) : (
-              "Register"
+              <div className="flex cursor-pointer">
+                <p className="font-medium tracking-wide text-white">Register</p>
+              </div>
             )}
           </Button>
         </form>

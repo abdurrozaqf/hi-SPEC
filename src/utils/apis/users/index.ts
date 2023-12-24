@@ -1,26 +1,43 @@
 import {
-  getUser,
-  updateUser,
-  deleteUser,
-  getDetailUser,
+  getUsers,
+  getProfile,
+  updateProfile,
+  deleteProfile,
   addWishlist,
   deleteWishlist,
+  getTransactionUser,
 } from "./api";
+
 import {
   User,
-  UpdateUserSchema,
-  updateUserSchema,
-  AllUser,
-  MyWishlist,
+  Profile,
+  MyWishlists,
+  MyTransactions,
+  ResponseUsers,
+  UpdateProfileSchema,
+  updateProfileSchema,
+  UpdateUsersAdminSchema,
+  updateUsersAdminSchema,
 } from "./types";
 
 export {
-  getUser,
-  getDetailUser,
-  updateUser,
-  deleteUser,
+  getUsers,
+  getProfile,
+  updateProfile,
+  deleteProfile,
+  getTransactionUser,
   addWishlist,
   deleteWishlist,
-  updateUserSchema,
+  updateProfileSchema,
+  updateUsersAdminSchema,
 };
-export type { User, AllUser, UpdateUserSchema, MyWishlist };
+
+export type {
+  User,
+  Profile,
+  MyWishlists,
+  MyTransactions,
+  ResponseUsers,
+  UpdateProfileSchema,
+  UpdateUsersAdminSchema,
+};

@@ -13,17 +13,13 @@ interface Props {
 
 const Layout = (props: Readonly<Props>) => {
   const { children } = props;
-  const { token, user } = useToken();
+  const { user } = useToken();
 
   return (
     <div className="w-full h-screen flex flex-col font-inter transition-all overflow-auto">
       <Navbar />
       <div className="flex grow overflow-auto">
-        {token && user.user?.name === "admin" ? (
-          <SidebarAdmin />
-        ) : user.user?.name !== "admin" ? (
-          <SidebarUser />
-        ) : undefined}
+        {user.role === "admin" ? <SidebarAdmin /> : <SidebarUser />}
 
         <div className="flex flex-1 flex-col p-6 bg-[#E4ECF1] dark:bg-transparent overflow-auto">
           {children}

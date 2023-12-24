@@ -1,15 +1,15 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import {
-  BoxIcon,
   ChevronFirstIcon,
-  ChevronLastIcon,
-  DollarSign,
   LayoutDashboard,
-  LogInIcon,
-  LogOutIcon,
+  ChevronLastIcon,
   MoonStarIcon,
+  LogOutIcon,
+  DollarSign,
+  LogInIcon,
   SunIcon,
+  BoxIcon,
   Users,
 } from "lucide-react";
 
@@ -21,9 +21,10 @@ import { useTheme } from "@/utils/contexts/theme-provider";
 import { useToken } from "@/utils/contexts/token";
 
 const SidebarAdmin = () => {
-  const { changeToken, changeUserID, user, token } = useToken();
+  const { changeToken, user, token } = useToken();
   const [isOpen, setIsOpen] = useState(false);
   const { setTheme, theme } = useTheme();
+  const { pathname } = useLocation();
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -36,7 +37,6 @@ const SidebarAdmin = () => {
 
   function handleLogout() {
     changeToken();
-    changeUserID();
     toast({
       description: "Logout Successfully",
     });
@@ -44,27 +44,23 @@ const SidebarAdmin = () => {
 
   return (
     <div className="font-poppins">
-      {/* SIDEBAR */}
       <div
         className={
           isOpen
-            ? `h-full px-3 lg:px-12 py-3 lg:py-6 border-r relative flex flex-col justify-between shadow-md transition-all duration-300`
-            : `h-full p-3 lg:p-6 border-r  relative flex flex-col justify-start shadow-md transition-all duration-300`
+            ? `h-full px-4 lg:px-12 py-3 lg:py-6 border-r relative flex flex-col justify-between shadow-md transition-all duration-300`
+            : `h-full p-3 lg:p-6 border-r relative flex flex-col justify-start shadow-md transition-all duration-300`
         }
       >
-        {/* BUTTON SIDEBAR */}
         <div
           className={
             isOpen
-              ? `p-2 bg-[#E4ECF1] dark:bg-[#1265AE] hover:bg-[#1265AE] hover:dark:bg-[#E4ECF1] hover:text-white hover:dark:text-black w-fit h-fit rounded-lg shadow-md cursor-pointer absolute right-4`
+              ? `p-2 bg-[#E4ECF1] dark:bg-[#1265AE] hover:bg-[#1265AE] hover:dark:bg-[#E4ECF1] hover:text-white hover:dark:text-black w-fit h-fit rounded-lg shadow-md cursor-pointer absolute right-2 lg:right-4 z-50`
               : `p-2 bg-[#E4ECF1] dark:bg-[#1265AE] hover:bg-[#1265AE] hover:dark:bg-[#E4ECF1] hover:text-white hover:dark:text-black w-fit h-fit rounded-lg shadow-md cursor-pointer mb-10`
           }
           onClick={toggle}
         >
           {isOpen ? <ChevronFirstIcon /> : <ChevronLastIcon />}
         </div>
-
-        {/* BUTTON MENU */}
         <div
           className={
             isOpen ? `flex flex-col gap-4` : `flex flex-col gap-4 grow`
@@ -72,7 +68,11 @@ const SidebarAdmin = () => {
         >
           <div className="flex items-center gap-2">
             <div
-              className="p-2 bg-[#E4ECF1] dark:bg-[#1265AE] hover:bg-[#1265AE] hover:dark:bg-[#E4ECF1] hover:text-white hover:dark:text-black w-fit h-fit rounded-lg shadow-md cursor-pointer"
+              className={
+                pathname === "/dashboard"
+                  ? `p-2 dark:bg-[#E4ECF1] bg-[#1265AE] text-white dark:text-black w-fit h-fit rounded-lg shadow-md cursor-pointer`
+                  : `p-2 bg-[#E4ECF1] dark:bg-[#1265AE] hover:bg-[#1265AE] hover:dark:bg-[#E4ECF1] hover:text-white hover:dark:text-black w-fit h-fit rounded-lg shadow-md cursor-pointer`
+              }
               onClick={() => navigate("/dashboard")}
             >
               <LayoutDashboard />
@@ -90,8 +90,12 @@ const SidebarAdmin = () => {
           </div>
           <div className="flex items-center gap-2">
             <div
-              className="p-2 bg-[#E4ECF1] dark:bg-[#1265AE] hover:bg-[#1265AE] hover:dark:bg-[#E4ECF1] hover:text-white hover:dark:text-black w-fit h-fit rounded-lg shadow-md cursor-pointer"
-              onClick={() => navigate("/products-admin")}
+              className={
+                pathname === "/admin/products"
+                  ? `p-2 dark:bg-[#E4ECF1] bg-[#1265AE] text-white dark:text-black w-fit h-fit rounded-lg shadow-md cursor-pointer`
+                  : `p-2 bg-[#E4ECF1] dark:bg-[#1265AE] hover:bg-[#1265AE] hover:dark:bg-[#E4ECF1] hover:text-white hover:dark:text-black w-fit h-fit rounded-lg shadow-md cursor-pointer`
+              }
+              onClick={() => navigate("/admin/products")}
             >
               <BoxIcon />
             </div>
@@ -101,15 +105,19 @@ const SidebarAdmin = () => {
                   ? `w-32 font-medium translate-x-0 opacity-100 transition-all cursor-pointer hover:bg-[#E4ECF1] dark:hover:bg-white rounded-md p-2 dark:hover:text-black`
                   : `-translate-x-28 opacity-0 transition-all absolute`
               }
-              onClick={() => navigate("/products-admin")}
+              onClick={() => navigate("/admin/products")}
             >
               Products
             </p>
           </div>
           <div className="flex items-center gap-2 cursor-pointer">
             <div
-              className="p-2 bg-[#E4ECF1] dark:bg-[#1265AE] hover:bg-[#1265AE] hover:dark:bg-[#E4ECF1] hover:text-white hover:dark:text-black w-fit h-fit rounded-lg shadow-md cursor-pointer"
-              onClick={() => navigate("/users-admin")}
+              className={
+                pathname === "/admin/users"
+                  ? `p-2 dark:bg-[#E4ECF1] bg-[#1265AE] text-white dark:text-black w-fit h-fit rounded-lg shadow-md cursor-pointer`
+                  : `p-2 bg-[#E4ECF1] dark:bg-[#1265AE] hover:bg-[#1265AE] hover:dark:bg-[#E4ECF1] hover:text-white hover:dark:text-black w-fit h-fit rounded-lg shadow-md cursor-pointer`
+              }
+              onClick={() => navigate("/admin/users")}
             >
               <Users />
             </div>
@@ -119,15 +127,19 @@ const SidebarAdmin = () => {
                   ? `w-32 font-medium translate-x-0 opacity-100 transition-all cursor-pointer hover:bg-[#E4ECF1] dark:hover:bg-white rounded-md p-2 dark:hover:text-black`
                   : `-translate-x-28 opacity-0 transition-all absolute`
               }
-              onClick={() => navigate("/users-admin")}
+              onClick={() => navigate("/admin/users")}
             >
               Users
             </p>
           </div>
           <div className="flex items-center gap-2 cursor-pointer">
             <div
-              className="p-2 bg-[#E4ECF1] dark:bg-[#1265AE] hover:bg-[#1265AE] hover:dark:bg-[#E4ECF1] hover:text-white hover:dark:text-black w-fit h-fit rounded-lg shadow-md cursor-pointer"
-              onClick={() => navigate("/transactions-admin")}
+              className={
+                pathname === "/admin/transactions"
+                  ? `p-2 dark:bg-[#E4ECF1] bg-[#1265AE] text-white dark:text-black w-fit h-fit rounded-lg shadow-md cursor-pointer`
+                  : `p-2 bg-[#E4ECF1] dark:bg-[#1265AE] hover:bg-[#1265AE] hover:dark:bg-[#E4ECF1] hover:text-white hover:dark:text-black w-fit h-fit rounded-lg shadow-md cursor-pointer`
+              }
+              onClick={() => navigate("/admin/transactions")}
             >
               <DollarSign />
             </div>
@@ -137,14 +149,12 @@ const SidebarAdmin = () => {
                   ? `w-32 font-medium translate-x-0 opacity-100 transition-all cursor-pointer hover:bg-[#E4ECF1] dark:hover:bg-white rounded-md p-2 dark:hover:text-black`
                   : `-translate-x-28 opacity-0 transition-all absolute`
               }
-              onClick={() => navigate("/transactions-admin")}
+              onClick={() => navigate("/admin/transactions")}
             >
               Transactions
             </p>
           </div>
         </div>
-
-        {/* ADMIN */}
         <div className="flex flex-col gap-4">
           <div className="flex gap-2 items-center">
             <Avatar
@@ -152,11 +162,8 @@ const SidebarAdmin = () => {
               className="cursor-pointer shadow-md hover:shadow-[#1265AE] dark:shadow-white/50 hover:shadow-lg rounded-full"
             >
               <AvatarImage
-                src={
-                  user.user?.avatar ||
-                  "https://mlsn40jruh7z.i.optimole.com/w:auto/h:auto/q:mauto/f:best/https://jeffjbutler.com//wp-content/uploads/2018/01/default-user.png"
-                }
-                alt={user.user?.name || "Guest"}
+                src={user?.avatar}
+                alt={user?.name || "Guest"}
                 className="object-cover"
               />
               <AvatarFallback>CN</AvatarFallback>
@@ -166,12 +173,12 @@ const SidebarAdmin = () => {
               className={
                 isOpen
                   ? `font-medium w-full opacity-100 translate-x-0 transition-all rounded-md p-2 hover:bg-[#E4ECF1]  hover:dark:bg-[#E4ECF1] dark:hover:text-black flex flex-col cursor-pointer`
-                  : `w-0 opacity-50 -translate-x-52 transition-all absolute`
+                  : `w-0 opacity-50 -translate-x-28 transition-all absolute flex flex-col text-[0]`
               }
             >
-              <span>{user.user?.name || "Guest"}</span>
-              <span className="text-xs">
-                {user.user?.email || "guest@mail.com"}
+              <span>{user?.name || "Guest"}</span>
+              <span className={isOpen ? "text-xs" : `text-[0]`}>
+                {user?.email || " guest@mail.com"}
               </span>
             </p>
           </div>

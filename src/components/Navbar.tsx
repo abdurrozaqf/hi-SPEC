@@ -1,5 +1,5 @@
+import { BookHeartIcon, NewspaperIcon } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-import { BookHeartIcon } from "lucide-react";
 
 import SearchBox from "@/components/SearchBox";
 
@@ -18,6 +18,7 @@ const Navbar = () => {
             <span className="text-2xl md:text-4xl font-black">SPEC</span>
           </h1>
         </Link>
+
         {pathname === "/products" ? (
           <SearchBox />
         ) : pathname === "/categories/office" ? (
@@ -27,18 +28,20 @@ const Navbar = () => {
         ) : pathname === "/categories/multimedia" ? (
           <SearchBox />
         ) : undefined}
-        {user.user?.name !== "admin" && (
-          <Link to={token ? `/wishlist/${user.user?.user_id}` : `/`}>
-            <div
-              className={
-                token
-                  ? `p-2 lg:p-3 rounded-xl shadow-md visible bg-[#E4ECF1] dark:bg-[#1265AE] hover:bg-[#1265AE] hover:dark:bg-[#E4ECF1] text-black dark:text-white hover:text-white hover:dark:text-black`
-                  : `invisible`
-              }
-            >
-              <BookHeartIcon size={25} />
-            </div>
-          </Link>
+
+        {token && user.role !== "admin" && (
+          <div className=" flex items-center gap-6">
+            <Link to="/wishlist">
+              <div className="p-2 lg:p-3 rounded-xl shadow-md visible bg-[#E4ECF1] dark:bg-[#1265AE] hover:bg-[#1265AE] hover:dark:bg-[#E4ECF1] text-black dark:text-white hover:text-white hover:dark:text-black">
+                <BookHeartIcon size={25} />
+              </div>
+            </Link>
+            <Link to="/transaction">
+              <div className="p-2 lg:p-3 rounded-xl shadow-md visible bg-[#E4ECF1] dark:bg-[#1265AE] hover:bg-[#1265AE] hover:dark:bg-[#E4ECF1] text-black dark:text-white hover:text-white hover:dark:text-black">
+                <NewspaperIcon size={25} />
+              </div>
+            </Link>
+          </div>
         )}
       </nav>
     </header>

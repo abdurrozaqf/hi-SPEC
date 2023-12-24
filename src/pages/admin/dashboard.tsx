@@ -1,6 +1,10 @@
 import { Box, DollarSign, Loader2, Users } from "lucide-react";
+import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
+import { useToast } from "@/components/ui/use-toast";
+import Pagination from "@/components/Pagination";
+import Layout from "@/components/Layout";
 import {
   Table,
   TableBody,
@@ -10,26 +14,29 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useToast } from "@/components/ui/use-toast";
-import Layout from "@/components/Layout";
 
 import { ResponseDashboard, getDashboard } from "@/utils/apis/admin";
 import { formatPrice } from "@/utils/formatter";
+import { Meta } from "@/utils/types/api";
 
 const Dashboard = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [datas, setDatas] = useState<ResponseDashboard>();
   const [isLoading, setIsLoading] = useState(false);
+  const [meta, setMeta] = useState<Meta>();
   const { toast } = useToast();
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [searchParams]);
 
   async function fetchData() {
     setIsLoading(true);
     try {
-      const result = await getDashboard();
+      const query = Object.fromEntries([...searchParams]);
+      const result = await getDashboard({ ...query });
       setDatas(result.data);
+      setMeta(result.pagination);
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -39,6 +46,11 @@ const Dashboard = () => {
     } finally {
       setIsLoading(false);
     }
+  }
+
+  function handlePrevNextPage(page: string | number) {
+    searchParams.set("page", String(page));
+    setSearchParams(searchParams);
   }
 
   return (
@@ -95,7 +107,7 @@ const Dashboard = () => {
           <div className="w-0 md:w-auto px-0 md:px-10 py-0 md:py-8 bg-white dark:bg-[#1265ae24] rounded-xl flex flex-col justify-between grow shadow-products-card font-poppins overflow-auto">
             <Table>
               <TableCaption>A list of recent products.</TableCaption>
-              <TableHeader className="sticky top-0 bg-white dark:bg-[#05152D]">
+              <TableHeader className="sticky top-0 bg-white dark:bg-[#05152D] drop-shadow">
                 <TableRow>
                   <TableHead className="w-[50px] text-center">No.</TableHead>
                   <TableHead className="w-[150px] text-center">Image</TableHead>
@@ -106,18 +118,12 @@ const Dashboard = () => {
               </TableHeader>
               <TableBody>
                 {datas?.product.map((data, index) => (
-                  <TableRow key={index}>
+                  <TableRow key={data.id}>
                     <TableCell className="font-medium text-center">
                       {index + 1}
                     </TableCell>
                     <TableCell>
-                      <img
-                        src={
-                          data.picture ||
-                          "https://www.iconpacks.net/icons/2/free-laptop-icon-1928-thumb.png"
-                        }
-                        alt={data.name || "unknown"}
-                      />
+                      <img src={data.picture} alt={data.name} />
                     </TableCell>
                     <TableCell>{data.name}</TableCell>
                     <TableCell>{formatPrice(data.price!)}</TableCell>
@@ -126,6 +132,14 @@ const Dashboard = () => {
                 ))}
               </TableBody>
             </Table>
+            <div className="mt-4">
+              <Pagination
+                meta={meta}
+                onClickPage={(page) => handlePrevNextPage(page)}
+                onClickNext={() => handlePrevNextPage(meta?.page! + 1)}
+                onClickPrevious={() => handlePrevNextPage(meta?.page! - 1)}
+              />
+            </div>
           </div>
         </>
       )}

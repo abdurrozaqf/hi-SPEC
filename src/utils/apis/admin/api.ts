@@ -1,12 +1,14 @@
 import { Request, Response, ResponsePagination } from "@/utils/types/api";
 import axiosWithConfig from "@/utils/apis/axiosWithConfig";
-import { Transactions } from "./types";
+import { ResponseTransactions, Transactions } from "./types";
 
-export const getDashboard = async () => {
+export const getNota = async (transaction_id: number) => {
   try {
-    const response = await axiosWithConfig.get(`/dashboard`);
+    const response = await axiosWithConfig.get(
+      `/transaction/${transaction_id}/download`
+    );
 
-    return response.data as Response;
+    return response.data;
   } catch (error: any) {
     throw Error(error.response.data.message);
   }
@@ -20,6 +22,30 @@ export const buyProducts = async (body: {
     const response = await axiosWithConfig.post(`/transaction`, body);
 
     return response.data as Response<Transactions>;
+  } catch (error: any) {
+    throw Error(error.response.data.message);
+  }
+};
+
+export const getDashboard = async (params?: Request) => {
+  try {
+    let query = "";
+
+    if (params) {
+      const queryParams: string[] = [];
+
+      let key: keyof typeof params;
+      for (key in params) {
+        queryParams.push(`${key}=${params[key]}`);
+      }
+
+      query = queryParams.join("&");
+    }
+
+    const url = query ? `/dashboard?${query}` : `/dashboard`;
+    const response = await axiosWithConfig.get(url);
+
+    return response.data as ResponsePagination;
   } catch (error: any) {
     throw Error(error.response.data.message);
   }
@@ -44,7 +70,7 @@ export const getTransactions = async (params?: Request) => {
 
     const response = await axiosWithConfig.get(url);
 
-    return response.data as ResponsePagination;
+    return response.data as ResponseTransactions;
   } catch (error: any) {
     throw Error(error.response.data.message);
   }

@@ -1,6 +1,6 @@
-import { useNavigate, useParams } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CameraIcon, Loader2, X } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -13,38 +13,38 @@ import { Form } from "@/components/ui/form";
 import Layout from "@/components/Layout";
 
 import {
-  UpdateUserSchema,
-  deleteUser,
-  getDetailUser,
-  User,
-  updateUser,
-  updateUserSchema,
+  Profile,
+  getProfile,
+  updateProfile,
+  deleteProfile,
+  UpdateProfileSchema,
+  updateProfileSchema,
 } from "@/utils/apis/users";
 import { useToken } from "@/utils/contexts/token";
 
 const EditProfile = () => {
-  const [profile, setProfile] = useState<User>();
-  const { changeToken, user } = useToken();
+  const [profile, setProfile] = useState<Profile>();
+  const [isLoading, setIsLoading] = useState(false);
+  const { changeToken } = useToken();
   const navigate = useNavigate();
   const { toast } = useToast();
-  const params = useParams();
 
-  const form = useForm<UpdateUserSchema>({
-    resolver: zodResolver(updateUserSchema),
+  const form = useForm<UpdateProfileSchema>({
+    resolver: zodResolver(updateProfileSchema),
     defaultValues: {
-      name: profile?.user.name ?? "",
-      email: profile?.user.email ?? "",
-      address: profile?.user.address ?? "",
-      phone_number: profile?.user.phone_number ?? "",
+      name: profile?.name ?? "",
+      email: profile?.email ?? "",
+      address: profile?.address ?? "",
+      phone_number: profile?.phone_number ?? "",
       password: "",
       newpassword: "",
-      avatar: profile?.user.avatar ?? "",
+      avatar: profile?.avatar ?? "",
     },
     values: {
-      name: profile?.user.name!,
-      email: profile?.user.email!,
-      address: profile?.user.address!,
-      phone_number: profile?.user.phone_number!,
+      name: profile?.name!,
+      email: profile?.email!,
+      address: profile?.address!,
+      phone_number: profile?.phone_number!,
       password: "",
       newpassword: "",
       avatar: "",
@@ -62,20 +62,23 @@ const EditProfile = () => {
   }, [form.formState]);
 
   async function fetchData() {
+    setIsLoading(true);
     try {
-      const result = await getDetailUser(params.user_id!);
-      setProfile(result.data);
+      const result = await getProfile();
+      setProfile(result.data.user);
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
         description: error.toString(),
         variant: "destructive",
       });
+    } finally {
+      setIsLoading(false);
     }
   }
 
   const fileRef = form.register("avatar", { required: false });
-  async function onSubmit(data: UpdateUserSchema) {
+  async function onSubmit(data: UpdateProfileSchema) {
     try {
       const formData = new FormData();
       formData.append("name", data.name);
@@ -86,7 +89,10 @@ const EditProfile = () => {
       formData.append("password", data.password);
       formData.append("avatar", data.avatar[0]);
 
-      const result = await updateUser(user.user?.user_id!, formData as any);
+      const result = await updateProfile(
+        profile?.user_id as number,
+        formData as any
+      );
       toast({ description: result.message });
     } catch (error: any) {
       toast({
@@ -99,11 +105,10 @@ const EditProfile = () => {
 
   async function handleDeleteProfile() {
     try {
-      const result = await deleteUser(+params.user_id!);
+      const result = await deleteProfile(profile?.user_id as number);
       toast({ description: result.message });
+      navigate("/login");
       changeToken();
-
-      navigate("/");
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -116,176 +121,202 @@ const EditProfile = () => {
   return (
     <Layout>
       <div className="grow bg-white shadow-lg rounded-xl p-4 md:p-8 lg:p-24 font-poppins dark:bg-transparent overflow-auto">
-        <h1 className=" mb-16 text-3xl lg:text-4xl font-bold">Edit Profile</h1>
-        <Form {...form}>
-          <form
-            className=" flex flex-col gap-6 relative"
-            onSubmit={form.handleSubmit(onSubmit)}
-          >
-            <div className="flex flex-col md:flex-row justify-center md:justify-between items-start md:items-center mb-12">
-              <div className="flex items-center">
-                <div className="flex items-center relative md:mb-0">
-                  <img
-                    src={
-                      user.user?.avatar ||
-                      "https://mlsn40jruh7z.i.optimole.com/w:auto/h:auto/q:mauto/f:best/https://jeffjbutler.com//wp-content/uploads/2018/01/default-user.png"
-                    }
-                    alt={user.user?.name || "Guest"}
-                    className="object-cover rounded-full w-14 lg:w-36 h-14 lg:h-36 relative"
-                  />
-                  <label
-                    htmlFor="input-image"
-                    className="absolute bottom-0 right-0 cursor-pointer"
-                  >
-                    <CameraIcon
-                      size={40}
-                      className="p-1 rounded-full bg-white dark:bg-black"
-                    />
-                  </label>
-                </div>
-                <p className="ml-4 md:ml-8 text-xl md:text-3xl font-bold truncate">
-                  {user.user?.name}
-                </p>
-              </div>
+        {isLoading ? (
+          <div className="flex items-center justify-center h-full">
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            <p>Loading</p>
+          </div>
+        ) : (
+          <>
+            <div className="h-fit flex items-center justify-between mb-16">
+              <h1 className="text-2xl md:text-4xl lg:text-4xl font-bold">
+                Edit Profile
+              </h1>
               <Button
                 type="button"
-                className="w-fit h-fit hover:bg-blue-800 mt-6 md:mt-0"
+                className="w-fit h-fit hover:bg-blue-800 block md:hidden"
                 onClick={() => navigate(-1)}
               >
-                <X />
+                <X size={14} />
               </Button>
             </div>
-            <div className="hidden absolute top-0">
-              <CustomFormField control={form.control} name="avatar">
-                {() => (
-                  <Input
-                    {...fileRef}
-                    type="file"
-                    id="input-image"
-                    accept="image/jpg, image/jpeg, image/png"
-                    className="cursor-pointer"
+            <Form {...form}>
+              <form
+                className=" flex flex-col gap-6 relative"
+                onSubmit={form.handleSubmit(onSubmit)}
+              >
+                <div className="flex flex-col md:flex-row justify-center md:justify-between items-start md:items-center mb-12">
+                  <div className="flex items-center">
+                    <div className="flex items-center relative md:mb-0">
+                      <img
+                        src={profile?.avatar}
+                        alt={profile?.name}
+                        className="object-cover rounded-full w-14 lg:w-36 h-14 lg:h-36 relative"
+                      />
+                      <label
+                        htmlFor="input-image"
+                        className="absolute bottom-0 right-0 cursor-pointer hidden lg:block"
+                      >
+                        <CameraIcon className="w-6 lg:w-10 h-6 lg:h-10 p-1 rounded-full bg-white dark:bg-black" />
+                      </label>
+                    </div>
+                    <p className="ml-4 md:ml-8 text-xl md:text-3xl font-bold truncate">
+                      {profile?.name}
+                    </p>
+                  </div>
+                  <Button
+                    type="button"
+                    className="w-fit h-fit hover:bg-blue-800 mt-6 md:mt-0 hidden md:block"
+                    onClick={() => navigate(-1)}
+                  >
+                    <X />
+                  </Button>
+                </div>
+
+                <CustomFormField
+                  control={form.control}
+                  name="name"
+                  label="Full Name"
+                >
+                  {(field) => (
+                    <Input
+                      {...field}
+                      placeholder="John Doe"
+                      type="text"
+                      disabled={form.formState.isSubmitting}
+                      aria-disabled={form.formState.isSubmitting}
+                    />
+                  )}
+                </CustomFormField>
+                <div className="block lg:hidden">
+                  <CustomFormField
+                    control={form.control}
+                    name="avatar"
+                    label="Profile picture"
+                  >
+                    {() => (
+                      <Input
+                        {...fileRef}
+                        type="file"
+                        id="input-image"
+                        accept="image/jpg, image/jpeg, image/png"
+                        className="cursor-pointer"
+                        disabled={form.formState.isSubmitting}
+                        aria-disabled={form.formState.isSubmitting}
+                      />
+                    )}
+                  </CustomFormField>
+                </div>
+                <CustomFormField
+                  control={form.control}
+                  name="email"
+                  label="Email"
+                >
+                  {(field) => (
+                    <Input
+                      {...field}
+                      placeholder="johndoe@mail.com"
+                      type="email"
+                      disabled={form.formState.isSubmitting}
+                      aria-disabled={form.formState.isSubmitting}
+                    />
+                  )}
+                </CustomFormField>
+                <CustomFormField
+                  control={form.control}
+                  name="password"
+                  label="Old Password"
+                >
+                  {(field) => (
+                    <Input
+                      {...field}
+                      placeholder="Old password"
+                      type="password"
+                      disabled={form.formState.isSubmitting}
+                      aria-disabled={form.formState.isSubmitting}
+                    />
+                  )}
+                </CustomFormField>
+                <CustomFormField
+                  control={form.control}
+                  name="newpassword"
+                  label="New Password"
+                >
+                  {(field) => (
+                    <Input
+                      {...field}
+                      placeholder="New password"
+                      type="password"
+                      disabled={form.formState.isSubmitting}
+                      aria-disabled={form.formState.isSubmitting}
+                    />
+                  )}
+                </CustomFormField>
+                <CustomFormField
+                  control={form.control}
+                  name="address"
+                  label="Address"
+                >
+                  {(field) => (
+                    <Input
+                      {...field}
+                      placeholder="e.g: Jl. Veteran, Kec. Lowokwaru, Kota Malang, Jawa Timur"
+                      type="text"
+                      disabled={form.formState.isSubmitting}
+                      aria-disabled={form.formState.isSubmitting}
+                    />
+                  )}
+                </CustomFormField>
+                <CustomFormField
+                  control={form.control}
+                  name="phone_number"
+                  label="Phone Number"
+                >
+                  {(field) => (
+                    <Input
+                      {...field}
+                      placeholder="0819362731919"
+                      type="tel"
+                      disabled={form.formState.isSubmitting}
+                      aria-disabled={form.formState.isSubmitting}
+                    />
+                  )}
+                </CustomFormField>
+                <div className="flex flex-col md:flex-row md:justify-between gap-2 items-center w-full">
+                  <Button
+                    type="submit"
                     disabled={form.formState.isSubmitting}
                     aria-disabled={form.formState.isSubmitting}
-                  />
-                )}
-              </CustomFormField>
-            </div>
-            <CustomFormField
-              control={form.control}
-              name="name"
-              label="Full Name"
-            >
-              {(field) => (
-                <Input
-                  {...field}
-                  placeholder="John Doe"
-                  type="text"
-                  disabled={form.formState.isSubmitting}
-                  aria-disabled={form.formState.isSubmitting}
-                />
-              )}
-            </CustomFormField>
-            <CustomFormField control={form.control} name="email" label="Email">
-              {(field) => (
-                <Input
-                  {...field}
-                  placeholder="johndoe@gmail.com"
-                  type="email"
-                  disabled={form.formState.isSubmitting}
-                  aria-disabled={form.formState.isSubmitting}
-                />
-              )}
-            </CustomFormField>
-            <CustomFormField
-              control={form.control}
-              name="password"
-              label="Old Password"
-            >
-              {(field) => (
-                <Input
-                  {...field}
-                  placeholder="Old password"
-                  type="password"
-                  disabled={form.formState.isSubmitting}
-                  aria-disabled={form.formState.isSubmitting}
-                />
-              )}
-            </CustomFormField>
-            <CustomFormField
-              control={form.control}
-              name="newpassword"
-              label="New Password"
-            >
-              {(field) => (
-                <Input
-                  {...field}
-                  placeholder="New password"
-                  type="password"
-                  disabled={form.formState.isSubmitting}
-                  aria-disabled={form.formState.isSubmitting}
-                />
-              )}
-            </CustomFormField>
-            <CustomFormField
-              control={form.control}
-              name="address"
-              label="Address"
-            >
-              {(field) => (
-                <Input
-                  {...field}
-                  placeholder="e.g: Jl. Veteran, Kec. Lowokwaru, Kota Malang, Jawa Timur"
-                  type="text"
-                  disabled={form.formState.isSubmitting}
-                  aria-disabled={form.formState.isSubmitting}
-                />
-              )}
-            </CustomFormField>
-            <CustomFormField
-              control={form.control}
-              name="phone_number"
-              label="Phone Number"
-            >
-              {(field) => (
-                <Input
-                  {...field}
-                  placeholder="0819362731919"
-                  type="tel"
-                  disabled={form.formState.isSubmitting}
-                  aria-disabled={form.formState.isSubmitting}
-                />
-              )}
-            </CustomFormField>
-            <Button
-              type="submit"
-              disabled={form.formState.isSubmitting}
-              aria-disabled={form.formState.isSubmitting}
-              className=" bg-[#1FBB5C] shadow-md"
-            >
-              {form.formState.isSubmitting ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please wait
-                </>
-              ) : (
-                "Submit"
-              )}
-            </Button>
-            <p className="text-center">or</p>
-            <Button
-              type="button"
-              variant={"destructive"}
-              className="border hover:text-black shadow-md"
-            >
-              <Alert
-                title="Are you absolutely sure?"
-                description="This action cannot be undone. This will permanently delete your account and remove your data from our servers."
-                onAction={handleDeleteProfile}
-              >
-                <p>Delete Account</p>
-              </Alert>
-            </Button>
-          </form>
-        </Form>
+                    className=" bg-[#1FBB5C] text-white shadow-md px-10 w-full md:w-fit"
+                  >
+                    {form.formState.isSubmitting ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please
+                        wait
+                      </>
+                    ) : (
+                      "Submit"
+                    )}
+                  </Button>
+                  <Alert
+                    title="Are you absolutely sure?"
+                    description="This action cannot be undone. This will permanently delete your account and remove your data from our servers."
+                    onAction={handleDeleteProfile}
+                    onActionTitle="Continue"
+                  >
+                    <Button
+                      type="button"
+                      variant={"destructive"}
+                      className="border hover:bg-red-700 shadow-md w-full"
+                    >
+                      <p className="w-full">Delete Account</p>
+                    </Button>
+                  </Alert>
+                </div>
+              </form>
+            </Form>
+          </>
+        )}
       </div>
     </Layout>
   );

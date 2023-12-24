@@ -1,4 +1,4 @@
-import Image2 from "@/assets/tagline-compare-2.svg";
+import Image2 from "@/assets/tagline-compare-2.png";
 import Image3 from "@/assets/tagline-compare-3.svg";
 
 const BannerSponsorCompare = () => {

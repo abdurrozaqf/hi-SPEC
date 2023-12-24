@@ -10,29 +10,29 @@ const ProtectedRoutes = () => {
 
   const tokenProtected = [
     "/profile",
-    "/edit-profile",
+    "/profile/edit",
     "/wishlist",
+    "/transaction",
     "/dashboard",
-    "/products-admin",
-    "/users-admin",
-    "/transactions-admin",
+    "/admin/products",
+    "/admin/users",
+    "/admin/transactions",
   ];
 
   const roleAdminProtected = [
     "/dashboard",
-    "/products-admin",
-    "/users-admin",
-    "/transactions-admin",
+    "/admin/users",
+    "/admin/products",
+    "/admin/transactions",
   ];
 
   const roleUserProtected = [
     "/",
-    "/products",
-    "/categories",
     "/compare",
-    "/categories",
+    "/products",
     "/wishlist",
-    "/detail-product",
+    "/transaction",
+    "/categories/:category",
   ];
 
   if (authProtected.includes(pathname)) {
@@ -43,12 +43,12 @@ const ProtectedRoutes = () => {
     if (!token) return <Navigate to="/login" />;
 
     if (roleAdminProtected.includes(pathname)) {
-      if (user.user?.name !== "admin") return <Navigate to="/" />;
+      if (user.role === "user") return <Navigate to="/" />;
     }
   }
 
   if (roleUserProtected.includes(pathname)) {
-    if (user.user?.name === "admin") return <Navigate to="/dashboard" />;
+    if (user.role === "admin") return <Navigate to="/dashboard" />;
   }
 
   return <Outlet />;

@@ -3,12 +3,6 @@ import { useForm } from "react-hook-form";
 import { Loader2 } from "lucide-react";
 import { useEffect } from "react";
 
-import {
-  addProduct,
-  AddProductSchema,
-  addProductSchema,
-} from "@/utils/apis/products";
-
 import { CustomFormField } from "@/components/CustomForm";
 import { Form, FormControl } from "@/components/ui/form";
 import { useToast } from "@/components/ui/use-toast";
@@ -21,6 +15,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+
+import {
+  addProduct,
+  AddProductSchema,
+  addProductSchema,
+} from "@/utils/apis/products";
 
 const AddProduct = () => {
   const { toast } = useToast();
@@ -63,7 +63,7 @@ const AddProduct = () => {
   return (
     <Form {...form}>
       <form
-        className="flex flex-col w-full mx-auto gap-6 mt-10"
+        className="flex flex-col w-full mx-auto gap-6 mt-10 font-poppins"
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <CustomFormField
@@ -118,6 +118,7 @@ const AddProduct = () => {
         </CustomFormField>
         <Button
           type="submit"
+          className="hover:bg-[#1265AE]"
           disabled={form.formState.isSubmitting}
           aria-disabled={form.formState.isSubmitting}
         >
@@ -127,8 +128,10 @@ const AddProduct = () => {
               <p>Please wait</p>
             </>
           ) : (
-            <div className="flex gap-3 items-center cursor-pointer ">
-              <p>Post</p>
+            <div className="flex cursor-pointer">
+              <p className="font-medium tracking-wide text-white">
+                Edit Product
+              </p>
             </div>
           )}
         </Button>

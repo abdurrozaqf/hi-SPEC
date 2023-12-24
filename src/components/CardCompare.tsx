@@ -11,11 +11,11 @@ const CardCompare = (props: Props) => {
   return (
     <div>
       <div className="h-full mt-10 flex flex-col items-center justify-center w-auto md:w-[22rem]">
-        <div className="h-[8rem] flex justify-center items-center mb-10">
+        <div className="h-[10rem] flex justify-center items-center mb-10">
           <img
             src={data.picture || "Unknown"}
             alt={data.name || "Unknown"}
-            className="w-[10rem] object-cover object-center"
+            className="h-full object-cover object-center"
           />
         </div>
         <div className="flex flex-col text-center w-[22rem] mb-6">

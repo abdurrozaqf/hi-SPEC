@@ -10,6 +10,7 @@ import Compare from "@/pages/products/compare";
 import Profile from "@/pages/profiles";
 import EditProfile from "@/pages/profiles/edit-profile";
 import WishList from "@/pages/profiles/wishlist";
+import Transaction from "@/pages/profiles/transaction";
 import ProductsAdmin from "@/pages/admin/products-admin";
 import UsersAdmin from "@/pages/admin/users-admin";
 import TransactionsAdmin from "@/pages/admin/transactions-admin";
@@ -50,27 +51,31 @@ export default function Router() {
           element: <Profile />,
         },
         {
-          path: "/edit-profile/:user_id",
+          path: "/profile/edit",
           element: <EditProfile />,
         },
         {
-          path: "/wishlist/:user_id",
+          path: "/wishlist",
           element: <WishList />,
+        },
+        {
+          path: "/transaction",
+          element: <Transaction />,
         },
         {
           path: "/dashboard",
           element: <Dashboard />,
         },
         {
-          path: "/products-admin",
+          path: "/admin/products",
           element: <ProductsAdmin />,
         },
         {
-          path: "/users-admin",
+          path: "/admin/users",
           element: <UsersAdmin />,
         },
         {
-          path: "/transactions-admin",
+          path: "/admin/transactions",
           element: <TransactionsAdmin />,
         },
         {

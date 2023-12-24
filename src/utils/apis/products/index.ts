@@ -1,9 +1,9 @@
 import {
   getProducts,
-  addProduct,
-  deleteProduct,
-  editProduct,
   getDetailProduct,
+  addProduct,
+  editProduct,
+  deleteProduct,
 } from "./api";
 
 import {

@@ -13,14 +13,14 @@ import { addWishlist } from "@/utils/apis/users";
 import { buyProducts } from "@/utils/apis/admin";
 import { formatPrice } from "@/utils/formatter";
 
-import BannerSponsorDetailProduct from "@/assets/Iklan.png";
+import BannerSponsorDetailProduct from "@/assets/iklan.png";
 import IconWishlist from "@/assets/wishlist-icon.png";
 
 const DetailProduct = () => {
   const [product, setProduct] = useState<Product>();
   const [isLoading, setIsLoading] = useState(false);
+  const { token, user } = useToken();
   const navigate = useNavigate();
-  const { token } = useToken();
   const { toast } = useToast();
   const params = useParams();
 
@@ -44,19 +44,6 @@ const DetailProduct = () => {
     }
   }
 
-  async function handleWishlist(product_id: number) {
-    try {
-      const result = await addWishlist(product_id);
-      toast({ description: result.message });
-    } catch (error: any) {
-      toast({
-        title: "Oops! Something went wrong.",
-        description: error.toString(),
-        variant: "destructive",
-      });
-    }
-  }
-
   async function handleBuyProduct(data: {
     product_id: number;
     total_price: number;
@@ -67,6 +54,19 @@ const DetailProduct = () => {
     } catch (error: any) {
       toast({
         title: "Oops, someting went wrong.",
+        description: error.toString(),
+        variant: "destructive",
+      });
+    }
+  }
+
+  async function handleWishlist(product_id: number) {
+    try {
+      const result = await addWishlist(product_id);
+      toast({ description: result.message });
+    } catch (error: any) {
+      toast({
+        title: "Oops! Something went wrong.",
         description: error.toString(),
         variant: "destructive",
       });
@@ -130,7 +130,7 @@ const DetailProduct = () => {
               <p>Weight: {product?.weight}</p>
             </div>
             <div className="flex flex-col justify-center items-center px-6">
-              {token && (
+              {token && user?.role === "user" && (
                 <div className="border-none md:border md:border-solid border-[#D9D9D9] p-6 rounded-lg">
                   <h2 className="font-bold mb-4">Purchase amount</h2>
                   <div className="flex border border-solid border-[#D9D9D9] rounded-md justify-center px-2 py-1">

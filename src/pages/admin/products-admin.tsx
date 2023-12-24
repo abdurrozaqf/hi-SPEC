@@ -1,22 +1,20 @@
 import { FilePlus, Laptop, Loader2, PencilLine, Trash2 } from "lucide-react";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import debounce from "lodash.debounce";
 
 import EditProduct from "@/components/form/EditProduct";
 import AddProduct from "@/components/form/AddProduct";
 import { useToast } from "@/components/ui/use-toast";
-import DetailCard from "@/components/DetailCard";
 import Pagination from "@/components/Pagination";
 import CustomDialog from "@/components/Dialog";
 import Alert from "@/components/AlertDialog";
 import Layout from "@/components/Layout";
-
 import {
   Select,
+  SelectTrigger,
   SelectContent,
   SelectItem,
-  SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
 import {
@@ -34,8 +32,8 @@ import {
   deleteProduct,
   getProducts,
 } from "@/utils/apis/products";
-import { Meta } from "@/utils/types/api";
 import { formatPrice } from "@/utils/formatter";
+import { Meta } from "@/utils/types/api";
 
 const ProductsAdmin = () => {
   const [products, setProducts] = useState<ResponseProducts[]>();
@@ -53,7 +51,6 @@ const ProductsAdmin = () => {
     try {
       const query = Object.fromEntries([...searchParams]);
       const result = await getProducts({ ...query });
-
       setProducts(result.data);
       setMeta(result.pagination);
     } catch (error: any) {
@@ -156,9 +153,10 @@ const ProductsAdmin = () => {
           ) : (
             <Table>
               <TableCaption>A list of recent products.</TableCaption>
-              <TableHeader className="sticky top-0 bg-white dark:bg-[#05152D]">
+              <TableHeader className="sticky top-0 bg-white dark:bg-[#05152D] drop-shadow">
                 <TableRow>
-                  <TableHead>Image</TableHead>
+                  <TableHead className="w-[50px] text-center">No</TableHead>
+                  <TableHead className="w-[150px] text-center">Image</TableHead>
                   <TableHead>Name</TableHead>
                   <TableHead>Price</TableHead>
                   <TableHead>Category</TableHead>
@@ -168,52 +166,51 @@ const ProductsAdmin = () => {
               </TableHeader>
               <TableBody>
                 {products?.map((product, index) => (
-                  <TableRow key={index} className="py-10">
-                    <TableCell>
+                  <TableRow key={product.product_id} className="py-10">
+                    <TableCell className="text-center">
+                      {(meta?.page! - 1) * meta?.limit! + index + 1}
+                    </TableCell>
+                    <TableCell className="flex items-center justify-center">
                       <img
                         src={
                           product.picture ||
                           "https://www.iconpacks.net/icons/2/free-laptop-icon-1928-thumb.png"
                         }
                         alt={product.name}
-                        className="object-cover w-14 gap-14 bg-center"
                       />
                     </TableCell>
                     <TableCell>{product.name}</TableCell>
                     <TableCell>{formatPrice(product.price!)}</TableCell>
                     <TableCell>{product.category}</TableCell>
                     <TableCell>
-                      <CustomDialog
-                        title="Detail Laptop"
-                        description={
-                          <DetailCard product_id={product.product_id} />
-                        }
-                      >
+                      <Link to={`/detail-product/${product.product_id}`}>
                         <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
                           <Laptop />
                         </div>
-                      </CustomDialog>
+                      </Link>
                     </TableCell>
-                    <TableCell className="flex justify-center items-center h-32 gap-4 z-50">
-                      <CustomDialog
-                        title="Edit Products"
-                        description={
-                          <EditProduct product_id={product.product_id} />
-                        }
-                      >
-                        <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
-                          <PencilLine />
-                        </div>
-                      </CustomDialog>
-                      <Alert
-                        title="Are you sure delete this Products from Database?"
-                        onAction={() => handleDelete(product.product_id)}
-                        onActionTitle="Delete"
-                      >
-                        <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
-                          <Trash2 />
-                        </div>
-                      </Alert>
+                    <TableCell>
+                      <div className="flex items-center justify-center gap-4">
+                        <CustomDialog
+                          title="Edit Products"
+                          description={
+                            <EditProduct product_id={product.product_id} />
+                          }
+                        >
+                          <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
+                            <PencilLine />
+                          </div>
+                        </CustomDialog>
+                        <Alert
+                          title="Are you sure delete this Products from Database?"
+                          onAction={() => handleDelete(product.product_id)}
+                          onActionTitle="Delete"
+                        >
+                          <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
+                            <Trash2 />
+                          </div>
+                        </Alert>
+                      </div>
                     </TableCell>
                   </TableRow>
                 ))}

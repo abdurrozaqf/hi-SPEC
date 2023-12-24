@@ -6,8 +6,8 @@ import LoginForm from "@/components/form/LoginForm";
 import { Button } from "@/components/ui/button";
 import CustomDialog from "@/components/Dialog";
 
-import LinesSponsor from "@/assets/lines-sponsor.svg";
-import HumanLogin from "@/assets/Home-page-human.png";
+import LinesSponsor from "@/assets/lines-sponsor.png";
+import HumanLogin from "@/assets/home-page-human.png";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -16,9 +16,9 @@ const Login = () => {
     <div className="w-full h-screen font-poppins background-login flex flex-col">
       <div className="flex flex-col lg:flex-row items-center justify-center lg:justify-around grow p-4 lg:p-0">
         <div className="w-auto md:px-10">
-          <h1 className="text-white font-poppins font-bold text-3xl md:text-5xl">
+          <p className="text-white font-poppins font-bold text-3xl md:text-5xl">
             Smart solution <br /> for your brand are here
-          </h1>
+          </p>
           <h3 className="text-white mt-10 lg:mt-16 font-semibold text-xl mb-2">
             Join us now
           </h3>
@@ -62,11 +62,12 @@ const Login = () => {
             src={HumanLogin}
             alt="human"
             className="h-[560px] xl:h-[650px] w-auto"
+            loading="lazy"
           />
         </div>
       </div>
 
-      <footer className="bg-[#E4ECF1] lg:w-full h-16 lg:h-20 flex items-center justify-center z-10">
+      <footer className="bg-[#E4ECF1] w-0 lg:w-full h-0 lg:h-20 flex items-center justify-center z-10">
         <Marquee pauseOnHover direction="right">
           <img src={LinesSponsor} alt="sponsors" className="flex mr-20" />
         </Marquee>
