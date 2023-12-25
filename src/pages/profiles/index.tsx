@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 
-import { Button } from "@/components/ui/button";
 import Layout from "@/components/Layout";
 
 import { useToken } from "@/utils/contexts/token";
@@ -26,13 +25,12 @@ const Profile = () => {
               {user.name}
             </p>
           </div>
-          <Button
-            type="button"
-            className="w-fit h-fit hover:bg-blue-800"
+          <div
             onClick={() => navigate(`/profile/edit`)}
+            className="px-4 py-3 bg-[#E4ECF1] dark:bg-[#1265AE] hover:bg-[#1265AE] hover:dark:bg-[#E4ECF1] hover:text-white hover:dark:text-black w-fit h-fit rounded-lg shadow-md cursor-pointer"
           >
             <p className="font-medium text-base">Edit Profile</p>
-          </Button>
+          </div>
         </div>
         <div>
           <p className=" font-semibold mb-4 text-xl">Full Name</p>
@@ -40,7 +38,7 @@ const Profile = () => {
           <p className=" font-semibold mb-4">Email</p>
           <div className="border p-4 mb-4 rounded-md">{user.email}</div>
           <p className="font-semibold mb-4">Password</p>
-          <div className=" border p-4 mb-4 rounded-md">**********</div>
+          <div className=" border p-4 mb-4 rounded-md">********</div>
           <p className=" font-semibold mb-4">Address</p>
           <div className=" border p-4 mb-4 rounded-md">{user.address}</div>
           <p className="font-semibold mb-4">Phone Number</p>

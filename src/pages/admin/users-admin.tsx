@@ -113,6 +113,7 @@ const UsersAdmin = () => {
               <TableHeader className="sticky top-0 bg-white dark:bg-[#05152D] drop-shadow z-10">
                 <TableRow>
                   <TableHead className="w-[50px] text-center">No</TableHead>
+                  <TableHead>Role</TableHead>
                   <TableHead>Image</TableHead>
                   <TableHead>Name</TableHead>
                   <TableHead>Email</TableHead>
@@ -123,53 +124,52 @@ const UsersAdmin = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {users
-                  ?.filter((user) => user.role !== "admin")
-                  .map((user, index) => (
-                    <TableRow key={user.user_id}>
-                      <TableCell className="text-center">
-                        {(meta?.page! - 1) * meta?.limit! + index + 1}
-                      </TableCell>
-                      <TableCell>
-                        <Avatar className="shadow-products-card">
-                          <AvatarImage
-                            src={user.avatar}
-                            alt={user.name}
-                            className="object-cover"
-                          />
-                          <AvatarFallback>CN</AvatarFallback>
-                        </Avatar>
-                      </TableCell>
-                      <TableCell>{user.name}</TableCell>
-                      <TableCell>{user.email}</TableCell>
-                      <TableCell>{user.address}</TableCell>
-                      <TableCell>{user.phone_number}</TableCell>
-                      <TableCell>
-                        {format(new Date(user.time), "iiii, dd MMM Y")}
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex justify-center items-center gap-4">
-                          <CustomDialog
-                            title={`Edit Profile ${user.name}`}
-                            description={<EditProfileUsers datas={user} />}
-                          >
-                            <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
-                              <PencilLine />
-                            </div>
-                          </CustomDialog>
-                          <Alert
-                            title="Are you sure delete this Products from Database?"
-                            onAction={() => handleDeleteUsers(user.user_id)}
-                            onActionTitle="Delete"
-                          >
-                            <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
-                              <Trash2 />
-                            </div>
-                          </Alert>
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                {users?.map((user, index) => (
+                  <TableRow key={user.user_id}>
+                    <TableCell className="text-center">
+                      {(meta?.page! - 1) * meta?.limit! + index + 1}
+                    </TableCell>
+                    <TableCell>{user.role}</TableCell>
+                    <TableCell>
+                      <Avatar className="shadow-products-card">
+                        <AvatarImage
+                          src={user.avatar || "/images/default-avatar.png"}
+                          alt={user.name}
+                          className="object-cover"
+                        />
+                        <AvatarFallback>CN</AvatarFallback>
+                      </Avatar>
+                    </TableCell>
+                    <TableCell>{user.name}</TableCell>
+                    <TableCell>{user.email}</TableCell>
+                    <TableCell>{user.address}</TableCell>
+                    <TableCell>{user.phone_number}</TableCell>
+                    <TableCell>
+                      {format(new Date(user.time), "iiii, dd MMM Y")}
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex justify-center items-center gap-4">
+                        <CustomDialog
+                          title={`Edit Profile ${user.name}`}
+                          description={<EditProfileUsers datas={user} />}
+                        >
+                          <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
+                            <PencilLine />
+                          </div>
+                        </CustomDialog>
+                        <Alert
+                          title="Are you sure delete this Products from Database?"
+                          onAction={() => handleDeleteUsers(user.user_id)}
+                          onActionTitle="Delete"
+                        >
+                          <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
+                            <Trash2 />
+                          </div>
+                        </Alert>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
               </TableBody>
             </Table>
           )}

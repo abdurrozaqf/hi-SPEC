@@ -75,7 +75,7 @@ const Compare = () => {
                 </div>
               </div>
             ))}
-            <Button className="w-fit" onClick={() => addCompare()}>
+            <Button className="w-fit text-white" onClick={() => addCompare()}>
               Add new compare
             </Button>
           </div>

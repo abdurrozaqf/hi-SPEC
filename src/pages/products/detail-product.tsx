@@ -1,15 +1,15 @@
+import { ArrowLeft, Heart, Loader2 } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { ArrowLeft, Loader2 } from "lucide-react";
 
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import Alert from "@/components/AlertDialog";
 import Layout from "@/components/Layout";
 
+import { MyWishlists, addWishlist, getProfile } from "@/utils/apis/users";
 import { Product, getDetailProduct } from "@/utils/apis/products";
 import { useToken } from "@/utils/contexts/token";
-import { addWishlist } from "@/utils/apis/users";
 import { buyProducts } from "@/utils/apis/admin";
 import { formatPrice } from "@/utils/formatter";
 
@@ -17,6 +17,7 @@ import BannerSponsorDetailProduct from "/images/iklan.png";
 import IconWishlist from "/images/wishlist-icon.png";
 
 const DetailProduct = () => {
+  const [profile, setProfile] = useState<MyWishlists[]>();
   const [product, setProduct] = useState<Product>();
   const [isLoading, setIsLoading] = useState(false);
   const { token, user } = useToken();
@@ -26,6 +27,7 @@ const DetailProduct = () => {
 
   useEffect(() => {
     fetchData();
+    fetchDataProfile();
   }, []);
 
   async function fetchData() {
@@ -43,6 +45,24 @@ const DetailProduct = () => {
       setIsLoading(false);
     }
   }
+
+  async function fetchDataProfile() {
+    try {
+      const result = await getProfile();
+      setProfile(result.data.my_favorite);
+    } catch (error: any) {
+      toast({
+        title: "Oops, someting went wrong.",
+        description: error.toString(),
+        variant: "destructive",
+      });
+    } finally {
+    }
+  }
+
+  const wish = profile?.filter(
+    (items) => items.product_id === +params.product_id!
+  );
 
   async function handleBuyProduct(data: {
     product_id: number;
@@ -64,6 +84,7 @@ const DetailProduct = () => {
     try {
       const result = await addWishlist(product_id);
       toast({ description: result.message });
+      fetchDataProfile();
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -150,10 +171,10 @@ const DetailProduct = () => {
                       <>
                         <div className="flex flex-col justify-center items-center mb-10">
                           <img src={product?.picture} className="h-80 w-fit" />
-                          <h1 className="font-bold text-2xl text-center">
+                          <h1 className="font-bold text-xl text-center">
                             {product?.name}
                           </h1>
-                          <p className="font-semibold text-xl">
+                          <p className="font-semibold text-2xl">
                             Product price: {formatPrice(product?.price!)}
                           </p>
                         </div>
@@ -171,17 +192,22 @@ const DetailProduct = () => {
                   </Alert>
                   <div className="flex justify-between items-center mt-3">
                     <p className="text-xs">Make your Wishlist come true</p>
-                    <div
+                    <Button
+                      disabled={wish?.length! >= 1}
                       onClick={() => handleWishlist(product?.product_id!)}
-                      className="flex items-center gap-2 cursor-pointer"
+                      className="flex p-0 items-center gap-2 cursor-pointer w-fit h-fit text-black dark:text-white bg-transparent hover:bg-transparent"
                     >
-                      <p className="font-bold text-xs">Wishlist</p>
-                      <img
-                        src={IconWishlist}
-                        alt="icon-love"
-                        className="w-6 h-6 "
-                      />
-                    </div>
+                      <p className="font-bold text-[12px]">Wishlist</p>
+                      {wish?.length! < 1 || !wish ? (
+                        <Heart />
+                      ) : (
+                        <img
+                          src={IconWishlist}
+                          alt="icon-love"
+                          className="w-6 h-6 "
+                        />
+                      )}
+                    </Button>
                   </div>
                 </div>
               )}

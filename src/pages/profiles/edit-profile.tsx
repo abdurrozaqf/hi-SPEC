@@ -166,13 +166,12 @@ const EditProfile = () => {
                       {profile?.name}
                     </p>
                   </div>
-                  <Button
-                    type="button"
-                    className="w-fit h-fit hover:bg-blue-800 mt-6 md:mt-0 hidden md:block"
+                  <div
                     onClick={() => navigate(-1)}
+                    className="hidden md:block p-2 bg-[#E4ECF1] dark:bg-[#1265AE] hover:bg-[#1265AE] hover:dark:bg-[#E4ECF1] hover:text-white hover:dark:text-black w-fit h-fit rounded-lg shadow-md cursor-pointer"
                   >
-                    <X />
-                  </Button>
+                    <X size={35} />
+                  </div>
                 </div>
 
                 <CustomFormField
@@ -300,11 +299,13 @@ const EditProfile = () => {
                       "Submit"
                     )}
                   </Button>
+                  <p className="block md:hidden">or</p>
                   <Alert
                     title="Are you absolutely sure?"
                     description="This action cannot be undone. This will permanently delete your account and remove your data from our servers."
                     onAction={handleDeleteProfile}
                     onActionTitle="Continue"
+                    style="w-full md:w-fit"
                   >
                     <Button
                       type="button"

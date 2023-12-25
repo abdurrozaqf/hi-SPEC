@@ -215,7 +215,7 @@ const SidebarAdmin = () => {
                 <p
                   className={
                     sidebar === "true"
-                      ? `font-medium w-full opacity-100 translate-x-0 transition-all hover:bg-[#E4ECF1] dark:hover:bg-white rounded-md p-2 dark:hover:text-black`
+                      ? `font-medium w-full text-start opacity-100 translate-x-0 transition-all hover:bg-[#E4ECF1] dark:hover:bg-white rounded-md p-2 dark:hover:text-black`
                       : `w-0 opacity-0 -translate-x-28 transition-all absolute`
                   }
                 >
@@ -234,7 +234,7 @@ const SidebarAdmin = () => {
               <p
                 className={
                   sidebar === "true"
-                    ? `font-medium w-full opacity-100 translate-x-0 transition-all hover:bg-[#E4ECF1] dark:hover:bg-white rounded-md p-2 dark:hover:text-black`
+                    ? `font-medium w-full text-start opacity-100 translate-x-0 transition-all hover:bg-[#E4ECF1] dark:hover:bg-white rounded-md p-2 dark:hover:text-black`
                     : `w-0 opacity-0 -translate-x-28 transition-all absolute`
                 }
               >

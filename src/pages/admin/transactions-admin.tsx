@@ -95,51 +95,51 @@ const TransactionsAdmin = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  <>
-                    {transactions?.map((data, index) => (
-                      <TableRow key={index}>
-                        <TableCell className="text-center">
-                          {(meta?.page! - 1) * meta?.limit! + index + 1}
-                        </TableCell>
-                        <TableCell>
-                          <Avatar>
-                            <AvatarImage
-                              src={data.user_picture}
-                              alt={data.user_name}
-                              className="object-cover"
-                            />
-                            <AvatarFallback>CN</AvatarFallback>
-                          </Avatar>
-                        </TableCell>
-                        <TableCell>{data.user_name}</TableCell>
-                        <TableCell>
-                          <img
-                            src={data.picture_product}
-                            alt={data.name_product}
+                  {transactions?.map((data, index) => (
+                    <TableRow key={index}>
+                      <TableCell className="text-center">
+                        {(meta?.page! - 1) * meta?.limit! + index + 1}
+                      </TableCell>
+                      <TableCell>
+                        <Avatar>
+                          <AvatarImage
+                            src={
+                              data.user_picture || "/images/default-avatar.png"
+                            }
+                            alt={data.user_name}
+                            className="object-cover"
                           />
-                        </TableCell>
-                        <TableCell>{data.name_product}</TableCell>
-                        <TableCell>{data.nota}</TableCell>
-                        <TableCell>{formatPrice(data.total_price!)}</TableCell>
-                        <TableCell>
-                          {format(new Date(data.timestamp), "iiii, dd MMM Y")}
-                        </TableCell>
-                        <TableCell
-                          className={
-                            data.status === "Pending"
-                              ? "text-yellow-600 font-medium text-lg"
-                              : data.status === "Canceled"
-                              ? "text-red-600 font-medium text-lg"
-                              : data.status === "Success"
-                              ? "text-green-600 font-medium text-lg"
-                              : "text-black font-medium text-lg"
-                          }
-                        >
-                          {data.status}
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </>
+                          <AvatarFallback>CN</AvatarFallback>
+                        </Avatar>
+                      </TableCell>
+                      <TableCell>{data.user_name}</TableCell>
+                      <TableCell>
+                        <img
+                          src={data.picture_product}
+                          alt={data.name_product}
+                        />
+                      </TableCell>
+                      <TableCell>{data.name_product}</TableCell>
+                      <TableCell>{data.nota}</TableCell>
+                      <TableCell>{formatPrice(data.total_price!)}</TableCell>
+                      <TableCell>
+                        {format(new Date(data.timestamp), "iiii, dd MMM Y")}
+                      </TableCell>
+                      <TableCell
+                        className={
+                          data.status === "Pending"
+                            ? "text-yellow-600 font-medium text-lg"
+                            : data.status === "Canceled"
+                            ? "text-red-600 font-medium text-lg"
+                            : data.status === "Success"
+                            ? "text-green-600 font-medium text-lg"
+                            : "text-black font-medium text-lg"
+                        }
+                      >
+                        {data.status}
+                      </TableCell>
+                    </TableRow>
+                  ))}
                 </TableBody>
               </Table>
             )}
