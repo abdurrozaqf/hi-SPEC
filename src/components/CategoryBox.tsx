@@ -1,5 +1,7 @@
 import { useSearchParams } from "react-router-dom";
 
+import { Checkbox } from "@/components/ui/checkbox";
+
 interface Props {
   isOpen: string;
 }
@@ -32,12 +34,17 @@ const CategoryBox = (props: Props) => {
       <h1 className="font-medium">Categories:</h1>
       <div className="flex ml-4 gap-2 items-center">
         <input
-          onChange={(e) => handleCategory(e.target.value)}
-          type="radio"
-          value=""
           id="all"
-          name="category"
-          className="cursor-pointer"
+          value=""
+          type="checkbox"
+          checked={!category}
+          onChange={(e) => handleCategory(e.target.value)}
+          className="hidden"
+        />
+        <Checkbox
+          id="all"
+          checked={!category}
+          className="bg-[#E4ECF1] w-4 h-4 border-black/25"
         />
         <label
           htmlFor="all"
@@ -49,12 +56,16 @@ const CategoryBox = (props: Props) => {
       <div className="flex ml-4 gap-2 items-center">
         <input
           onChange={(e) => handleCategory(e.target.value)}
-          type="radio"
-          value="Office"
           id="office"
-          name="category"
+          type="checkbox"
+          value="Office"
           checked={category === "Office"}
-          className="cursor-pointer"
+          className="hidden"
+        />
+        <Checkbox
+          id="office"
+          checked={category === "Office"}
+          className="bg-[#E4ECF1] w-4 h-4 border-black/25"
         />
         <label
           htmlFor="office"
@@ -66,12 +77,16 @@ const CategoryBox = (props: Props) => {
       <div className="flex ml-4 gap-2 items-center">
         <input
           onChange={(e) => handleCategory(e.target.value)}
-          type="radio"
-          value="Multimedia"
           id="multimedia"
-          name="category"
+          type="checkbox"
+          value="Multimedia"
           checked={category === "Multimedia"}
-          className="cursor-pointer"
+          className="hidden"
+        />
+        <Checkbox
+          id="multimedia"
+          checked={category === "Multimedia"}
+          className="bg-[#E4ECF1] w-4 h-4 border-black/25"
         />
         <label
           htmlFor="multimedia"
@@ -83,12 +98,16 @@ const CategoryBox = (props: Props) => {
       <div className="flex ml-4 gap-2 items-center">
         <input
           onChange={(e) => handleCategory(e.target.value)}
-          type="radio"
-          value="Gaming"
           id="gaming"
-          name="category"
+          type="checkbox"
+          value="Gaming"
           checked={category === "Gaming"}
-          className="cursor-pointer"
+          className="hidden"
+        />
+        <Checkbox
+          id="gaming"
+          checked={category === "Gaming"}
+          className="bg-[#E4ECF1] w-4 h-4 border-black/25"
         />
         <label
           htmlFor="gaming"
