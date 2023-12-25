@@ -122,31 +122,42 @@ const ProductsAdmin = () => {
     <Layout>
       <div className="px-3 md:px-10 py-8 bg-white dark:bg-[#1265ae24] rounded-xl flex flex-col justify-start grow shadow-products-card font-poppins overflow-auto">
         <h1 className="text-2xl font-medium text-center">Database Products</h1>
-        <div className="flex flex-col gap-4 md:gap-0 md:flex-row items-center justify-between mb-10">
-          <div className="flex flex-col gap-4 md:gap-0 md:flex-row md:items-center space-x-0 md:space-x-6">
+        <div className="flex flex-col gap-4 md:gap-0 md:flex-row items-center justify-between my-10">
+          <div className="flex flex-col md:flex-row items-center gap-x-6 gap-y-4">
             <input
               type="search"
-              onChange={(e) => debounceRequest1(e.target.value)}
               placeholder="Search by name product"
-              className="w-fit placeholder:italic placeholder:text-sm outline-none py-2 px-4 rounded-lg dark:bg-transparent shadow dark:shadow-white"
+              onChange={(e) => debounceRequest1(e.target.value)}
+              className="w-full md:w-fit placeholder:italic placeholder:text-sm outline-none py-2 px-4 rounded-lg dark:bg-transparent shadow dark:shadow-white"
             />
-            <Select onValueChange={(value) => debounceRequest2(value)}>
-              <SelectTrigger className="w-52 placeholder:italic placeholder:text-sm outline-none py-2 px-4 rounded-lg dark:bg-transparent shadow dark:shadow-white border-none">
-                <SelectValue placeholder="Select by categories" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="default">Default</SelectItem>
-                <SelectItem value="Office">Office</SelectItem>
-                <SelectItem value="Multimedia">Multimedia</SelectItem>
-                <SelectItem value="Gaming">Gaming</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          <CustomDialog title="Add Products" description={<AddProduct />}>
-            <div className="p-3 bg-White shadow dark:shadow-white flex items-center justify-center rounded-xl">
-              <FilePlus size={30} />
+            <div className="flex items-center gap-x-4">
+              <Select onValueChange={(value) => debounceRequest2(value)}>
+                <SelectTrigger className="w-52 placeholder:italic placeholder:text-sm outline-none py-2 px-4 rounded-lg dark:bg-transparent shadow dark:shadow-white border-none">
+                  <SelectValue placeholder="Select by categories" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="default">Default</SelectItem>
+                  <SelectItem value="Office">Office</SelectItem>
+                  <SelectItem value="Multimedia">Multimedia</SelectItem>
+                  <SelectItem value="Gaming">Gaming</SelectItem>
+                </SelectContent>
+              </Select>
+              <div className="block md:hidden">
+                <CustomDialog title="Add Products" description={<AddProduct />}>
+                  <div className="p-3 bg-White shadow dark:shadow-white flex items-center justify-center rounded-xl">
+                    <FilePlus size={30} />
+                  </div>
+                </CustomDialog>
+              </div>
             </div>
-          </CustomDialog>
+          </div>
+          <div className="hidden md:block">
+            <CustomDialog title="Add Products" description={<AddProduct />}>
+              <div className="p-3 bg-White shadow dark:shadow-white flex items-center justify-center rounded-xl">
+                <FilePlus size={30} />
+              </div>
+            </CustomDialog>
+          </div>
         </div>
         <div className="flex justify-center grow overflow-auto">
           {isLoading ? (
@@ -176,11 +187,9 @@ const ProductsAdmin = () => {
                     </TableCell>
                     <TableCell className="flex items-center justify-center">
                       <img
-                        src={
-                          product.picture ||
-                          "https://www.iconpacks.net/icons/2/free-laptop-icon-1928-thumb.png"
-                        }
+                        src={product.picture}
                         alt={product.name}
+                        loading="lazy"
                       />
                     </TableCell>
                     <TableCell>{product.name}</TableCell>

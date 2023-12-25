@@ -95,15 +95,13 @@ const UsersAdmin = () => {
   return (
     <Layout>
       <div className="px-3 md:px-10 py-8 bg-white dark:bg-[#1265ae24] rounded-xl flex flex-col grow shadow-products-card font-poppins overflow-auto">
-        <h1 className="text-2xl font-medium text-center mb-6 md:mb-0">
-          Database Users
-        </h1>
-        <div className="flex mb-6 md:mb-10">
+        <h1 className="text-2xl font-medium text-center">Database Users</h1>
+        <div className="flex my-6 md:my-10 px-4 md:px-0">
           <input
             type="search"
-            onChange={(e) => debounceRequest(e.target.value)}
             placeholder="Search by name user"
-            className="w-fit placeholder:italic placeholder:text-sm outline-none py-2 px-4 rounded-lg dark:bg-transparent shadow dark:shadow-white"
+            onChange={(e) => debounceRequest(e.target.value)}
+            className="w-full md:w-fit placeholder:italic placeholder:text-sm outline-none py-2 px-4 rounded-lg dark:bg-transparent shadow dark:shadow-white"
           />
         </div>
         <div className="flex justify-center grow overflow-auto">
@@ -140,6 +138,7 @@ const UsersAdmin = () => {
                         <AvatarImage
                           src={user.avatar || "/images/default-avatar.png"}
                           alt={user.name}
+                          loading="lazy"
                           className="object-cover"
                         />
                         <AvatarFallback>CN</AvatarFallback>

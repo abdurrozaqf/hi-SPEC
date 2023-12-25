@@ -123,7 +123,7 @@ const Dashboard = () => {
                       {(meta?.page! - 1) * meta?.limit! + index + 1}
                     </TableCell>
                     <TableCell>
-                      <img src={data.picture} alt={data.name} />
+                      <img src={data.picture} alt={data.name} loading="lazy" />
                     </TableCell>
                     <TableCell>{data.name}</TableCell>
                     <TableCell>{formatPrice(data.price!)}</TableCell>

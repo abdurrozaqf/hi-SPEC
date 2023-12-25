@@ -97,7 +97,11 @@ const Transaction = () => {
                   <TableRow key={index}>
                     <TableCell className="text-center">{index + 1}</TableCell>
                     <TableCell>
-                      <img src={data.product_picture} alt={data.product_name} />
+                      <img
+                        src={data.product_picture}
+                        alt={data.product_name}
+                        loading="lazy"
+                      />
                     </TableCell>
                     <TableCell>{data.product_name}</TableCell>
                     <TableCell>{data.nota}</TableCell>

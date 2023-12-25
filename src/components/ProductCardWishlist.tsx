@@ -30,7 +30,12 @@ const ProductCardWishlist = (props: Props) => {
     >
       <div>
         <div className="flex justify-center py-4">
-          <img src={data.picture} className="h-32" />
+          <img
+            src={data.picture}
+            alt={data.name}
+            loading="lazy"
+            className="h-32"
+          />
         </div>
         <div className="bg-white dark:bg-[#1265ae24] px-4 py-3">
           <p className="text-[#757575] dark:text-[#b5b5b5] font-bold text-sm tracking-tight truncate">
@@ -71,7 +76,12 @@ const ProductCardWishlist = (props: Props) => {
                     description={
                       <>
                         <div className="flex flex-col justify-center items-center mb-10">
-                          <img src={data.picture} className="h-80 w-fit" />
+                          <img
+                            src={data.picture}
+                            alt={data.picture}
+                            loading="lazy"
+                            className="h-80 w-fit"
+                          />
                           <h1 className="font-bold text-xl text-center">
                             {data.name}
                           </h1>

@@ -154,6 +154,7 @@ const EditProfile = () => {
                       <img
                         src={profile?.avatar || DefaultAvatar}
                         alt={profile?.name}
+                        loading="lazy"
                         className="object-cover rounded-full w-14 lg:w-36 h-14 lg:h-36 relative"
                       />
                       <label

@@ -169,6 +169,7 @@ const SidebarAdmin = () => {
               <AvatarImage
                 src={user.avatar || DefaultAvatar}
                 alt={user?.name || "Guest"}
+                loading="lazy"
                 className="object-cover"
               />
               <AvatarFallback>CN</AvatarFallback>

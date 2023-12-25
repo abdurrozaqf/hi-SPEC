@@ -19,6 +19,7 @@ const Profile = () => {
             <img
               src={user.avatar || DefaultAvatar}
               alt={user.name}
+              loading="lazy"
               className="object-cover rounded-full w-14 lg:w-36 h-14 lg:h-36 shadow-md border"
             />
             <p className="ml-4 md:ml-8 text-xl md:text-3xl font-bold truncate">

@@ -8,8 +8,18 @@ const BannerSponsorCompare = () => {
         Transform <br />
         the way you learn
       </h1>
-      <img src={Image2} alt="Tagline-2" className="h-0 lg:h-[155px]" />
-      <img src={Image3} alt="Tagline-3" className="h-0 lg:h-[100px]" />
+      <img
+        src={Image2}
+        alt="Tagline-2"
+        loading="lazy"
+        className="h-0 lg:h-[155px]"
+      />
+      <img
+        src={Image3}
+        alt="Tagline-3"
+        loading="lazy"
+        className="h-0 lg:h-[100px]"
+      />
     </div>
   );
 };

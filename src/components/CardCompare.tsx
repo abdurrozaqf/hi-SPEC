@@ -18,27 +18,26 @@ const CardCompare = (props: Props) => {
     >
       <div className="h-[10rem] flex justify-center items-center mb-10">
         <img
-          src={data.picture || "Unknown"}
-          alt={data.name || "Unknown"}
+          src={data.picture}
+          alt={data.name}
+          loading="lazy"
           className="h-full object-fit object-center"
         />
       </div>
       <div className="flex flex-col mb-6 px-6">
-        <p className="font-bold text-lg truncate">{data.name || "Unknown"}</p>
-        <p className="font-bold text-lg">
-          {formatPrice(data.price!) || "Unknown"}
-        </p>
+        <p className="font-bold text-lg truncate">{data.name}</p>
+        <p className="font-bold text-lg">{formatPrice(data.price!)}</p>
       </div>
       <div className="flex flex-col gap-4 px-6 grow">
-        <p className="truncate">CPU : {data.cpu || "Unknown"}</p>
-        <p className="truncate">RAM : {data.ram || "Unknown"}</p>
-        <p className="truncate">Display : {data.display || "Unknown"}</p>
-        <p className="truncate">Storage : {data.storage || "Unknown"}</p>
-        <p className="truncate">Thickness : {data.thickness || "Unknown"}</p>
-        <p className="truncate">Weight : {data.weight || "Unknown"}</p>
-        <p className="truncate">Bluetooth : {data.bluetooth || "Unknown"}</p>
-        <p className="truncate">HDMI : {data.hdmi || "Unknown"}</p>
-        <p className="truncate">Category : {data.category || "Unknown"}</p>
+        <p className="truncate">CPU : {data.cpu}</p>
+        <p className="truncate">RAM : {data.ram}</p>
+        <p className="truncate">Display : {data.display}</p>
+        <p className="truncate">Storage : {data.storage}</p>
+        <p className="truncate">Thickness : {data.thickness}</p>
+        <p className="truncate">Weight : {data.weight}</p>
+        <p className="truncate">Bluetooth : {data.bluetooth}</p>
+        <p className="truncate">HDMI : {data.hdmi}</p>
+        <p className="truncate">Category : {data.category}</p>
       </div>
       <p className="text-start font-normal text-xs text-slate-400">
         *Click for see details product

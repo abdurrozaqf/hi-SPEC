@@ -107,6 +107,7 @@ const TransactionsAdmin = () => {
                               data.user_picture || "/images/default-avatar.png"
                             }
                             alt={data.user_name}
+                            loading="lazy"
                             className="object-cover"
                           />
                           <AvatarFallback>CN</AvatarFallback>
@@ -117,6 +118,7 @@ const TransactionsAdmin = () => {
                         <img
                           src={data.picture_product}
                           alt={data.name_product}
+                          loading="lazy"
                         />
                       </TableCell>
                       <TableCell>{data.name_product}</TableCell>

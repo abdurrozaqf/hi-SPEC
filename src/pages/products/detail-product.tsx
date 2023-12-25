@@ -120,6 +120,7 @@ const DetailProduct = () => {
                   src={product?.picture}
                   alt={product?.name}
                   className="w-52 lg:w-96"
+                  loading="lazy"
                 />
               </div>
             </div>
@@ -170,7 +171,11 @@ const DetailProduct = () => {
                     description={
                       <>
                         <div className="flex flex-col justify-center items-center mb-10">
-                          <img src={product?.picture} className="h-80 w-fit" />
+                          <img
+                            src={product?.picture}
+                            className="h-80 w-fit"
+                            loading="lazy"
+                          />
                           <h1 className="font-bold text-xl text-center">
                             {product?.name}
                           </h1>
@@ -204,7 +209,8 @@ const DetailProduct = () => {
                         <img
                           src={IconWishlist}
                           alt="icon-love"
-                          className="w-6 h-6 "
+                          className="w-6 h-6"
+                          loading="lazy"
                         />
                       )}
                     </Button>
@@ -212,7 +218,11 @@ const DetailProduct = () => {
                 </div>
               )}
               <div className="w-0 lg:w-auto mt-6">
-                <img src={BannerSponsorDetailProduct} alt="iklan" />
+                <img
+                  src={BannerSponsorDetailProduct}
+                  alt="iklan"
+                  loading="lazy"
+                />
               </div>
             </div>
           </>

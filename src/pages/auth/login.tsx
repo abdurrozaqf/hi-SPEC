@@ -56,13 +56,23 @@ const Login = () => {
           </div>
         </div>
         <div className="hidden lg:flex items-end -mb-4">
-          <img src={HumanLogin} alt="human" className="object-cover" />
+          <img
+            src={HumanLogin}
+            alt="human"
+            className="object-cover"
+            loading="lazy"
+          />
         </div>
       </div>
 
       <footer className="bg-[#E4ECF1] hidden lg:flex items-center justify-center h-20">
         <Marquee pauseOnHover direction="right">
-          <img src={LinesSponsor} alt="sponsors" className="flex mr-20" />
+          <img
+            src={LinesSponsor}
+            alt="sponsors"
+            loading="lazy"
+            className="flex mr-20"
+          />
         </Marquee>
       </footer>
     </div>
