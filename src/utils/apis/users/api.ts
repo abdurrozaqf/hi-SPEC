@@ -79,13 +79,3 @@ export const deleteWishlist = async (favorite_id: number) => {
     throw Error(error.response.data.message);
   }
 };
-
-export const getTransactionUser = async (user_id: number) => {
-  try {
-    const response = await axiosWithConfig.get(`/transaction/user/${user_id}`);
-
-    return response.data as Response;
-  } catch (error: any) {
-    throw Error(error.response.data.message);
-  }
-};

@@ -5,10 +5,10 @@ import { Loader2 } from "lucide-react";
 import BannerSponsorWishlist from "@/components/BannerSponsorWishlist";
 import ProductCardWishlist from "@/components/ProductCardWishlist";
 import { useToast } from "@/components/ui/use-toast";
+import { Button } from "@/components/ui/button";
 import Layout from "@/components/Layout";
 
 import { MyWishlists, deleteWishlist, getProfile } from "@/utils/apis/users";
-import { Button } from "@/components/ui/button";
 import { buyProducts } from "@/utils/apis/admin";
 
 const WishList = () => {

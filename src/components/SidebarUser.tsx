@@ -18,10 +18,10 @@ import CategoryBox from "@/components/CategoryBox";
 import Alert from "@/components/AlertDialog";
 
 import { useTheme } from "@/utils/contexts/theme-provider";
+import { useSidebar } from "@/utils/contexts/sidebar";
 import { useToken } from "@/utils/contexts/token";
 
 import DefaultAvatar from "/images/default-avatar.png";
-import { useSidebar } from "@/utils/contexts/sidebar";
 
 const SidebarUser = () => {
   const { changeToken, user, token } = useToken();
@@ -40,6 +40,7 @@ const SidebarUser = () => {
 
   function handleLogout() {
     changeToken();
+    changeSidebar();
     toast({
       description: "Logout Successfully",
     });

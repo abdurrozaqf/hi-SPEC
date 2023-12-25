@@ -5,7 +5,6 @@ import {
   deleteProfile,
   addWishlist,
   deleteWishlist,
-  getTransactionUser,
 } from "./api";
 
 import {
@@ -25,7 +24,6 @@ export {
   getProfile,
   updateProfile,
   deleteProfile,
-  getTransactionUser,
   addWishlist,
   deleteWishlist,
   updateProfileSchema,

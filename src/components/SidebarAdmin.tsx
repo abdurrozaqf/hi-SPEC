@@ -17,8 +17,10 @@ import { useToast } from "@/components/ui/use-toast";
 import Alert from "@/components/AlertDialog";
 
 import { useTheme } from "@/utils/contexts/theme-provider";
-import { useToken } from "@/utils/contexts/token";
 import { useSidebar } from "@/utils/contexts/sidebar";
+import { useToken } from "@/utils/contexts/token";
+
+import DefaultAvatar from "/images/default-avatar.png";
 
 const SidebarAdmin = () => {
   const { changeToken, user, token } = useToken();
@@ -37,6 +39,7 @@ const SidebarAdmin = () => {
 
   function handleLogout() {
     changeToken();
+    changeSidebar();
     toast({
       description: "Logout Successfully",
     });
@@ -164,7 +167,7 @@ const SidebarAdmin = () => {
               className="cursor-pointer shadow-md hover:shadow-[#1265AE] dark:shadow-white/50 hover:shadow-lg rounded-full"
             >
               <AvatarImage
-                src={user?.avatar}
+                src={user.avatar || DefaultAvatar}
                 alt={user?.name || "Guest"}
                 className="object-cover"
               />

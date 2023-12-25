@@ -2,17 +2,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Loader2 } from "lucide-react";
 
-import {
-  RegisterSchema,
-  registerSchema,
-  registerAccount,
-} from "@/utils/apis/auth";
-
 import { CustomFormField } from "@/components/CustomForm";
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Form } from "@/components/ui/form";
+
+import {
+  RegisterSchema,
+  registerSchema,
+  registerAccount,
+} from "@/utils/apis/auth";
 
 const RegisterForm = () => {
   const { toast } = useToast();

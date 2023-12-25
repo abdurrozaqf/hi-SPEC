@@ -1,6 +1,6 @@
 import { Request, Response, ResponsePagination } from "@/utils/types/api";
-import axiosWithConfig from "@/utils/apis/axiosWithConfig";
 import { ResponseTransactions, Transactions } from "./types";
+import axiosWithConfig from "@/utils/apis/axiosWithConfig";
 
 export const getNota = async (transaction_id: number) => {
   try {

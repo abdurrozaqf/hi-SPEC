@@ -2,19 +2,21 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Loader2 } from "lucide-react";
 
-import { LoginSchema, loginSchema, loginAccount } from "@/utils/apis/auth";
-import { useToken } from "@/utils/contexts/token";
-
 import { CustomFormField } from "@/components/CustomForm";
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Form } from "@/components/ui/form";
 
+import { LoginSchema, loginSchema, loginAccount } from "@/utils/apis/auth";
+import { useSidebar } from "@/utils/contexts/sidebar";
+import { useToken } from "@/utils/contexts/token";
+
 const LoginForm = () => {
   const { toast } = useToast();
 
   const { changeToken } = useToken();
+  const { changeSidebar } = useSidebar();
 
   const form = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
@@ -29,6 +31,7 @@ const LoginForm = () => {
       const result = await loginAccount(data);
       toast({ description: result.message });
       changeToken(result.data.token);
+      changeSidebar("true");
     } catch (error: any) {
       toast({
         title: "Oops, something went wrong!",

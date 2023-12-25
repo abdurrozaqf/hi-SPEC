@@ -11,11 +11,11 @@ import Profile from "@/pages/profiles";
 import EditProfile from "@/pages/profiles/edit-profile";
 import WishList from "@/pages/profiles/wishlist";
 import Transaction from "@/pages/profiles/transaction";
+import Dashboard from "@/pages/admin/dashboard";
 import ProductsAdmin from "@/pages/admin/products-admin";
 import UsersAdmin from "@/pages/admin/users-admin";
 import TransactionsAdmin from "@/pages/admin/transactions-admin";
 import NotFound from "@/pages/not-found";
-import Dashboard from "@/pages/admin/dashboard";
 
 export default function Router() {
   const router = createBrowserRouter([
