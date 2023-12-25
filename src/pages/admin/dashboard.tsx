@@ -120,7 +120,7 @@ const Dashboard = () => {
                 {datas?.product.map((data, index) => (
                   <TableRow key={data.id}>
                     <TableCell className="font-medium text-center">
-                      {index + 1}
+                      {(meta?.page! - 1) * meta?.limit! + index + 1}
                     </TableCell>
                     <TableCell>
                       <img src={data.picture} alt={data.name} />
