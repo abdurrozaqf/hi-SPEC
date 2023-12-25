@@ -18,11 +18,12 @@ import {
 
 interface Props {
   datas: ResponseUsers;
+  refecthUsers: () => void;
 }
 
 const EditProfileUsers = (props: Props) => {
+  const { datas, refecthUsers } = props;
   const { toast } = useToast();
-  const { datas } = props;
 
   const form = useForm<UpdateUsersAdminSchema>({
     resolver: zodResolver(updateUsersAdminSchema),
@@ -66,6 +67,7 @@ const EditProfileUsers = (props: Props) => {
         formData as any
       );
       toast({ description: result.message });
+      refecthUsers();
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",

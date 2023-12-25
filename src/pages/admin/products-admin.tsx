@@ -1,6 +1,6 @@
 import { FilePlus, Laptop, Loader2, PencilLine, Trash2 } from "lucide-react";
 import { Link, useSearchParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import debounce from "lodash.debounce";
 
 import EditProduct from "@/components/form/EditProduct";
@@ -63,6 +63,10 @@ const ProductsAdmin = () => {
       setIsLoading(false);
     }
   }
+
+  const refetchProducts = useCallback(() => {
+    fetchData();
+  }, []);
 
   async function handleDelete(product_id: number) {
     try {
@@ -194,7 +198,10 @@ const ProductsAdmin = () => {
                         <CustomDialog
                           title="Edit Products"
                           description={
-                            <EditProduct product_id={product.product_id} />
+                            <EditProduct
+                              product_id={product.product_id}
+                              refecthProduct={() => refetchProducts()}
+                            />
                           }
                         >
                           <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">

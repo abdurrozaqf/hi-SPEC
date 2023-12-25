@@ -25,9 +25,9 @@ import { useToken } from "@/utils/contexts/token";
 import DefaultAvatar from "/images/default-avatar.png";
 
 const EditProfile = () => {
+  const { changeToken, refetchProfile } = useToken();
   const [profile, setProfile] = useState<Profile>();
   const [isLoading, setIsLoading] = useState(false);
-  const { changeToken } = useToken();
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -96,6 +96,7 @@ const EditProfile = () => {
         formData as any
       );
       toast({ description: result.message });
+      refetchProfile();
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",

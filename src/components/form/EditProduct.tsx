@@ -26,10 +26,11 @@ import {
 
 interface Props {
   product_id: number;
+  refecthProduct: () => void;
 }
 
 const EditProduct = (props: Props) => {
-  const { product_id } = props;
+  const { product_id, refecthProduct } = props;
 
   const [datas, setDatas] = useState<Product>();
   const [isLoading, setIsLoading] = useState(false);
@@ -112,6 +113,7 @@ const EditProduct = (props: Props) => {
 
       const result = await editProduct(product_id, formData as any);
       toast({ description: result.message });
+      refecthProduct();
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",

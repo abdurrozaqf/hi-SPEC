@@ -1,6 +1,6 @@
 import { Loader2, PencilLine, Trash2 } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import debounce from "lodash.debounce";
 import { format } from "date-fns";
 
@@ -54,10 +54,15 @@ const UsersAdmin = () => {
     }
   }
 
+  const refetchUsers = useCallback(() => {
+    fetchData();
+  }, []);
+
   async function handleDeleteUsers(user_id: number) {
     try {
       const result = await deleteProfile(user_id);
       toast({ description: result.message });
+      fetchData();
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -151,7 +156,12 @@ const UsersAdmin = () => {
                       <div className="flex justify-center items-center gap-4">
                         <CustomDialog
                           title={`Edit Profile ${user.name}`}
-                          description={<EditProfileUsers datas={user} />}
+                          description={
+                            <EditProfileUsers
+                              datas={user}
+                              refecthUsers={() => refetchUsers()}
+                            />
+                          }
                         >
                           <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
                             <PencilLine />
