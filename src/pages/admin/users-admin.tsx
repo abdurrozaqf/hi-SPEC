@@ -1,11 +1,12 @@
-import { Loader2, PencilLine, Trash2 } from "lucide-react";
-import { useSearchParams } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import { PencilLine, Trash2 } from "lucide-react";
 import debounce from "lodash.debounce";
 import { format } from "date-fns";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import EditProfileUsers from "@/components/form/EditProfileUsers";
+import SkeletonUsersAdmin from "@/components/SkeletonUsersAdmin";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { useToast } from "@/components/ui/use-toast";
 import Pagination from "@/components/Pagination";
 import CustomDialog from "@/components/Dialog";
@@ -105,83 +106,81 @@ const UsersAdmin = () => {
           />
         </div>
         <div className="flex justify-center grow overflow-auto">
-          {isLoading ? (
-            <div className="flex items-center h-full">
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              <p>Loading</p>
-            </div>
-          ) : (
-            <Table>
-              <TableCaption>A list of your recent Users.</TableCaption>
-              <TableHeader className="sticky top-0 bg-white dark:bg-[#05152D] drop-shadow z-10">
-                <TableRow>
-                  <TableHead className="w-[50px] text-center">No</TableHead>
-                  <TableHead>Role</TableHead>
-                  <TableHead>Image</TableHead>
-                  <TableHead>Name</TableHead>
-                  <TableHead>Email</TableHead>
-                  <TableHead>Address</TableHead>
-                  <TableHead>Phone Number</TableHead>
-                  <TableHead>Create at</TableHead>
-                  <TableHead className="text-center">Action</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {users?.map((user, index) => (
-                  <TableRow key={user.user_id}>
-                    <TableCell className="text-center">
-                      {(meta?.page! - 1) * meta?.limit! + index + 1}
-                    </TableCell>
-                    <TableCell>{user.role}</TableCell>
-                    <TableCell>
-                      <Avatar className="shadow-products-card">
-                        <AvatarImage
-                          src={user.avatar || "/images/default-avatar.png"}
-                          alt={user.name}
-                          loading="lazy"
-                          className="object-cover"
-                        />
-                        <AvatarFallback>CN</AvatarFallback>
-                      </Avatar>
-                    </TableCell>
-                    <TableCell>{user.name}</TableCell>
-                    <TableCell>{user.email}</TableCell>
-                    <TableCell>{user.address}</TableCell>
-                    <TableCell>{user.phone_number}</TableCell>
-                    <TableCell>
-                      {format(new Date(user.time), "iiii, dd MMM Y")}
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex justify-center items-center gap-4">
-                        <CustomDialog
-                          title={`Edit Profile ${user.name}`}
-                          description={
-                            <EditProfileUsers
-                              datas={user}
-                              refecthUsers={() => refetchUsers()}
-                            />
-                          }
-                        >
-                          <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
-                            <PencilLine />
-                          </div>
-                        </CustomDialog>
-                        <Alert
-                          title="Are you sure delete this Products from Database?"
-                          onAction={() => handleDeleteUsers(user.user_id)}
-                          onActionTitle="Delete"
-                        >
-                          <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
-                            <Trash2 />
-                          </div>
-                        </Alert>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          )}
+          <Table>
+            <TableCaption>A list of your recent Users.</TableCaption>
+            <TableHeader className="sticky top-0 bg-white dark:bg-[#05152D] drop-shadow z-10">
+              <TableRow>
+                <TableHead className="w-[50px] text-center">No</TableHead>
+                <TableHead>Role</TableHead>
+                <TableHead>Image</TableHead>
+                <TableHead>Name</TableHead>
+                <TableHead>Email</TableHead>
+                <TableHead>Address</TableHead>
+                <TableHead>Phone Number</TableHead>
+                <TableHead>Create at</TableHead>
+                <TableHead className="text-center">Action</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {isLoading ? (
+                <SkeletonUsersAdmin />
+              ) : (
+                <>
+                  {users?.map((user, index) => (
+                    <TableRow key={user.user_id}>
+                      <TableCell className="text-center">
+                        {(meta?.page! - 1) * meta?.limit! + index + 1}
+                      </TableCell>
+                      <TableCell>{user.role}</TableCell>
+                      <TableCell>
+                        <Avatar className="shadow-products-card">
+                          <AvatarImage
+                            src={user.avatar || "/images/default-avatar.png"}
+                            alt={user.name}
+                            loading="lazy"
+                            className="object-cover"
+                          />
+                        </Avatar>
+                      </TableCell>
+                      <TableCell>{user.name}</TableCell>
+                      <TableCell>{user.email}</TableCell>
+                      <TableCell>{user.address}</TableCell>
+                      <TableCell>{user.phone_number}</TableCell>
+                      <TableCell>
+                        {format(new Date(user.time), "iiii, dd MMM Y")}
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex justify-center items-center gap-4">
+                          <CustomDialog
+                            title={`Edit Profile ${user.name}`}
+                            description={
+                              <EditProfileUsers
+                                datas={user}
+                                refecthUsers={() => refetchUsers()}
+                              />
+                            }
+                          >
+                            <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
+                              <PencilLine />
+                            </div>
+                          </CustomDialog>
+                          <Alert
+                            title="Are you sure delete this Products from Database?"
+                            onAction={() => handleDeleteUsers(user.user_id)}
+                            onActionTitle="Delete"
+                          >
+                            <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
+                              <Trash2 />
+                            </div>
+                          </Alert>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </>
+              )}
+            </TableBody>
+          </Table>
         </div>
         <div className="mt-4">
           <Pagination

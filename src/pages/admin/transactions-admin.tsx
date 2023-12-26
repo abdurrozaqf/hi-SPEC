@@ -1,9 +1,9 @@
 import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Loader2 } from "lucide-react";
 import { format } from "date-fns";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import SkeletonTransactionsAdmin from "@/components/SkeletonTransactionsAdmin";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { useToast } from "@/components/ui/use-toast";
 import Pagination from "@/components/Pagination";
 import Layout from "@/components/Layout";
@@ -62,39 +62,29 @@ const TransactionsAdmin = () => {
         <h1 className="text-2xl font-medium text-center mb-10">
           Database Transactions
         </h1>
-
-        {transactions === null ? (
-          <div className="flex grow justify-center items-center">
-            <p className="text-sm text-slate-500 font-light tracking-wide">
-              There is no transaction list
-            </p>
-          </div>
-        ) : (
-          <div className="flex justify-center grow overflow-auto">
-            {isLoading ? (
-              <div className="flex items-center h-full">
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                <p>Loading</p>
-              </div>
-            ) : (
-              <Table>
-                <TableCaption>A list of users recent invoices.</TableCaption>
-                <TableHeader className="sticky top-0 bg-white dark:bg-[#05152D] drop-shadow z-10">
-                  <TableRow>
-                    <TableHead className="w-[50px] text-center">No.</TableHead>
-                    <TableHead>Image</TableHead>
-                    <TableHead>Username</TableHead>
-                    <TableHead className="w-[100px] text-center">
-                      Image Product
-                    </TableHead>
-                    <TableHead>Name Product</TableHead>
-                    <TableHead>Nota</TableHead>
-                    <TableHead>Total Price</TableHead>
-                    <TableHead>Date</TableHead>
-                    <TableHead>Status</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
+        <div className="flex justify-center grow overflow-auto">
+          <Table>
+            <TableCaption>A list of users recent invoices.</TableCaption>
+            <TableHeader className="sticky top-0 bg-white dark:bg-[#05152D] drop-shadow z-10">
+              <TableRow>
+                <TableHead className="w-[50px] text-center">No.</TableHead>
+                <TableHead>Image</TableHead>
+                <TableHead>Username</TableHead>
+                <TableHead className="w-[100px] text-center">
+                  Image Product
+                </TableHead>
+                <TableHead>Name Product</TableHead>
+                <TableHead>Nota</TableHead>
+                <TableHead>Total Price</TableHead>
+                <TableHead>Date</TableHead>
+                <TableHead>Status</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {isLoading ? (
+                <SkeletonTransactionsAdmin />
+              ) : (
+                <>
                   {transactions?.map((data, index) => (
                     <TableRow key={index}>
                       <TableCell className="text-center">
@@ -110,7 +100,6 @@ const TransactionsAdmin = () => {
                             loading="lazy"
                             className="object-cover"
                           />
-                          <AvatarFallback>CN</AvatarFallback>
                         </Avatar>
                       </TableCell>
                       <TableCell>{data.user_name}</TableCell>
@@ -142,11 +131,11 @@ const TransactionsAdmin = () => {
                       </TableCell>
                     </TableRow>
                   ))}
-                </TableBody>
-              </Table>
-            )}
-          </div>
-        )}
+                </>
+              )}
+            </TableBody>
+          </Table>
+        </div>
         <div className="mt-4">
           <Pagination
             meta={meta}
