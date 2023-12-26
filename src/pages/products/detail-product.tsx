@@ -27,7 +27,9 @@ const DetailProduct = () => {
 
   useEffect(() => {
     fetchData();
-    fetchDataProfile();
+    if (token) {
+      fetchDataProfile();
+    }
   }, []);
 
   async function fetchData() {

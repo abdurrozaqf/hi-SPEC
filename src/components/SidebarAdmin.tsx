@@ -168,7 +168,7 @@ const SidebarAdmin = () => {
             >
               <AvatarImage
                 src={user.avatar || DefaultAvatar}
-                alt={user?.name || "Guest"}
+                alt={user.name || "Guest"}
                 loading="lazy"
                 className="object-cover"
               />
@@ -182,9 +182,9 @@ const SidebarAdmin = () => {
                   : `w-0 opacity-50 -translate-x-28 transition-all absolute flex flex-col text-[0]`
               }
             >
-              <span>{user?.name || "Guest"}</span>
+              <span>{user.name || "Guest"}</span>
               <span className={sidebar === "true" ? "text-xs" : `text-[0]`}>
-                {user?.email || " guest@mail.com"}
+                {user.email || " guest@mail.com"}
               </span>
             </p>
           </div>
