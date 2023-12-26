@@ -3,7 +3,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 const SkeletonHome = () => {
   return (
     <div className="w-full">
-      <Skeleton className="rounded-xl h-28 w-full hidden md:block" />
       <div className="flex flex-col gap-8 font-poppins mt-0 lg:mt-10">
         <div className="flex flex-col gap-6">
           <div className="flex items-center justify-between w-full">
@@ -17,7 +16,7 @@ const SkeletonHome = () => {
                 className="w-full h-fit flex flex-col rounded-xl shadow-products-card overflow-auto"
               >
                 <div className="flex items-center justify-center py-4 grow">
-                  <Skeleton className="rounded-full w-32 h-32" />
+                  <Skeleton className="rounded-full w-36 h-36" />
                 </div>
                 <div className="bg-white dark:bg-[#1265ae24] px-4 py-3 flex flex-col gap-3">
                   <Skeleton className="rounded-full h-4 mr-10" />
@@ -42,7 +41,7 @@ const SkeletonHome = () => {
                 className="w-full h-fit flex flex-col rounded-xl shadow-products-card overflow-auto"
               >
                 <div className="flex items-center justify-center py-4 grow">
-                  <Skeleton className="rounded-full w-32 h-32" />
+                  <Skeleton className="rounded-full w-36 h-36" />
                 </div>
                 <div className="bg-white dark:bg-[#1265ae24] px-4 py-3 flex flex-col gap-3">
                   <Skeleton className="rounded-full h-4 mr-10" />
@@ -67,7 +66,7 @@ const SkeletonHome = () => {
                 className="w-full h-fit flex flex-col rounded-xl shadow-products-card overflow-auto"
               >
                 <div className="flex items-center justify-center py-4 grow">
-                  <Skeleton className="rounded-full w-32 h-32" />
+                  <Skeleton className="rounded-full w-36 h-36" />
                 </div>
                 <div className="bg-white dark:bg-[#1265ae24] px-4 py-3 flex flex-col gap-3">
                   <Skeleton className="rounded-full h-4 mr-10" />
