@@ -1,7 +1,7 @@
 import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Loader2 } from "lucide-react";
 
+import SkeletonProducts from "@/components/SkeletonProducts";
 import BannerTagline from "@/components/BannerTagline";
 import { useToast } from "@/components/ui/use-toast";
 import ProductCard from "@/components/ProductCard";
@@ -52,10 +52,7 @@ const Products = () => {
         <div className="space-y-8 flex flex-col grow">
           <BannerTagline />
           {isLoading ? (
-            <div className="flex items-center justify-center h-full">
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              <p>Loading</p>
-            </div>
+            <SkeletonProducts />
           ) : (
             <>
               {datas == undefined ? (
@@ -65,7 +62,7 @@ const Products = () => {
                   </h1>
                 </div>
               ) : (
-                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
                   {datas?.map((data, index) => {
                     return <ProductCard key={index} data={data} />;
                   })}

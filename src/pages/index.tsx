@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Loader2 } from "lucide-react";
 
 import BannerTagline from "@/components/BannerTagline";
+import SkeletonHome from "@/components/SkeletonHome";
 import { useToast } from "@/components/ui/use-toast";
 import ProductCard from "@/components/ProductCard";
 import Layout from "@/components/Layout";
@@ -74,10 +74,7 @@ const Home = () => {
     <Layout>
       <BannerTagline />
       {isLoading ? (
-        <div className="flex items-center justify-center h-full">
-          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-          <p>Loading</p>
-        </div>
+        <SkeletonHome />
       ) : (
         <>
           <div className="flex flex-col gap-8 font-poppins mt-0 lg:mt-10">
