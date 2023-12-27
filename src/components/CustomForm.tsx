@@ -40,7 +40,9 @@ export function CustomFormField<T extends FieldValues>(
       name={name}
       render={({ field }) => (
         <FormItem className="flex flex-col">
-          <FormLabel>{label}</FormLabel>
+          <FormLabel className="text-base text-black dark:text-white">
+            {label}
+          </FormLabel>
           <FormControl>{children(field)}</FormControl>
           {description && <FormDescription>{description}</FormDescription>}
           <FormMessage />
