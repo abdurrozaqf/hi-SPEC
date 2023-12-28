@@ -1,4 +1,4 @@
-import { ArrowLeft, Heart, Loader2 } from "lucide-react";
+import { ArrowLeft, Heart } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
@@ -15,6 +15,7 @@ import { formatPrice } from "@/utils/formatter";
 
 import BannerSponsorDetailProduct from "/images/iklan.png";
 import IconWishlist from "/images/wishlist-icon.png";
+import SkeletonDetail from "@/components/SkeletonDetail";
 
 const DetailProduct = () => {
   const [profile, setProfile] = useState<MyWishlists[]>();
@@ -100,10 +101,7 @@ const DetailProduct = () => {
     <Layout>
       <div className="flex flex-col xl:flex-row gap-10 justify-center lg:gap-6 grow bg-white dark:bg-[#1265ae24] rounded-lg px-0 lg:px-10 py-4 lg:py-6 shadow">
         {isLoading ? (
-          <div className="flex items-center justify-center h-full">
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            <p>Loading</p>
-          </div>
+          <SkeletonDetail />
         ) : (
           <>
             <div className="flex flex-col">
