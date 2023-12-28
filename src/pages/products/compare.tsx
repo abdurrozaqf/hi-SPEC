@@ -11,14 +11,18 @@ import Layout from "@/components/Layout";
 import { getDetailProduct } from "@/utils/apis/products/api";
 import { Product } from "@/utils/apis/products";
 import { useCompareStore } from "@/utils/state";
+import { useState } from "react";
+import SkeletonCompare from "@/components/SkeletonCompare";
 
 const Compare = () => {
   const { compares, addCompare, updateCompare, deleteCompare } =
     useCompareStore((state) => state);
   const navigate = useNavigate();
   const { toast } = useToast();
+  const [isLoading, setIsLoading] = useState(false);
 
   async function fetchDetail(id: number, index: number) {
+    setIsLoading(true);
     try {
       const result = await getDetailProduct(id);
       updateCompare(index, result.data);
@@ -28,6 +32,8 @@ const Compare = () => {
         description: error.toString(),
         variant: "destructive",
       });
+    } finally {
+      setIsLoading(true);
     }
   }
 
@@ -64,15 +70,19 @@ const Compare = () => {
                     className="ml-2 cursor-pointer dark:hover:bg-black/20 rounded-lg"
                   />
                 </div>
-                <div className="flex items-start justify-center grow">
-                  {Object.keys(data).length !== 0 ? (
-                    <CardCompare key={index} data={data as Product} />
-                  ) : (
-                    <p className="h-full flex justify-center items-center text-center  text-gray-400 ">
-                      Search Product
-                    </p>
-                  )}
-                </div>
+                {isLoading ? (
+                  <SkeletonCompare />
+                ) : (
+                  <div className="flex items-start justify-center grow">
+                    {Object.keys(data).length !== 0 ? (
+                      <CardCompare key={index} data={data as Product} />
+                    ) : (
+                      <p className="h-full flex justify-center items-center text-center  text-gray-400 ">
+                        Search Product
+                      </p>
+                    )}
+                  </div>
+                )}
               </div>
             ))}
             <Button className="w-fit text-white" onClick={() => addCompare()}>
