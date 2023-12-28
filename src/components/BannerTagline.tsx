@@ -10,7 +10,7 @@ const BannerTagline = () => {
         </h1>
         <img
           src={HumanBannerTagline}
-          alt="Image Human Banner Tagline"
+          alt="image-human-banner"
           loading="lazy"
           className="absolute -bottom-1 -left-28 h-[155px]"
         />

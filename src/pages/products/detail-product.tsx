@@ -59,7 +59,6 @@ const DetailProduct = () => {
         description: error.toString(),
         variant: "destructive",
       });
-    } finally {
     }
   }
 

@@ -1,7 +1,7 @@
 import { useParams, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Loader2 } from "lucide-react";
 
+import SkeletonAllByCategories from "@/components/SkeletonAllByCategories";
 import BannerTagline from "@/components/BannerTagline";
 import { useToast } from "@/components/ui/use-toast";
 import ProductCard from "@/components/ProductCard";
@@ -54,15 +54,12 @@ const AllByCategories = () => {
         <div className="space-y-8 flex flex-col grow">
           <BannerTagline />
           {isLoading ? (
-            <div className="flex items-center justify-center h-full">
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              <p>Loading</p>
-            </div>
+            <SkeletonAllByCategories />
           ) : (
             <>
               {datas == undefined ? (
                 <div className="flex flex-col items-center justify-center grow">
-                  <h1 className="font-semibold text-slate-500">
+                  <h1 className="font-medium italic text-slate-500">
                     Laptop not found
                   </h1>
                 </div>
