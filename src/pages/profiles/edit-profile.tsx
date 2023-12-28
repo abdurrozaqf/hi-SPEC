@@ -290,7 +290,7 @@ const EditProfile = () => {
                     type="submit"
                     disabled={form.formState.isSubmitting}
                     aria-disabled={form.formState.isSubmitting}
-                    className="text-base bg-[#1FBB5C] text-black shadow-md px-10 w-full md:w-fit"
+                    className="text-base bg-[#1FBB5C] text-white shadow-md px-10 w-full md:w-fit"
                   >
                     {form.formState.isSubmitting ? (
                       <>

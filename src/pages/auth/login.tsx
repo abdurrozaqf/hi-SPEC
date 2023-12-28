@@ -37,7 +37,7 @@ const Login = () => {
               title="Register Account"
               description={<RegisterForm />}
             >
-              <Button className="w-full h-fit py-3 text-lg rounded-full bg-[#48B774] hover:bg-[#3b9e62] text-black font-semibold tracking-wide">
+              <Button className="w-full h-fit py-3 text-lg rounded-full bg-[#48B774] hover:bg-[#3b9e62] text-white font-semibold tracking-wide">
                 Register
               </Button>
             </CustomDialog>
