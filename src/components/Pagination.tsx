@@ -27,6 +27,7 @@ const Pagination = (props: Props) => {
         size="icon"
         disabled={meta?.page === 1}
         onClick={onClickPrevious}
+        aria-label="previous"
         className="hover:bg-[#1265AE] shadow-md text-white"
       >
         <ChevronLeft className="h-6 w-6" />
@@ -51,6 +52,7 @@ const Pagination = (props: Props) => {
         size="icon"
         disabled={meta?.page! === meta?.total_page || meta?.total_page === 0}
         onClick={onClickNext}
+        aria-label="next"
         className="hover:bg-[#1265AE] shadow-md text-white"
       >
         <ChevronRight className="h-6 w-6" />

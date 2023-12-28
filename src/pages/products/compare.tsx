@@ -1,8 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, X } from "lucide-react";
+import { useState } from "react";
 
 import BannerSponsorCompare from "@/components/BannerSponsorCompare";
 import SearchCompareBox from "@/components/SearchCompareBox";
+import SkeletonCompare from "@/components/SkeletonCompare";
 import { useToast } from "@/components/ui/use-toast";
 import CardCompare from "@/components/CardCompare";
 import { Button } from "@/components/ui/button";
@@ -11,8 +13,6 @@ import Layout from "@/components/Layout";
 import { getDetailProduct } from "@/utils/apis/products/api";
 import { Product } from "@/utils/apis/products";
 import { useCompareStore } from "@/utils/state";
-import { useState } from "react";
-import SkeletonCompare from "@/components/SkeletonCompare";
 
 const Compare = () => {
   const { compares, addCompare, updateCompare, deleteCompare } =
@@ -33,7 +33,7 @@ const Compare = () => {
         variant: "destructive",
       });
     } finally {
-      setIsLoading(true);
+      setIsLoading(false);
     }
   }
 
@@ -41,7 +41,7 @@ const Compare = () => {
     <Layout>
       <div className="flex flex-col grow">
         <BannerSponsorCompare />
-        <div className="bg-white rounded-xl flex flex-col font-poppins shadow-lg px-4 py-6 lg:p-14 grow overflow-auto dark:bg-[#1265ae24]">
+        <div className="flex flex-col grow bg-white dark:bg-[#1265ae24] rounded-xl font-poppins px-4 py-6 lg:p-14 overflow-auto shadow-products-card">
           <div className="flex flex-col md:flex-row items-center mb-10">
             <div
               onClick={() => navigate(-1)}

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
+import SkeletonEditProfile from "@/components/SkeletonEditProfile";
 import { CustomFormField } from "@/components/CustomForm";
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
@@ -125,10 +126,7 @@ const EditProfile = () => {
     <Layout>
       <div className="grow bg-white shadow-lg rounded-xl p-4 md:p-8 lg:p-24 font-poppins dark:bg-transparent overflow-auto">
         {isLoading ? (
-          <div className="flex items-center justify-center h-full">
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            <p>Loading</p>
-          </div>
+          <SkeletonEditProfile />
         ) : (
           <>
             <div className="h-fit flex items-center justify-between mb-16">
@@ -137,7 +135,8 @@ const EditProfile = () => {
               </h1>
               <Button
                 type="button"
-                className="w-fit h-fit hover:bg-blue-800 block md:hidden"
+                aria-label="Close Edit Profile"
+                className="w-fit h-fit block md:hidden"
                 onClick={() => navigate(-1)}
               >
                 <X size={14} />
@@ -168,12 +167,13 @@ const EditProfile = () => {
                       {profile?.name}
                     </p>
                   </div>
-                  <div
+                  <Button
                     onClick={() => navigate(-1)}
-                    className="hidden md:block p-2 bg-[#E4ECF1] dark:bg-[#1265AE] hover:bg-[#1265AE] hover:dark:bg-[#E4ECF1] hover:text-white hover:dark:text-black w-fit h-fit rounded-lg shadow-md cursor-pointer"
+                    aria-label="Close Edit Profile"
+                    className="hidden md:block w-fit h-fit"
                   >
                     <X size={35} />
-                  </div>
+                  </Button>
                 </div>
 
                 <CustomFormField
@@ -202,6 +202,7 @@ const EditProfile = () => {
                         {...fileRef}
                         type="file"
                         id="input-image"
+                        aria-label="Profile Picture"
                         accept="image/jpg, image/jpeg, image/png"
                         className="cursor-pointer"
                         disabled={form.formState.isSubmitting}

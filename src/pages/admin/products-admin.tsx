@@ -127,13 +127,17 @@ const ProductsAdmin = () => {
           <div className="flex flex-col md:flex-row items-center gap-x-6 gap-y-4">
             <input
               type="search"
+              aria-label="Search Products"
               placeholder="Search by name product"
               onChange={(e) => debounceRequest1(e.target.value)}
               className="w-full md:w-fit placeholder:italic placeholder:text-sm outline-none py-2 px-4 rounded-lg dark:bg-transparent shadow dark:shadow-white"
             />
             <div className="flex items-center gap-x-4">
               <Select onValueChange={(value) => debounceRequest2(value)}>
-                <SelectTrigger className="w-52 placeholder:italic placeholder:text-sm outline-none py-2 px-4 rounded-lg dark:bg-transparent shadow dark:shadow-white border-none">
+                <SelectTrigger
+                  aria-label="Select Categories"
+                  className="w-52 placeholder:italic placeholder:text-sm outline-none py-2 px-4 rounded-lg dark:bg-transparent shadow dark:shadow-white border-none"
+                >
                   <SelectValue placeholder="Select by categories" />
                 </SelectTrigger>
                 <SelectContent>
@@ -154,7 +158,10 @@ const ProductsAdmin = () => {
           </div>
           <div className="hidden md:block">
             <CustomDialog title="Add Products" description={<AddProduct />}>
-              <div className="p-3 bg-White shadow dark:shadow-white flex items-center justify-center rounded-xl">
+              <div
+                aria-label="Add Products"
+                className="p-3 bg-White shadow dark:shadow-white flex items-center justify-center rounded-xl"
+              >
                 <FilePlus size={30} />
               </div>
             </CustomDialog>
@@ -195,7 +202,10 @@ const ProductsAdmin = () => {
                       <TableCell>{formatPrice(product.price!)}</TableCell>
                       <TableCell>{product.category}</TableCell>
                       <TableCell>
-                        <Link to={`/detail-product/${product.product_id}`}>
+                        <Link
+                          to={`/detail-product/${product.product_id}`}
+                          aria-label="Details Products"
+                        >
                           <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
                             <Laptop />
                           </div>
@@ -212,7 +222,10 @@ const ProductsAdmin = () => {
                               />
                             }
                           >
-                            <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
+                            <div
+                              aria-label="Edit Products"
+                              className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center"
+                            >
                               <PencilLine />
                             </div>
                           </CustomDialog>
@@ -221,7 +234,10 @@ const ProductsAdmin = () => {
                             onAction={() => handleDelete(product.product_id)}
                             onActionTitle="Delete"
                           >
-                            <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
+                            <div
+                              aria-label="Delete Products"
+                              className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center"
+                            >
                               <Trash2 />
                             </div>
                           </Alert>

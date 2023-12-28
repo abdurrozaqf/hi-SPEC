@@ -100,6 +100,7 @@ const UsersAdmin = () => {
         <div className="flex my-6 md:my-10 px-4 md:px-0">
           <input
             type="search"
+            aria-label="Search Users"
             placeholder="Search by name user"
             onChange={(e) => debounceRequest(e.target.value)}
             className="w-full md:w-fit placeholder:italic placeholder:text-sm outline-none py-2 px-4 rounded-lg dark:bg-transparent shadow dark:shadow-white"
@@ -133,7 +134,7 @@ const UsersAdmin = () => {
                       </TableCell>
                       <TableCell>{user.role}</TableCell>
                       <TableCell>
-                        <Avatar className="shadow-products-card">
+                        <Avatar className="shadow-md">
                           <AvatarImage
                             src={user.avatar || "/images/default-avatar.png"}
                             alt={user.name}
@@ -160,7 +161,10 @@ const UsersAdmin = () => {
                               />
                             }
                           >
-                            <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
+                            <div
+                              aria-label="Edit Users"
+                              className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center"
+                            >
                               <PencilLine />
                             </div>
                           </CustomDialog>
@@ -169,7 +173,10 @@ const UsersAdmin = () => {
                             onAction={() => handleDeleteUsers(user.user_id)}
                             onActionTitle="Delete"
                           >
-                            <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
+                            <div
+                              aria-label="Delete Users"
+                              className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center"
+                            >
                               <Trash2 />
                             </div>
                           </Alert>

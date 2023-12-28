@@ -43,6 +43,7 @@ const CategoryBox = (props: Props) => {
         />
         <Checkbox
           id="all"
+          aria-label="All Categories"
           checked={!category}
           className="bg-[#E4ECF1] w-4 h-4 border-black/25"
         />
@@ -64,6 +65,7 @@ const CategoryBox = (props: Props) => {
         />
         <Checkbox
           id="office"
+          aria-label="Office"
           checked={category === "Office"}
           className="bg-[#E4ECF1] w-4 h-4 border-black/25"
         />
@@ -85,6 +87,7 @@ const CategoryBox = (props: Props) => {
         />
         <Checkbox
           id="multimedia"
+          aria-label="Multimedia"
           checked={category === "Multimedia"}
           className="bg-[#E4ECF1] w-4 h-4 border-black/25"
         />
@@ -106,6 +109,7 @@ const CategoryBox = (props: Props) => {
         />
         <Checkbox
           id="gaming"
+          aria-label="Gaming"
           checked={category === "Gaming"}
           className="bg-[#E4ECF1] w-4 h-4 border-black/25"
         />

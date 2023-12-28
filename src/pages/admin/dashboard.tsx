@@ -65,13 +65,11 @@ const Dashboard = () => {
               <div className="bg-[#FF579A] rounded-full p-3 absolute right-10 hidden xl:block">
                 <Box color="white" size={50} />
               </div>
-              <p className="font-medium text-[#6B80AA] text-xl">
-                Total Products
-              </p>
+              <p className="font-semibold text-xl">Total Products</p>
               <h1 className="font-bold text-4xl mt-3">
                 {datas?.total_product || "0"}
               </h1>
-              <p className="text-black/50 dark:text-white/75 mt-6 tracking-wider">
+              <p className="text-black/75 dark:text-white/75 mt-6 tracking-wider">
                 Total all products already in hi’SPEC
               </p>
             </div>
@@ -79,11 +77,11 @@ const Dashboard = () => {
               <div className="bg-[#5C60F6] rounded-full p-3 absolute right-10 hidden xl:block">
                 <Users color="white" size={50} />
               </div>
-              <p className="font-medium text-[#6B80AA] text-xl">Total Users</p>
+              <p className="font-semibold text-xl">Total Users</p>
               <h1 className="font-bold text-4xl mt-3">
                 {datas?.total_user || "0"}
               </h1>
-              <p className="text-black/50 dark:text-white/75 mt-6 tracking-wider">
+              <p className="text-black/75 dark:text-white/75 mt-6 tracking-wider">
                 Total cerate account in hi’SPEC
               </p>
             </div>
@@ -91,13 +89,13 @@ const Dashboard = () => {
               <div className="bg-[#01CC89] rounded-full p-3 absolute right-10 hidden xl:block">
                 <DollarSign color="white" size={50} />
               </div>
-              <p className="font-medium text-[#6B80AA] text-xl truncate">
+              <p className="font-semibold text-xl truncate">
                 Total Transactions
               </p>
               <h1 className="font-bold text-4xl mt-3">
                 {datas?.total_transaction || "0"}
               </h1>
-              <p className="text-black/50 dark:text-white/75 mt-6 tracking-wider">
+              <p className="text-black/75 dark:text-white/75 mt-6 tracking-wider">
                 Total transactions user from hi’SPEC
               </p>
             </div>

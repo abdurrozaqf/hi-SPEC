@@ -32,12 +32,18 @@ const Navbar = () => {
         {token && user.role !== "admin" ? (
           <div className=" flex items-center gap-1 md:gap-2 lg:gap-4 xl:gap-6">
             <Link to="/wishlist">
-              <div className="p-2 lg:p-3 rounded-xl shadow-md visible bg-[#E4ECF1] dark:bg-[#1265AE] hover:bg-[#1265AE] hover:dark:bg-[#E4ECF1] text-black dark:text-white hover:text-white hover:dark:text-black">
+              <div
+                aria-label="wishlists"
+                className="p-2 lg:p-3 rounded-xl shadow-md visible bg-[#E4ECF1] dark:bg-[#1265AE] hover:bg-[#1265AE] hover:dark:bg-[#E4ECF1] text-black dark:text-white hover:text-white hover:dark:text-black"
+              >
                 <BookHeartIcon size={25} />
               </div>
             </Link>
             <Link to="/transaction">
-              <div className="p-2 lg:p-3 rounded-xl shadow-md visible bg-[#E4ECF1] dark:bg-[#1265AE] hover:bg-[#1265AE] hover:dark:bg-[#E4ECF1] text-black dark:text-white hover:text-white hover:dark:text-black">
+              <div
+                aria-label="transactions"
+                className="p-2 lg:p-3 rounded-xl shadow-md visible bg-[#E4ECF1] dark:bg-[#1265AE] hover:bg-[#1265AE] hover:dark:bg-[#E4ECF1] text-black dark:text-white hover:text-white hover:dark:text-black"
+              >
                 <NewspaperIcon size={25} />
               </div>
             </Link>

@@ -1,7 +1,8 @@
-import { ArrowLeft, Heart } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
+import { ArrowLeft, Heart } from "lucide-react";
 import { useEffect, useState } from "react";
 
+import SkeletonDetailProduct from "@/components/SkeletonDetailProduct";
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import Alert from "@/components/AlertDialog";
@@ -15,7 +16,6 @@ import { formatPrice } from "@/utils/formatter";
 
 import BannerSponsorDetailProduct from "/images/iklan.png";
 import IconWishlist from "/images/wishlist-icon.png";
-import SkeletonDetail from "@/components/SkeletonDetail";
 
 const DetailProduct = () => {
   const [profile, setProfile] = useState<MyWishlists[]>();
@@ -98,9 +98,9 @@ const DetailProduct = () => {
 
   return (
     <Layout>
-      <div className="flex flex-col xl:flex-row gap-10 justify-center lg:gap-6 grow bg-white dark:bg-[#1265ae24] rounded-lg px-0 lg:px-10 py-4 lg:py-6 shadow">
+      <div className="flex flex-col xl:flex-row gap-10 justify-center lg:gap-6 grow bg-white dark:bg-[#1265ae24] rounded-lg px-0 lg:px-10 py-4 lg:py-6 shadow-products-card">
         {isLoading ? (
-          <SkeletonDetail />
+          <SkeletonDetailProduct />
         ) : (
           <>
             <div className="flex flex-col">
@@ -124,28 +124,30 @@ const DetailProduct = () => {
               </div>
             </div>
             <div className="flex flex-col justify-center px-6 grow">
-              <h3 className="text-[#1E1E1E] dark:text-white font-semibold text-xl mt-4 mb-1 truncate">
+              <h2 className="text-[#1E1E1E] dark:text-white font-semibold text-xl mt-4 mb-1 truncate">
                 {product?.name}
-              </h3>
+              </h2>
               <h1 className="text-[#1E1E1E] dark:text-white font-bold text-xl lg:text-3xl mb-2">
                 {formatPrice(product?.price!)}
               </h1>
               <hr className="bg-[#757575]" />
-              <p className="text-[#48B774] font-bold text-base my-2">Details</p>
+              <p className="text-[#1D7F44] font-bold text-lg my-2 tracking-wide">
+                Details
+              </p>
               <hr className="bg-[#757575]" />
 
-              <h4 className="text-[#1E1E1E] dark:text-white font-bold text-base mt-4">
+              <h2 className="text-[#1E1E1E] dark:text-white font-bold text-base mt-4">
                 Product information
-              </h4>
+              </h2>
               <p>Category: {product?.category}</p>
               <p>RAM Capacity: {product?.ram}</p>
               <p>Memory Capacity: {product?.storage}</p>
               <p>Processor Type: {product?.cpu}</p>
               <p>Display Size: {product?.display}</p>
 
-              <h4 className="text-[#1E1E1E] dark:text-white font-bold text-base mt-4">
+              <h2 className="text-[#1E1E1E] dark:text-white font-bold text-base mt-4">
                 Specifications
-              </h4>
+              </h2>
               <p>Thickness: {product?.thickness}</p>
               <p>Bluetooth: {product?.bluetooth}</p>
               <p>HDMI: {product?.hdmi}</p>
