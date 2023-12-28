@@ -1,6 +1,5 @@
 import { Skeleton } from "./ui/skeleton";
 import Alert from "./AlertDialog";
-import BannerSponsorDetailProduct from "/images/iklan.png";
 
 const SkeletonDetail = () => {
   return (
