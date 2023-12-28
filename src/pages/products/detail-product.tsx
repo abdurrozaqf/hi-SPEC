@@ -45,7 +45,7 @@ const DetailProduct = () => {
         variant: "destructive",
       });
     } finally {
-      setIsLoading(false);
+      setIsLoading(true);
     }
   }
 
