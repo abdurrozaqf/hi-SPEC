@@ -2,7 +2,6 @@ import { ReactNode } from "react";
 
 import SidebarAdmin from "@/components/SidebarAdmin";
 import SidebarUser from "@/components/SidebarUser";
-import { Toaster } from "@/components/ui/toaster";
 import Navbar from "@/components/Navbar";
 
 import { useToken } from "@/utils/contexts/token";
@@ -25,7 +24,6 @@ const Layout = (props: Readonly<Props>) => {
           {children}
         </div>
       </div>
-      <Toaster />
     </div>
   );
 };

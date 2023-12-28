@@ -34,7 +34,7 @@ const ProductCardWishlist = (props: Props) => {
             src={data.picture}
             alt={data.name}
             loading="lazy"
-            className="h-32"
+            className="h-32 w-auto"
           />
         </div>
         <div className="bg-white dark:bg-[#1265ae24] px-4 py-3">
@@ -54,13 +54,18 @@ const ProductCardWishlist = (props: Props) => {
               onActionTitle="Delete"
               style="w-full"
             >
-              <Button variant={"destructive"} className="w-full">
+              <Button className="w-full bg-[#CC4949] hover:bg-[#B13838] text-white">
                 Delete
               </Button>
             </Alert>
             <DropdownMenu>
               <DropdownMenuTrigger>
-                <Button size="icon" variant="outline" className="h-fit p-2 ">
+                <Button
+                  size="icon"
+                  variant="outline"
+                  className="h-fit p-2"
+                  aria-label="More options"
+                >
                   <MoreHorizontal />
                 </Button>
               </DropdownMenuTrigger>

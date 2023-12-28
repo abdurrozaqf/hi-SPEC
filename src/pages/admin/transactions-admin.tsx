@@ -123,7 +123,7 @@ const TransactionsAdmin = () => {
                             : data.status === "Canceled"
                             ? "text-red-600 font-medium text-lg"
                             : data.status === "Success"
-                            ? "text-green-600 font-medium text-lg"
+                            ? "text-green-700 font-medium text-lg"
                             : "text-black font-medium text-lg"
                         }
                       >

@@ -115,7 +115,7 @@ const Transaction = () => {
                           : data.status === "Canceled"
                           ? "text-red-600 font-medium text-lg"
                           : data.status === "Success"
-                          ? "text-green-600 font-medium text-lg"
+                          ? "text-green-700 font-medium text-lg"
                           : "text-black font-medium text-lg"
                       }
                     >
@@ -136,7 +136,10 @@ const Transaction = () => {
                         onAction={() => handleNota(data.transaction_id)}
                         onActionTitle="Download"
                       >
-                        <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
+                        <div
+                          aria-label="Downlaad Invoice"
+                          className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center"
+                        >
                           <DownloadIcon />
                         </div>
                       </Alert>

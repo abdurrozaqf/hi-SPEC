@@ -17,7 +17,7 @@ const ProductCard = (props: Props) => {
             src={data.picture}
             alt={data.name}
             loading="lazy"
-            className="h-36"
+            className="h-36 w-auto"
           />
         </div>
         <div className="bg-white dark:bg-[#1265ae24] px-4 py-3 font-poppins">

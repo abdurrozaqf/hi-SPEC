@@ -7,7 +7,7 @@ import Products from "@/pages/products";
 import AllByCategories from "@/pages/products/all-by-categories";
 import DetailProduct from "@/pages/products/detail-product";
 import Compare from "@/pages/products/compare";
-import Profile from "@/pages/profiles";
+import ProfileUser from "@/pages/profiles";
 import EditProfile from "@/pages/profiles/edit-profile";
 import WishList from "@/pages/profiles/wishlist";
 import Transaction from "@/pages/profiles/transaction";
@@ -48,7 +48,7 @@ export default function Router() {
         },
         {
           path: "/profile",
-          element: <Profile />,
+          element: <ProfileUser />,
         },
         {
           path: "/profile/edit",
