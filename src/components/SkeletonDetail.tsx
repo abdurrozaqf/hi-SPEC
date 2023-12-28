@@ -4,9 +4,7 @@ import Alert from "./AlertDialog";
 const SkeletonDetail = () => {
   return (
     <div className="flex flex-col xl:flex-row gap-10 justify-center lg:gap-6 grow">
-      <div className="flex items-center justify-center grow">
-        <Skeleton className="h-60 w-full" />
-      </div>
+      {/* test */}
       <div className="flex flex-col justify-center px-6 grow">
         <Skeleton className="mt-4 mb-1 h-8 w-full" />
         <Skeleton className="mb-2 h-10 w-3/5" />
