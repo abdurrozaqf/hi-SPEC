@@ -15,7 +15,7 @@ import { formatPrice } from "@/utils/formatter";
 
 import BannerSponsorDetailProduct from "/images/iklan.png";
 import IconWishlist from "/images/wishlist-icon.png";
-import SkeletonDetail from "@/components/SkeletenDetail";
+import SkeletonDetail from "@/components/SkeletonDetail";
 
 const DetailProduct = () => {
   const [profile, setProfile] = useState<MyWishlists[]>();
