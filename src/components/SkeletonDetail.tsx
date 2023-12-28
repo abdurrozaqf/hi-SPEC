@@ -6,6 +6,9 @@ const SkeletonDetail = () => {
     <div className="flex flex-col xl:flex-row gap-10 justify-center lg:gap-6 grow">
       <div className="flex flex-col">
         <Skeleton className="h-8 w-16" />
+        <div className="flex flex-col items-center justify-center grow">
+          <Skeleton className="h-60 w-52 lg:w-96" />
+        </div>
       </div>
       <div className="flex flex-col justify-center px-6 grow">
         <Skeleton className="mt-4 mb-1 h-8 w-full" />
