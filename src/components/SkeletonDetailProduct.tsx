@@ -18,7 +18,7 @@ const SkeletonDetailProduct = () => {
           <Skeleton className="rounded-full h-6 w-24" />
           <hr className="bg-[#757575]" />
         </div>
-        <div className="space-y-4 mb-8">
+        <div className="flex flex-col gap-y-4 mb-8">
           <Skeleton className="rounded-full h-6 w-2/4" />
           <Skeleton className="rounded-full h-4 w-full" />
           <Skeleton className="rounded-full h-4 w-full" />
@@ -26,7 +26,7 @@ const SkeletonDetailProduct = () => {
           <Skeleton className="rounded-full h-4 w-full" />
           <Skeleton className="rounded-full h-4 w-full" />
         </div>
-        <div className="space-y-4">
+        <div className="flex flex-col gap-y-4">
           <Skeleton className="rounded-full h-6 w-2/4" />
           <Skeleton className="rounded-full h-4 w-full" />
           <Skeleton className="rounded-full h-4 w-full" />
