@@ -48,7 +48,7 @@ const Login = () => {
               </p>
               <Button
                 onClick={() => navigate("/")}
-                className="rounded-full h-fit bg-white text-black"
+                className="rounded-full h-fit text-black bg-[#C9DFF2] hover:bg-[#b0c8dc]"
               >
                 try it view
               </Button>

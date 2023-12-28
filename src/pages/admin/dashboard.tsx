@@ -1,7 +1,8 @@
-import { Box, DollarSign, Loader2, Users } from "lucide-react";
+import { Box, DollarSign, Users } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
+import SkeletonDashboard from "@/components/SkeletonDashboard";
 import { useToast } from "@/components/ui/use-toast";
 import Pagination from "@/components/Pagination";
 import Layout from "@/components/Layout";
@@ -56,13 +57,10 @@ const Dashboard = () => {
   return (
     <Layout>
       {isLoading ? (
-        <div className="flex items-center justify-center h-full">
-          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-          <p>Loading</p>
-        </div>
+        <SkeletonDashboard />
       ) : (
         <>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-24 font-poppins mb-0 md:mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-24 font-poppins mb-0 md:mb-6">
             <div className="text-center lg:text-start shadow-products-card relative p-4 lg:p-4 xl:p-10 rounded-xl bg-white dark:bg-[#1265ae24]">
               <div className="bg-[#FF579A] rounded-full p-3 absolute right-10 hidden xl:block">
                 <Box color="white" size={50} />
@@ -107,7 +105,7 @@ const Dashboard = () => {
           <div className="w-0 md:w-auto px-0 md:px-10 py-0 md:py-8 bg-white dark:bg-[#1265ae24] rounded-xl flex flex-col justify-between grow shadow-products-card font-poppins overflow-auto">
             <Table>
               <TableCaption>A list of recent products.</TableCaption>
-              <TableHeader className="sticky top-0 bg-white dark:bg-[#05152D] drop-shadow">
+              <TableHeader className="sticky top-0 bg-white dark:bg-[#05152D] drop-shadow z-10">
                 <TableRow>
                   <TableHead className="w-[50px] text-center">No.</TableHead>
                   <TableHead className="w-[150px] text-center">Image</TableHead>

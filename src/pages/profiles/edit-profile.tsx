@@ -290,7 +290,7 @@ const EditProfile = () => {
                     type="submit"
                     disabled={form.formState.isSubmitting}
                     aria-disabled={form.formState.isSubmitting}
-                    className=" bg-[#1FBB5C] text-white shadow-md px-10 w-full md:w-fit"
+                    className="text-base bg-[#1FBB5C] text-white shadow-md px-10 w-full md:w-fit"
                   >
                     {form.formState.isSubmitting ? (
                       <>
@@ -312,7 +312,7 @@ const EditProfile = () => {
                     <Button
                       type="button"
                       variant={"destructive"}
-                      className="border hover:bg-red-700 shadow-md w-full"
+                      className="text-base hover:bg-red-700 shadow-md w-full"
                     >
                       <p className="w-full">Delete Account</p>
                     </Button>

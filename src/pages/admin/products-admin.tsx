@@ -1,8 +1,9 @@
-import { FilePlus, Laptop, Loader2, PencilLine, Trash2 } from "lucide-react";
+import { FilePlus, Laptop, PencilLine, Trash2 } from "lucide-react";
 import { Link, useSearchParams } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
 import debounce from "lodash.debounce";
 
+import SkeletonProductsAdmin from "@/components/SkeletonProductsAdmin";
 import EditProduct from "@/components/form/EditProduct";
 import AddProduct from "@/components/form/AddProduct";
 import { useToast } from "@/components/ui/use-toast";
@@ -110,7 +111,7 @@ const ProductsAdmin = () => {
 
   const debounceRequest2 = debounce(
     (category: string) => handleCategory(category),
-    500
+    250
   );
 
   function handlePrevNextPage(page: string | number) {
@@ -160,79 +161,78 @@ const ProductsAdmin = () => {
           </div>
         </div>
         <div className="flex justify-center grow overflow-auto">
-          {isLoading ? (
-            <div className="flex items-center h-full">
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              <p>Loading</p>
-            </div>
-          ) : (
-            <Table>
-              <TableCaption>A list of recent products.</TableCaption>
-              <TableHeader className="sticky top-0 bg-white dark:bg-[#05152D] drop-shadow">
-                <TableRow>
-                  <TableHead className="w-[50px] text-center">No</TableHead>
-                  <TableHead className="w-[150px] text-center">Image</TableHead>
-                  <TableHead>Name</TableHead>
-                  <TableHead>Price</TableHead>
-                  <TableHead>Category</TableHead>
-                  <TableHead>Detail</TableHead>
-                  <TableHead className="text-center">Action</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {products?.map((product, index) => (
-                  <TableRow key={product.product_id} className="py-10">
-                    <TableCell className="text-center">
-                      {(meta?.page! - 1) * meta?.limit! + index + 1}
-                    </TableCell>
-                    <TableCell className="flex items-center justify-center">
-                      <img
-                        src={product.picture}
-                        alt={product.name}
-                        loading="lazy"
-                      />
-                    </TableCell>
-                    <TableCell>{product.name}</TableCell>
-                    <TableCell>{formatPrice(product.price!)}</TableCell>
-                    <TableCell>{product.category}</TableCell>
-                    <TableCell>
-                      <Link to={`/detail-product/${product.product_id}`}>
-                        <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
-                          <Laptop />
+          <Table>
+            <TableCaption>A list of recent products.</TableCaption>
+            <TableHeader className="sticky top-0 bg-white dark:bg-[#05152D] drop-shadow z-10">
+              <TableRow>
+                <TableHead className="w-[50px] text-center">No</TableHead>
+                <TableHead className="w-[150px] text-center">Image</TableHead>
+                <TableHead>Name</TableHead>
+                <TableHead>Price</TableHead>
+                <TableHead>Category</TableHead>
+                <TableHead>Detail</TableHead>
+                <TableHead className="text-center">Action</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {isLoading ? (
+                <SkeletonProductsAdmin />
+              ) : (
+                <>
+                  {products?.map((product, index) => (
+                    <TableRow key={product.product_id} className="py-10">
+                      <TableCell className="text-center">
+                        {(meta?.page! - 1) * meta?.limit! + index + 1}
+                      </TableCell>
+                      <TableCell className="flex items-center justify-center">
+                        <img
+                          src={product.picture}
+                          alt={product.name}
+                          loading="lazy"
+                        />
+                      </TableCell>
+                      <TableCell>{product.name}</TableCell>
+                      <TableCell>{formatPrice(product.price!)}</TableCell>
+                      <TableCell>{product.category}</TableCell>
+                      <TableCell>
+                        <Link to={`/detail-product/${product.product_id}`}>
+                          <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
+                            <Laptop />
+                          </div>
+                        </Link>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex items-center justify-center gap-4">
+                          <CustomDialog
+                            title="Edit Products"
+                            description={
+                              <EditProduct
+                                product_id={product.product_id}
+                                refecthProduct={() => refetchProducts()}
+                              />
+                            }
+                          >
+                            <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
+                              <PencilLine />
+                            </div>
+                          </CustomDialog>
+                          <Alert
+                            title="Are you sure delete this Products from Database?"
+                            onAction={() => handleDelete(product.product_id)}
+                            onActionTitle="Delete"
+                          >
+                            <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
+                              <Trash2 />
+                            </div>
+                          </Alert>
                         </div>
-                      </Link>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex items-center justify-center gap-4">
-                        <CustomDialog
-                          title="Edit Products"
-                          description={
-                            <EditProduct
-                              product_id={product.product_id}
-                              refecthProduct={() => refetchProducts()}
-                            />
-                          }
-                        >
-                          <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
-                            <PencilLine />
-                          </div>
-                        </CustomDialog>
-                        <Alert
-                          title="Are you sure delete this Products from Database?"
-                          onAction={() => handleDelete(product.product_id)}
-                          onActionTitle="Delete"
-                        >
-                          <div className="bg-white dark:bg-[#1265ae24] shadow w-fit h-fit p-2 rounded-lg flex items-center justify-center">
-                            <Trash2 />
-                          </div>
-                        </Alert>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          )}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </>
+              )}
+            </TableBody>
+          </Table>
         </div>
         <div className="mt-4">
           <Pagination
