@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Loader2 } from "lucide-react";
 
 import BannerSponsorWishlist from "@/components/BannerSponsorWishlist";
 import ProductCardWishlist from "@/components/ProductCardWishlist";
+import SkeletonWishlists from "@/components/SkeletonWishlists";
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/Layout";
@@ -32,8 +32,9 @@ const WishList = () => {
         description: error.toString(),
         variant: "destructive",
       });
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   }
 
   async function handleDeleteWishlist(favorite_id: number) {
@@ -71,10 +72,7 @@ const WishList = () => {
       <div className="flex flex-col gap-0 lg:gap-8 grow font-poppins">
         <BannerSponsorWishlist />
         {isLoading ? (
-          <div className="flex items-center justify-center h-full">
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            <p>Loading</p>
-          </div>
+          <SkeletonWishlists />
         ) : (
           <>
             {!wishlists && (

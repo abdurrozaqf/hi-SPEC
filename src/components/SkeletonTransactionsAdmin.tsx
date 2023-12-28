@@ -1,5 +1,5 @@
 import { TableCell, TableRow } from "@/components/ui/table";
-import CustomSkeleton from "@/components/Skeleton";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const SkeletonTransactionsAdmin = () => {
   return (
@@ -7,31 +7,31 @@ const SkeletonTransactionsAdmin = () => {
       {"1234567890".split("").map((index) => (
         <TableRow key={index}>
           <TableCell className="text-center">
-            <CustomSkeleton width="w-4" height="h-4" />
+            <Skeleton className="w-4 h-4 rounded-full" />
           </TableCell>
           <TableCell>
-            <CustomSkeleton width="w-12" height="h-12" />
+            <Skeleton className="w-12 h-12 rounded-full" />
           </TableCell>
           <TableCell>
-            <CustomSkeleton width="w-[120px]" height="h-4" />
+            <Skeleton className="w-[120px] h-4 rounded-full" />
           </TableCell>
           <TableCell className="flex justify-center">
-            <CustomSkeleton width="w-14" height="h-14" />
+            <Skeleton className="w-14 h-14 rounded-full" />
           </TableCell>
           <TableCell>
-            <CustomSkeleton width="w-[330px]" height="h-4" />
+            <Skeleton className="w-[330px] h-4 rounded-full" />
           </TableCell>
           <TableCell>
-            <CustomSkeleton width="w-[60px]" height="h-4" />
+            <Skeleton className="w-[60px] h-4 rounded-full" />
           </TableCell>
           <TableCell>
-            <CustomSkeleton width="w-[150px]" height="h-4" />
+            <Skeleton className="w-[150px] h-4 rounded-full" />
           </TableCell>
           <TableCell>
-            <CustomSkeleton width="w-[160px]" height="h-4" />
+            <Skeleton className="w-[160px] h-4 rounded-full" />
           </TableCell>
           <TableCell>
-            <CustomSkeleton width="w-[80px]" height="h-4" />
+            <Skeleton className="w-[80px] h-4 rounded-full" />
           </TableCell>
         </TableRow>
       ))}

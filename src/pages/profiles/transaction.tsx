@@ -1,5 +1,5 @@
-import { DownloadIcon, Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { DownloadIcon } from "lucide-react";
 import { format } from "date-fns";
 
 import BannerSponsorWishlist from "@/components/BannerSponsorWishlist";
@@ -20,6 +20,7 @@ import {
 import { MyTransactions, getProfile } from "@/utils/apis/users";
 import { formatPrice } from "@/utils/formatter";
 import { getNota } from "@/utils/apis/admin";
+import SkeletonTransactionsUser from "@/components/SkeletonTransactionsUser";
 
 const Transaction = () => {
   const [transactions, setTransactions] = useState<MyTransactions[]>();
@@ -71,28 +72,26 @@ const Transaction = () => {
         <h1 className="text-center mb-10 text-xl font-bold">
           History Transactions
         </h1>
-        {isLoading ? (
-          <div className="flex items-center justify-center h-full">
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            <p>Loading</p>
-          </div>
-        ) : (
-          <>
-            <Table>
-              <TableCaption>A list of your recent transactions.</TableCaption>
-              <TableHeader className="sticky top-0 bg-white dark:bg-[#05152D] drop-shadow w-full">
-                <TableRow>
-                  <TableHead className="w-[50px] text-center">No</TableHead>
-                  <TableHead className="w-[100px] text-center">Image</TableHead>
-                  <TableHead>Name Product</TableHead>
-                  <TableHead>Nota</TableHead>
-                  <TableHead>Total Price</TableHead>
-                  <TableHead>Date Transaction</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Action</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
+
+        <Table>
+          <TableCaption>A list of your recent transactions.</TableCaption>
+          <TableHeader className="sticky top-0 bg-white dark:bg-[#05152D] drop-shadow w-full z-10">
+            <TableRow>
+              <TableHead className="w-[50px] text-center">No</TableHead>
+              <TableHead className="w-[100px] text-center">Image</TableHead>
+              <TableHead>Name Product</TableHead>
+              <TableHead>Nota</TableHead>
+              <TableHead>Total Price</TableHead>
+              <TableHead>Date Transaction</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead>Action</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {isLoading ? (
+              <SkeletonTransactionsUser />
+            ) : (
+              <>
                 {transactions?.map((data, index) => (
                   <TableRow key={index}>
                     <TableCell className="text-center">{index + 1}</TableCell>
@@ -144,10 +143,10 @@ const Transaction = () => {
                     </TableCell>
                   </TableRow>
                 ))}
-              </TableBody>
-            </Table>
-          </>
-        )}
+              </>
+            )}
+          </TableBody>
+        </Table>
       </div>
     </Layout>
   );

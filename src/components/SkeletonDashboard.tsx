@@ -1,3 +1,5 @@
+import { Box, DollarSign, Users } from "lucide-react";
+
 import {
   Table,
   TableBody,
@@ -7,8 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import CustomSkeleton from "@/components/Skeleton";
-import { Box, DollarSign, Users } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const SkeletonDashboard = () => {
   return (
@@ -20,7 +21,7 @@ const SkeletonDashboard = () => {
           </div>
           <p className="font-medium text-[#6B80AA] text-xl">Total Products</p>
           <h1 className="font-bold text-4xl mt-3">
-            <CustomSkeleton width="w-10" height="h-8 mb-8" />
+            <Skeleton className="w-10 h-8 mb-8" />
           </h1>
           <p className="text-black/50 dark:text-white/75 mt-6 tracking-wider">
             Total all products already in hi’SPEC
@@ -32,7 +33,7 @@ const SkeletonDashboard = () => {
           </div>
           <p className="font-medium text-[#6B80AA] text-xl">Total Users</p>
           <h1 className="font-bold text-4xl mt-3">
-            <CustomSkeleton width="w-10" height="h-8 mb-8" />
+            <Skeleton className="w-10 h-8 mb-8" />
           </h1>
           <p className="text-black/50 dark:text-white/75 mt-6 tracking-wider">
             Total cerate account in hi’SPEC
@@ -46,7 +47,7 @@ const SkeletonDashboard = () => {
             Total Transactions
           </p>
           <h1 className="font-bold text-4xl mt-3">
-            <CustomSkeleton width="w-10" height="h-8 mb-8" />
+            <Skeleton className="w-10 h-8 mb-8" />
           </h1>
           <p className="text-black/50 dark:text-white/75 mt-6 tracking-wider">
             Total transactions user from hi’SPEC
@@ -69,19 +70,19 @@ const SkeletonDashboard = () => {
             {"1234567890".split("").map((index) => (
               <TableRow key={index}>
                 <TableCell className="font-medium text-center">
-                  <CustomSkeleton width="w-4" height="h-4" />
+                  <Skeleton className="w-4 h-4 rounded-full" />
                 </TableCell>
                 <TableCell className="flex justify-center">
-                  <CustomSkeleton width="w-14" height="h-14" />
+                  <Skeleton className="w-14 h-14 rounded-full" />
                 </TableCell>
                 <TableCell>
-                  <CustomSkeleton width="w-[300px]" height="h-4" />
+                  <Skeleton className="w-[300px] h-4 rounded-full" />
                 </TableCell>
                 <TableCell>
-                  <CustomSkeleton width="w-[160px]" height="h-4" />
+                  <Skeleton className="w-[160px] h-4 rounded-full" />
                 </TableCell>
                 <TableCell>
-                  <CustomSkeleton width="w-[100px]" height="h-4" />
+                  <Skeleton className="w-[100px] h-4 rounded-full" />
                 </TableCell>
               </TableRow>
             ))}
