@@ -52,7 +52,7 @@ const Compare = () => {
             </div>
             <h1 className="font-bold text-center text-4xl grow">Compare</h1>
           </div>
-          <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 place-items-center">
+          <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 place-items-center grow">
             {compares.map((data, index) => (
               <div
                 key={index}
