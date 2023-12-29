@@ -62,39 +62,49 @@ const Dashboard = () => {
         <>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-24 font-poppins mb-0 md:mb-6">
             <div className="text-center lg:text-start shadow-products-card relative p-4 lg:p-4 xl:p-10 rounded-xl bg-white dark:bg-[#1265ae24]">
-              <div className="bg-[#FF579A] rounded-full p-3 absolute right-10 hidden xl:block">
-                <Box color="white" size={50} />
+              <div className="flex justify-between">
+                <div>
+                  <p className="font-semibold text-xl">Total Products</p>
+                  <h1 className="font-bold text-4xl mt-3">
+                    {datas?.total_product || "0"}
+                  </h1>
+                </div>
+                <div className="w-fit h-fit bg-[#FF579A] rounded-full p-3 hidden xl:block">
+                  <Box color="white" size={50} />
+                </div>
               </div>
-              <p className="font-semibold text-xl">Total Products</p>
-              <h1 className="font-bold text-4xl mt-3">
-                {datas?.total_product || "0"}
-              </h1>
               <p className="text-black/75 dark:text-white/75 mt-6 tracking-wider">
                 Total all products already in hi’SPEC
               </p>
             </div>
             <div className="text-center lg:text-start shadow-products-card relative p-4 lg:p-4 xl:p-10 rounded-xl bg-white dark:bg-[#1265ae24]">
-              <div className="bg-[#5C60F6] rounded-full p-3 absolute right-10 hidden xl:block">
-                <Users color="white" size={50} />
+              <div className="flex justify-between">
+                <div>
+                  <p className="font-semibold text-xl">Total Users</p>
+                  <h1 className="font-bold text-4xl mt-3">
+                    {datas?.total_user || "0"}
+                  </h1>
+                </div>
+                <div className="w-fit h-fit bg-[#5C60F6] rounded-full p-3 hidden xl:block">
+                  <Users color="white" size={50} />
+                </div>
               </div>
-              <p className="font-semibold text-xl">Total Users</p>
-              <h1 className="font-bold text-4xl mt-3">
-                {datas?.total_user || "0"}
-              </h1>
               <p className="text-black/75 dark:text-white/75 mt-6 tracking-wider">
                 Total cerate account in hi’SPEC
               </p>
             </div>
             <div className="text-center lg:text-start shadow-products-card relative p-4 lg:p-4 xl:p-10 rounded-xl bg-white dark:bg-[#1265ae24]">
-              <div className="bg-[#01CC89] rounded-full p-3 absolute right-10 hidden xl:block">
-                <DollarSign color="white" size={50} />
+              <div className="flex justify-between">
+                <div>
+                  <p className="font-semibold text-xl">Total Transactions</p>
+                  <h1 className="font-bold text-4xl mt-3">
+                    {datas?.total_transaction || "0"}
+                  </h1>
+                </div>
+                <div className="w-fit h-fit bg-[#01CC89] rounded-full p-3 hidden xl:block">
+                  <DollarSign color="white" size={50} />
+                </div>
               </div>
-              <p className="font-semibold text-xl truncate">
-                Total Transactions
-              </p>
-              <h1 className="font-bold text-4xl mt-3">
-                {datas?.total_transaction || "0"}
-              </h1>
               <p className="text-black/75 dark:text-white/75 mt-6 tracking-wider">
                 Total transactions user from hi’SPEC
               </p>
