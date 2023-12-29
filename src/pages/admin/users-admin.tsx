@@ -169,9 +169,9 @@ const UsersAdmin = () => {
                             </div>
                           </CustomDialog>
                           <Alert
-                            title="Are you sure delete this Products from Database?"
+                            title="Are you sure delete this User from Database?"
                             onAction={() => handleDeleteUsers(user.user_id)}
-                            onActionTitle="Delete"
+                            onActionTitle="Continue"
                           >
                             <div
                               aria-label="Delete Users"

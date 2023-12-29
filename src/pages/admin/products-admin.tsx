@@ -230,9 +230,9 @@ const ProductsAdmin = () => {
                             </div>
                           </CustomDialog>
                           <Alert
-                            title="Are you sure delete this Products from Database?"
+                            title="Are you sure delete this Product from Database?"
                             onAction={() => handleDelete(product.product_id)}
-                            onActionTitle="Delete"
+                            onActionTitle="Continue"
                           >
                             <div
                               aria-label="Delete Products"

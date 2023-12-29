@@ -152,15 +152,14 @@ const DetailProduct = () => {
               <p>Bluetooth: {product?.bluetooth}</p>
               <p>HDMI: {product?.hdmi}</p>
               <p>Weight: {product?.weight}</p>
-
-              <div className="mt-3">
+              {user.role !== "admin" && (
                 <Button
-                  className="w-fit text-white"
+                  className="w-fit text-white mt-4"
                   onClick={() => navigate("/compare")}
                 >
                   Lets Compare
                 </Button>
-              </div>
+              )}
             </div>
             <div className="flex flex-row xl:flex-col justify-center lg:justify-around xl:justify-center items-center px-0 xl:px-6">
               {token && user?.role === "user" && (

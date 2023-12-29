@@ -130,7 +130,7 @@ const AddProduct = () => {
           ) : (
             <div className="flex cursor-pointer">
               <p className="font-medium tracking-wide text-white">
-                Edit Product
+                Add Product
               </p>
             </div>
           )}
