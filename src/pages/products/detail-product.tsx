@@ -152,6 +152,15 @@ const DetailProduct = () => {
               <p>Bluetooth: {product?.bluetooth}</p>
               <p>HDMI: {product?.hdmi}</p>
               <p>Weight: {product?.weight}</p>
+
+              <div className="mt-3">
+                <Button
+                  className="w-fit text-white"
+                  onClick={() => navigate("/compare")}
+                >
+                  Lets Compare
+                </Button>
+              </div>
             </div>
             <div className="flex flex-row xl:flex-col justify-center lg:justify-around xl:justify-center items-center px-0 xl:px-6">
               {token && user?.role === "user" && (
@@ -196,6 +205,7 @@ const DetailProduct = () => {
                   >
                     <Button className="w-[17rem] bg-[#48B774]">Buy Now</Button>
                   </Alert>
+
                   <div className="flex justify-between items-center mt-3">
                     <p className="text-xs">Make your Wishlist come true</p>
                     <Button
