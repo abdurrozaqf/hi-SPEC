@@ -1,8 +1,7 @@
-import { useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { PencilLine, Trash2 } from "lucide-react";
+import { useEffect, useState } from "react";
 import debounce from "lodash.debounce";
-import { format } from "date-fns";
 
 import EditProfileUsers from "@/components/form/EditProfileUsers";
 import SkeletonUsersAdmin from "@/components/SkeletonUsersAdmin";
@@ -23,7 +22,10 @@ import {
 } from "@/components/ui/table";
 
 import { ResponseUsers, deleteProfile, getUsers } from "@/utils/apis/users";
+import { formatDate } from "@/utils/formatter";
 import { Meta } from "@/utils/types/api";
+
+import DefaultAvatar from "/images/default-avatar.png";
 
 const UsersAdmin = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -54,10 +56,6 @@ const UsersAdmin = () => {
       setIsLoading(false);
     }
   }
-
-  const refetchUsers = useCallback(() => {
-    fetchData();
-  }, []);
 
   async function handleDeleteUsers(user_id: number) {
     try {
@@ -136,7 +134,7 @@ const UsersAdmin = () => {
                       <TableCell>
                         <Avatar className="shadow-md">
                           <AvatarImage
-                            src={user.avatar || "/images/default-avatar.png"}
+                            src={user.avatar || DefaultAvatar}
                             alt={user.name}
                             loading="lazy"
                             className="object-cover"
@@ -147,9 +145,7 @@ const UsersAdmin = () => {
                       <TableCell>{user.email}</TableCell>
                       <TableCell>{user.address}</TableCell>
                       <TableCell>{user.phone_number}</TableCell>
-                      <TableCell>
-                        {format(new Date(user.time), "iiii, dd MMM Y")}
-                      </TableCell>
+                      <TableCell>{formatDate(user.time!)}</TableCell>
                       <TableCell>
                         <div className="flex justify-center items-center gap-4">
                           <CustomDialog
@@ -157,7 +153,7 @@ const UsersAdmin = () => {
                             description={
                               <EditProfileUsers
                                 datas={user}
-                                refecthUsers={() => refetchUsers()}
+                                refecthUsers={() => fetchData()}
                               />
                             }
                           >

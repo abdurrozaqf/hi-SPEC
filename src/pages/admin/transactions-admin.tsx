@@ -1,6 +1,5 @@
 import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { format } from "date-fns";
 
 import SkeletonTransactionsAdmin from "@/components/SkeletonTransactionsAdmin";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
@@ -18,8 +17,11 @@ import {
 } from "@/components/ui/table";
 
 import { Transactions, getTransactions } from "@/utils/apis/admin";
-import { formatPrice } from "@/utils/formatter";
+import { formatDate, formatPrice } from "@/utils/formatter";
 import { Meta } from "@/utils/types/api";
+
+import DefaultAvatar from "/images/default-avatar.png";
+import DefaultLaptop from "/images/default-laptop.png";
 
 const TransactionsAdmin = () => {
   const [transactions, setTransactions] = useState<Transactions[]>();
@@ -93,9 +95,7 @@ const TransactionsAdmin = () => {
                       <TableCell>
                         <Avatar>
                           <AvatarImage
-                            src={
-                              data.user_picture || "/images/default-avatar.png"
-                            }
+                            src={data.user_picture || DefaultAvatar}
                             alt={data.user_name}
                             loading="lazy"
                             className="object-cover"
@@ -105,7 +105,7 @@ const TransactionsAdmin = () => {
                       <TableCell>{data.user_name}</TableCell>
                       <TableCell>
                         <img
-                          src={data.picture_product}
+                          src={data.picture_product || DefaultLaptop}
                           alt={data.name_product}
                           loading="lazy"
                         />
@@ -113,9 +113,7 @@ const TransactionsAdmin = () => {
                       <TableCell>{data.name_product}</TableCell>
                       <TableCell>{data.nota}</TableCell>
                       <TableCell>{formatPrice(data.total_price!)}</TableCell>
-                      <TableCell>
-                        {format(new Date(data.timestamp), "iiii, dd MMM Y")}
-                      </TableCell>
+                      <TableCell>{formatDate(data.timestamp!)}</TableCell>
                       <TableCell
                         className={
                           data.status === "Pending"

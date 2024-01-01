@@ -22,7 +22,12 @@ import {
   addProductSchema,
 } from "@/utils/apis/products";
 
-const AddProduct = () => {
+interface Props {
+  refetchProduct: () => void;
+}
+
+const AddProduct = (props: Props) => {
+  const { refetchProduct } = props;
   const { toast } = useToast();
 
   const form = useForm<AddProductSchema>({
@@ -43,8 +48,8 @@ const AddProduct = () => {
       formData.append("picture", data.picture[0]);
 
       const result = await addProduct(formData as any);
-
       toast({ description: result.message });
+      refetchProduct();
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",

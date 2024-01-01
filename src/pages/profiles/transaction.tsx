@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { DownloadIcon } from "lucide-react";
-import { format } from "date-fns";
 
+import SkeletonTransactionsUser from "@/components/SkeletonTransactionsUser";
 import BannerSponsorWishlist from "@/components/BannerSponsorWishlist";
 import { useToast } from "@/components/ui/use-toast";
 import Alert from "@/components/AlertDialog";
@@ -18,9 +18,8 @@ import {
 } from "@/components/ui/table";
 
 import { MyTransactions, getProfile } from "@/utils/apis/users";
-import { formatPrice } from "@/utils/formatter";
+import { formatDate, formatPrice } from "@/utils/formatter";
 import { getNota } from "@/utils/apis/admin";
-import SkeletonTransactionsUser from "@/components/SkeletonTransactionsUser";
 
 const Transaction = () => {
   const [transactions, setTransactions] = useState<MyTransactions[]>();
@@ -105,9 +104,7 @@ const Transaction = () => {
                     <TableCell>{data.product_name}</TableCell>
                     <TableCell>{data.nota}</TableCell>
                     <TableCell>{formatPrice(data.total_price!)}</TableCell>
-                    <TableCell>
-                      {format(new Date(), "iiii, dd MMM Y")}
-                    </TableCell>
+                    <TableCell>{formatDate(data.timestamp!)}</TableCell>
                     <TableCell
                       className={
                         data.status === "Pending"

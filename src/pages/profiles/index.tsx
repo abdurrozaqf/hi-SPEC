@@ -3,12 +3,12 @@ import { useEffect, useState } from "react";
 
 import SkeletonProfileUser from "@/components/SkeletonProfileUser";
 import { useToast } from "@/components/ui/use-toast";
+import { Button } from "@/components/ui/button";
 import Layout from "@/components/Layout";
 
 import { Profile, getProfile } from "@/utils/apis/users";
 
 import DefaultAvatar from "/images/default-avatar.png";
-import { Button } from "@/components/ui/button";
 
 const ProfileUser = () => {
   const [isLoading, setIsLoading] = useState(true);

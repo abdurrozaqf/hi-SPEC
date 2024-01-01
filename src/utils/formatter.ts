@@ -1,3 +1,5 @@
+import { format } from "date-fns";
+
 export const generatePagesToDisplay = (page: number, total_page: number) => {
   const maxPagesToShow = 5;
   let pagesToDisplay: (number | string)[] = [page];
@@ -28,6 +30,14 @@ export const formatPrice = (price: number | undefined): string => {
       style: "currency",
       currency: "IDR",
     });
+  } else {
+    return "";
+  }
+};
+
+export const formatDate = (date: Date) => {
+  if (date !== undefined) {
+    return format(new Date(date), "iiii, dd MMM Y");
   } else {
     return "";
   }

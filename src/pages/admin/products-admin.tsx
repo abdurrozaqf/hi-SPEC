@@ -1,6 +1,6 @@
 import { FilePlus, Laptop, PencilLine, Trash2 } from "lucide-react";
 import { Link, useSearchParams } from "react-router-dom";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import debounce from "lodash.debounce";
 
 import SkeletonProductsAdmin from "@/components/SkeletonProductsAdmin";
@@ -36,6 +36,8 @@ import {
 import { formatPrice } from "@/utils/formatter";
 import { Meta } from "@/utils/types/api";
 
+import DefaultLaptop from "/images/default-laptop.png";
+
 const ProductsAdmin = () => {
   const [products, setProducts] = useState<ResponseProducts[]>();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -64,10 +66,6 @@ const ProductsAdmin = () => {
       setIsLoading(false);
     }
   }
-
-  const refetchProducts = useCallback(() => {
-    fetchData();
-  }, []);
 
   async function handleDelete(product_id: number) {
     try {
@@ -148,7 +146,12 @@ const ProductsAdmin = () => {
                 </SelectContent>
               </Select>
               <div className="block md:hidden">
-                <CustomDialog title="Add Products" description={<AddProduct />}>
+                <CustomDialog
+                  title="Add Products"
+                  description={
+                    <AddProduct refetchProduct={() => fetchData()} />
+                  }
+                >
                   <div className="p-3 bg-White shadow dark:shadow-white flex items-center justify-center rounded-xl">
                     <FilePlus size={30} />
                   </div>
@@ -157,7 +160,10 @@ const ProductsAdmin = () => {
             </div>
           </div>
           <div className="hidden md:block">
-            <CustomDialog title="Add Products" description={<AddProduct />}>
+            <CustomDialog
+              title="Add Products"
+              description={<AddProduct refetchProduct={() => fetchData()} />}
+            >
               <div
                 aria-label="Add Products"
                 className="p-3 bg-White shadow dark:shadow-white flex items-center justify-center rounded-xl"
@@ -193,7 +199,7 @@ const ProductsAdmin = () => {
                       </TableCell>
                       <TableCell className="flex items-center justify-center">
                         <img
-                          src={product.picture}
+                          src={product.picture || DefaultLaptop}
                           alt={product.name}
                           loading="lazy"
                         />
@@ -218,7 +224,7 @@ const ProductsAdmin = () => {
                             description={
                               <EditProduct
                                 product_id={product.product_id}
-                                refecthProduct={() => refetchProducts()}
+                                refecthProduct={() => fetchData()}
                               />
                             }
                           >
