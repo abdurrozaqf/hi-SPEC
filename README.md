@@ -12,7 +12,7 @@ hi'Spec is a website that helps you choose the right laptop according to your ne
 
 ## 🛠 Deployment
 
-[hi'SPEC](hi-spec.vercel.app)
+[hi'SPEC](https://hi-spec.vercel.app)
 
 ## ⚡️ Features
 
