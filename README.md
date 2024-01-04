@@ -58,6 +58,3 @@ npm run dev
 
 <img src="https://github.com/hi-specs/FE-hi-SPEC/assets/127754894/b36555ed-a238-4211-9adb-b4ea06bee689">
 
-## 🧠 Lessons Learned
-
-What did you learn while building this project? What challenges did you face and how did you overcome them?
