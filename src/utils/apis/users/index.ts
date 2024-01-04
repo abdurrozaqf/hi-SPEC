@@ -1,10 +1,11 @@
 import {
-  getUsers,
   getProfile,
   updateProfile,
   deleteProfile,
   addWishlist,
   deleteWishlist,
+  getNota,
+  buyProducts,
 } from "./api";
 
 import {
@@ -20,12 +21,13 @@ import {
 } from "./types";
 
 export {
-  getUsers,
   getProfile,
   updateProfile,
   deleteProfile,
   addWishlist,
   deleteWishlist,
+  getNota,
+  buyProducts,
   updateProfileSchema,
   updateUsersAdminSchema,
 };

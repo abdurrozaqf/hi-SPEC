@@ -1,31 +1,6 @@
-import { Request, Response, ResponsePagination } from "@/utils/types/api";
-import { ResponseTransactions, Transactions } from "./types";
+import { Request, ResponsePagination } from "@/utils/types/api";
+import { ResponseTransactions } from "./types";
 import axiosWithConfig from "@/utils/apis/axiosWithConfig";
-
-export const getNota = async (transaction_id: number) => {
-  try {
-    const response = await axiosWithConfig.get(
-      `/transaction/${transaction_id}/download`
-    );
-
-    return response.data;
-  } catch (error: any) {
-    throw Error(error.response.data.message);
-  }
-};
-
-export const buyProducts = async (body: {
-  product_id: number;
-  total_price: number;
-}) => {
-  try {
-    const response = await axiosWithConfig.post(`/transaction`, body);
-
-    return response.data as Response<Transactions>;
-  } catch (error: any) {
-    throw Error(error.response.data.message);
-  }
-};
 
 export const getDashboard = async (params?: Request) => {
   try {
@@ -42,7 +17,32 @@ export const getDashboard = async (params?: Request) => {
       query = queryParams.join("&");
     }
 
-    const url = query ? `/dashboard?${query}` : `/dashboard`;
+    const url = query ? `/admin/dashboard?${query}` : `/admin/dashboard`;
+    const response = await axiosWithConfig.get(url);
+
+    return response.data as ResponsePagination;
+  } catch (error: any) {
+    throw Error(error.response.data.message);
+  }
+};
+
+export const getUsers = async (params?: Request) => {
+  try {
+    let query = "";
+
+    if (params) {
+      const queryParams: string[] = [];
+
+      let key: keyof typeof params;
+      for (key in params) {
+        queryParams.push(`${key}=${params[key]}`);
+      }
+
+      query = queryParams.join("&");
+    }
+
+    const url = query ? `/admin/users?${query}` : `/admin/users`;
+
     const response = await axiosWithConfig.get(url);
 
     return response.data as ResponsePagination;
@@ -66,7 +66,7 @@ export const getTransactions = async (params?: Request) => {
       query = queryParams.join("&");
     }
 
-    const url = query ? `/transactions?${query}` : `/transactions`;
+    const url = query ? `/admin/transactions?${query}` : `/admin/transactions`;
 
     const response = await axiosWithConfig.get(url);
 

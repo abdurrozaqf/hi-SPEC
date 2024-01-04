@@ -22,7 +22,7 @@ export const getProducts = async (params?: Request) => {
       query = queryParams.join("&");
     }
 
-    const url = query ? `/product/search?${query}` : `/products`;
+    const url = query ? `/products?${query}` : `/products`;
 
     const response = await axiosWithConfig.get(url);
 
@@ -34,7 +34,7 @@ export const getProducts = async (params?: Request) => {
 
 export const getDetailProduct = async (product_id: number) => {
   try {
-    const response = await axiosWithConfig.get(`/product/${product_id}`);
+    const response = await axiosWithConfig.get(`/products/${product_id}`);
 
     return response.data as Response<Product>;
   } catch (error: any) {
@@ -44,7 +44,7 @@ export const getDetailProduct = async (product_id: number) => {
 
 export const addProduct = async (body: AddProductSchema) => {
   try {
-    const response = await axiosWithConfig.post(`/product`, body);
+    const response = await axiosWithConfig.post(`/products`, body);
 
     return response.data as Response;
   } catch (error: any) {
@@ -58,7 +58,7 @@ export const editProduct = async (
 ) => {
   try {
     const response = await axiosWithConfig.patch(
-      `/product/${product_id}`,
+      `/products/${product_id}`,
       body
     );
 
@@ -70,7 +70,7 @@ export const editProduct = async (
 
 export const deleteProduct = async (product_id: number) => {
   try {
-    const response = await axiosWithConfig.delete(`/product/${product_id}`);
+    const response = await axiosWithConfig.delete(`/products/${product_id}`);
 
     return response.data as Response;
   } catch (error: any) {

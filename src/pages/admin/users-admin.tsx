@@ -11,6 +11,7 @@ import Pagination from "@/components/Pagination";
 import CustomDialog from "@/components/Dialog";
 import Alert from "@/components/AlertDialog";
 import Layout from "@/components/Layout";
+
 import {
   Table,
   TableBody,
@@ -21,8 +22,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { ResponseUsers, deleteProfile, getUsers } from "@/utils/apis/users";
+import { ResponseUsers, deleteProfile } from "@/utils/apis/users";
 import { formatDate } from "@/utils/formatter";
+import { getUsers } from "@/utils/apis/admin";
 import { Meta } from "@/utils/types/api";
 
 import DefaultAvatar from "/images/default-avatar.png";

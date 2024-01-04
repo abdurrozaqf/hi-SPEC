@@ -1,35 +1,11 @@
-import { Request, Response, ResponsePagination } from "@/utils/types/api";
 import axiosWithConfig from "@/utils/apis/axiosWithConfig";
 import { User, UpdateProfileSchema } from "./types";
-
-export const getUsers = async (params?: Request) => {
-  try {
-    let query = "";
-
-    if (params) {
-      const queryParams: string[] = [];
-
-      let key: keyof typeof params;
-      for (key in params) {
-        queryParams.push(`${key}=${params[key]}`);
-      }
-
-      query = queryParams.join("&");
-    }
-
-    const url = query ? `/user/search?${query}` : `/users`;
-
-    const response = await axiosWithConfig.get(url);
-
-    return response.data as ResponsePagination;
-  } catch (error: any) {
-    throw Error(error.response.data.message);
-  }
-};
+import { Transactions } from "../admin/types";
+import { Response } from "@/utils/types/api";
 
 export const getProfile = async () => {
   try {
-    const response = await axiosWithConfig.get(`/user`);
+    const response = await axiosWithConfig.get(`/users`);
 
     return response.data as Response<User>;
   } catch (error: any) {
@@ -42,7 +18,7 @@ export const updateProfile = async (
   body: UpdateProfileSchema
 ) => {
   try {
-    const response = await axiosWithConfig.patch(`/user/${user_id}`, body);
+    const response = await axiosWithConfig.patch(`/users/${user_id}`, body);
 
     return response.data as Response;
   } catch (error: any) {
@@ -52,7 +28,7 @@ export const updateProfile = async (
 
 export const deleteProfile = async (user_id: number) => {
   try {
-    const response = await axiosWithConfig.delete(`/user/${user_id}`);
+    const response = await axiosWithConfig.delete(`/users/${user_id}`);
 
     return response.data as Response;
   } catch (error: any) {
@@ -62,7 +38,7 @@ export const deleteProfile = async (user_id: number) => {
 
 export const addWishlist = async (product_id: number) => {
   try {
-    const response = await axiosWithConfig.post(`/user/fav/add/${product_id}`);
+    const response = await axiosWithConfig.post(`/fav/${product_id}`);
 
     return response.data as Response;
   } catch (error: any) {
@@ -72,9 +48,34 @@ export const addWishlist = async (product_id: number) => {
 
 export const deleteWishlist = async (favorite_id: number) => {
   try {
-    const response = await axiosWithConfig.delete(`/user/fav/${favorite_id}`);
+    const response = await axiosWithConfig.delete(`/fav/${favorite_id}`);
 
     return response.data as Response;
+  } catch (error: any) {
+    throw Error(error.response.data.message);
+  }
+};
+
+export const buyProducts = async (body: {
+  product_id: number;
+  total_price: number;
+}) => {
+  try {
+    const response = await axiosWithConfig.post(`/transaction`, body);
+
+    return response.data as Response<Transactions>;
+  } catch (error: any) {
+    throw Error(error.response.data.message);
+  }
+};
+
+export const getNota = async (transaction_id: number) => {
+  try {
+    const response = await axiosWithConfig.get(
+      `/transaction/${transaction_id}/download`
+    );
+
+    return response.data;
   } catch (error: any) {
     throw Error(error.response.data.message);
   }
