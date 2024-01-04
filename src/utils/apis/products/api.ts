@@ -6,6 +6,7 @@ import {
   AddProductSchema,
   EditProductSchema,
 } from "./types";
+import { Transactions } from "../admin/types";
 
 export const getProducts = async (params?: Request) => {
   try {
@@ -37,6 +38,19 @@ export const getDetailProduct = async (product_id: number) => {
     const response = await axiosWithConfig.get(`/products/${product_id}`);
 
     return response.data as Response<Product>;
+  } catch (error: any) {
+    throw Error(error.response.data.message);
+  }
+};
+
+export const buyProducts = async (body: {
+  product_id: number;
+  total_price: number;
+}) => {
+  try {
+    const response = await axiosWithConfig.post(`/transactions`, body);
+
+    return response.data as Response<Transactions>;
   } catch (error: any) {
     throw Error(error.response.data.message);
   }

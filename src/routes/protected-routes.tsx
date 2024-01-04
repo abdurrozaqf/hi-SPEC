@@ -32,7 +32,7 @@ const ProtectedRoutes = () => {
     "/products",
     "/wishlist",
     "/transaction",
-    "/categories/:category",
+    `/categories/${pathname.slice(12)}`,
   ];
 
   if (authProtected.includes(pathname)) {

@@ -81,7 +81,7 @@ const Home = () => {
             <div className="flex flex-col gap-3">
               <div className="flex items-center justify-between w-full">
                 <h1 className="font-semibold">Recomended for Office</h1>
-                <Link to={`/categories/office`}>
+                <Link to="/categories/office">
                   <p className="hover:text-slate-500">see all</p>
                 </Link>
               </div>

@@ -17,9 +17,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { MyTransactions, getProfile } from "@/utils/apis/users";
+import { MyTransactions, getNota, getProfile } from "@/utils/apis/users";
 import { formatDate, formatPrice } from "@/utils/formatter";
-import { getNota } from "@/utils/apis/admin";
 
 const Transaction = () => {
   const [transactions, setTransactions] = useState<MyTransactions[]>();

@@ -1,6 +1,7 @@
 import {
   getProducts,
   getDetailProduct,
+  buyProducts,
   addProduct,
   editProduct,
   deleteProduct,
@@ -18,6 +19,7 @@ import {
 export {
   getProducts,
   getDetailProduct,
+  buyProducts,
   addProduct,
   editProduct,
   deleteProduct,

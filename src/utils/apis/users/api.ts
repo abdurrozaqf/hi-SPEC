@@ -1,6 +1,5 @@
 import axiosWithConfig from "@/utils/apis/axiosWithConfig";
 import { User, UpdateProfileSchema } from "./types";
-import { Transactions } from "../admin/types";
 import { Response } from "@/utils/types/api";
 
 export const getProfile = async () => {
@@ -56,23 +55,10 @@ export const deleteWishlist = async (favorite_id: number) => {
   }
 };
 
-export const buyProducts = async (body: {
-  product_id: number;
-  total_price: number;
-}) => {
-  try {
-    const response = await axiosWithConfig.post(`/transaction`, body);
-
-    return response.data as Response<Transactions>;
-  } catch (error: any) {
-    throw Error(error.response.data.message);
-  }
-};
-
 export const getNota = async (transaction_id: number) => {
   try {
     const response = await axiosWithConfig.get(
-      `/transaction/${transaction_id}/download`
+      `/transactions/${transaction_id}/download`
     );
 
     return response.data;

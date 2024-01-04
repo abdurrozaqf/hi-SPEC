@@ -8,10 +8,9 @@ import { Button } from "@/components/ui/button";
 import Alert from "@/components/AlertDialog";
 import Layout from "@/components/Layout";
 
-import { MyWishlists, addWishlist, getProfile } from "@/utils/apis/users";
-import { Product, getDetailProduct } from "@/utils/apis/products";
+import { Product, buyProducts, getDetailProduct } from "@/utils/apis/products";
+import { getProfile, addWishlist, MyWishlists } from "@/utils/apis/users";
 import { useToken } from "@/utils/contexts/token";
-import { buyProducts } from "@/utils/apis/admin";
 import { formatPrice } from "@/utils/formatter";
 
 import BannerSponsorDetailProduct from "/images/iklan.png";

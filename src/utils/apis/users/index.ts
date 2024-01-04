@@ -5,7 +5,6 @@ import {
   addWishlist,
   deleteWishlist,
   getNota,
-  buyProducts,
 } from "./api";
 
 import {
@@ -27,7 +26,6 @@ export {
   addWishlist,
   deleteWishlist,
   getNota,
-  buyProducts,
   updateProfileSchema,
   updateUsersAdminSchema,
 };

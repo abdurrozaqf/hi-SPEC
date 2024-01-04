@@ -8,8 +8,8 @@ import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/Layout";
 
-import { MyWishlists, deleteWishlist, getProfile } from "@/utils/apis/users";
-import { buyProducts } from "@/utils/apis/admin";
+import { getProfile, MyWishlists, deleteWishlist } from "@/utils/apis/users";
+import { buyProducts } from "@/utils/apis/products";
 
 const WishList = () => {
   const [wishlists, setWishlists] = useState<MyWishlists[]>();

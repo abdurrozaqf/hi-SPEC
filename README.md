@@ -1,6 +1,4 @@
-
 <img src="https://github.com/hi-specs/FE-hi-SPEC/assets/127754894/8eaa9ccc-4e50-4066-a41f-bd3c481b404d">
-
 
 # 🚀 hi'SPEC
 

@@ -46,6 +46,9 @@ const SidebarUser = () => {
     });
   }
 
+  const HomePage = ["/", `/categories/${pathname.slice(12)}`];
+  const ProductsPage = ["/products", `/detail-product/${pathname.slice(16)}`];
+
   return (
     <div className="font-poppins">
       <div
@@ -75,7 +78,7 @@ const SidebarUser = () => {
           <div className="flex items-center gap-2">
             <div
               className={
-                pathname === "/"
+                HomePage.includes(pathname)
                   ? `p-2 dark:bg-[#E4ECF1] bg-[#1265AE] text-white dark:text-black w-fit h-fit rounded-lg shadow-md cursor-pointer`
                   : `p-2 bg-[#E4ECF1] dark:bg-[#1265AE] hover:bg-[#1265AE] hover:dark:bg-[#E4ECF1] hover:text-white hover:dark:text-black w-fit h-fit rounded-lg shadow-md cursor-pointer`
               }
@@ -97,7 +100,7 @@ const SidebarUser = () => {
           <div className="flex items-center gap-2">
             <div
               className={
-                pathname === "/products"
+                ProductsPage.includes(pathname)
                   ? `p-2 dark:bg-[#E4ECF1] bg-[#1265AE] text-white dark:text-black w-fit h-fit rounded-lg shadow-md cursor-pointer`
                   : `p-2 bg-[#E4ECF1] dark:bg-[#1265AE] hover:bg-[#1265AE] hover:dark:bg-[#E4ECF1] hover:text-white hover:dark:text-black w-fit h-fit rounded-lg shadow-md cursor-pointer`
               }
