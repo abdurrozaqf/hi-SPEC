@@ -54,5 +54,4 @@ npm run dev
 
 ## 💾 Screenshots
 
-<img src="https://github.com/hi-specs/FE-hi-SPEC/assets/127754894/6eb9cafc-f223-4d85-9976-60194b741ddf">
-
+<img src="https://github.com/hi-specs/FE-hi-SPEC/assets/127754894/0b4e5df8-786d-4c20-b7f0-16cbd2842e0b">
